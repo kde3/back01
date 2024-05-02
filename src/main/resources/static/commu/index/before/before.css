@@ -1,0 +1,170 @@
+* {
+  margin:0;
+  padding:0;
+  font-family: "Pretendard";
+  font-size: 10px;
+}
+
+body {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.outer {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #FFFFFF;
+}
+
+.inner {
+  width: 1000px;
+}
+
+a {text-decoration: none;}
+input:focus {outline: none;}
+/* -------------------------------------------- */
+/* .before-list-container : start */
+/* -------------------------------------------- */
+
+.list-category{
+  display: flex;
+  justify-content: space-between;
+
+  margin: 30px 0;
+}
+
+.list-category p {
+  font-size: 20px;
+  color: #8976FD;
+  font-weight: 500;
+}
+
+.write--button{
+  border: 1px solid #8976FD;
+}
+
+.write--button span{
+  font-size: 18px;
+  color: #8976FD;
+  
+}
+
+.material-symbols-outlined {
+  color: #8976FD;
+  width: 20px;
+  height: 20px;
+
+  position: relative;
+  top: 3px;
+
+font-variation-settings:
+'FILL' 0,
+'wght' 400,
+'GRAD' 0,
+'opsz' 24
+}
+
+.post .material-symbols-outlined{
+  color: #CACACA;
+  padding-left: 10px;
+
+font-variation-settings:
+'FILL' 0,
+'wght' 400,
+'GRAD' 0,
+'opsz' 24
+}
+
+.post {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  height: 40px;
+}
+
+.post--title {
+  display: flex;
+  justify-content: center;
+}
+
+.post--title-name {
+  display: block;
+  margin-left: 10px;
+  font-size: 18px;
+
+}
+
+.post--title .picture_icon {
+  height: 20px;
+  transform: translateY(-25%);
+}
+
+.like{
+  position: relative;
+  left: 550px;
+}
+
+.like-count,
+.comme-count{
+  font-size: 20px;
+  color: #CACACA;
+  padding: 10px;
+}
+
+.list-index{
+  text-align: center;
+  margin-top: 40px;
+}
+
+.list-index a{
+  text-decoration: none;
+  color: #6E6E6E;
+  font-size: 25px;
+  margin: 10px;
+
+}
+
+#post_list--pagination {
+  display: flex;
+  justify-content: center;
+
+  margin: 30px 0 50px 0;
+}
+
+#post_list--pagination .page-btn {
+  margin: 0 3px;
+  width: 30px;
+  height: 30px;
+
+  line-height: 30px;
+  text-align: center;
+
+  font-size: 15px;
+  border:1px solid #8976FD;
+  background-color: white;
+  color: #332C5C;
+
+  cursor: pointer;
+}
+
+#post_list--pagination .prev-btn,
+#post_list--pagination .next-btn {
+  margin: 0 5px;
+  padding:0 10px;
+
+  height: 30px;
+
+  line-height: 30px;
+  text-align: center;
+
+  font-size: 15px;
+
+  color:#332C5C;
+  background-color: #F5F3FF;
+  border: 1px solid #8976FD;
+
+  cursor: pointer;
+}

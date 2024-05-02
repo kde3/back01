@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeaseMates: 임차인들을 위한 정보공유공간</title>
+    <link rel="icon" href="/img/favicon.ico">
+    
+    <link rel="stylesheet" href="./pw.css">
+    <script defer src="./pw.js"></script>
+    
+    <script type="module" src="/temp/header/after_login/add.js"></script>
+    <script type="module" src="/temp/footer/add.js"></script>
+  </head>
+<body>
+    <div id="header-placeholder"></div>
+    <main>
+          <div class="outer">
+              <div class="inner">
+                  <div class="Nickname">
+                      <div class="userVO-name">홍길동 님 페이지</div>
+                  </div>
+  
+                  <div class="Pagebotton">
+                      <a href="../../index/index.html"><div class="main--profile">프로필</div></a>
+                      <a href="../../../list/list.html"><div class="maim--post">작성게시글</div></a>
+                      <a href="../info_change/info_change.html"><div class="maim--change">내 정보변경</div></a>
+                      <a href="pw.html"><div class="maim--pwdchang">비밀번호 변경</div></a>
+                      <a href="#" onclick="alert('준비중입니다')"><div class="maim--note">쪽지함</div></a>
+                  </div>
+                  
+                  <div class ="secret-page">
+                    <p>비밀번호를 변경하시려면 기존 비밀번호와 새 비밀번호를 입력해주세요</p>
+                    <form class="secret-page-input">
+                      <input id="oldpwd" type="password" class="pw" placeholder="기존 비밀번호">
+                      <input id="pwd" type="password" class="pw" id="newpassword" placeholder="새 비밀번호">
+  
+                      <div class="strongPassword hide">8글자 이상, 영문, 숫자, 특수문자 필수</div>
+                     
+                      <input id="pwdck" type="password" class="pw" id="checkpassword" placeholder="새 비빌먼호 확인">
+                      
+                      <div class="missmatch-message hide">비밀번호가 일치하지 않습니다</div>
+                      <!-- <input type="button" onclick="test()" value="비밀번호 변경" id="pwchange" /> -->
+                      <!-- <div class="check hide">모두 입력하셔야합니다</div> -->
+                    </form>
+                    <form>
+                      <button id="pwdbutton"type="button" onclick="pwdCheckOk()">비밀번호 변경</button>
+                    </form>
+                  </div>
+              </div>
+          </div>
+        </main>
+      <div id="footer-placeholder"></div>
+  </body>
+  </html>

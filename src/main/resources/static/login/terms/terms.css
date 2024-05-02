@@ -1,0 +1,99 @@
+*{
+  margin: 0;
+  padding: 0;
+  font-family: "Pretendard";
+}
+
+body {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.outer {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.inner {
+  width: 1000px;
+}
+
+a {text-decoration: none;}
+input:focus {outline: none;}
+
+.terms_of_use .inner {
+  display: flex;
+  justify-content: center;
+}
+
+#terms-container{
+  margin: 50px 0;
+  height: 649px;
+  width: 680px;
+  background-color: #F5F3FF;
+}
+
+form{
+  height: 500px; 
+  margin: 30px;
+}
+
+h1{
+  font-size: 30px;
+  color: #8976FD;
+  margin: 0 0 15px 0;
+}
+
+h3{
+  font-size: 15px;
+  color: #332C5C;
+  font-weight: 500;
+}
+
+h1,h3{
+  position: relative;
+  top: 30px;
+  left: 30px;
+}
+
+#terms-wrap{
+    margin: 50px 10px 0 10px;
+}
+
+fieldset{
+    border: none;
+}
+
+label{
+    font-size: 17px;
+    color: #332C5C;
+    font-weight: 600;
+}
+
+.terms-box{
+  margin: 15px;
+  padding: 5px;
+  background-color: #ffffff;
+  font-size: 15px;
+  color: #979797;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+#terms-button{
+    margin: 0 230px;
+    padding: 10px;
+    width: 140px;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 10px;
+}
+
+a {
+  text-decoration: none;
+  font-size: 18px;
+  color: #979797;
+  font-weight: 600;
+}
