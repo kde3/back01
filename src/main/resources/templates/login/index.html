@@ -4,19 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LeaseMates: 임차인들을 위한 정보공유공간</title>
-    <link rel="icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/default.css">
 
-    <link rel="stylesheet" href="./index.css">
-    <script defer src="./index.js"></script>
+    <!-- 화면 확인 위함 -->
+<!--    <link rel="stylesheet" href="/static/user/logIn/index.css">-->
+<!--    <script defer src="/static/user/logIn/index.js"></script>-->
 
-    <script type="module" src="/temp/header/before_login/add.js"></script>
-    <script type="module" src="/temp/footer/add.js"></script>
-
-    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <!-- 타임리프 매핑 -->
+    <link rel="stylesheet" href="/userVO/logIn/login.css">
+    <script defer src="/userVO/logIn/logIn.js"></script>
 </head>
 <body>
   <div id="header-placeholder"></div>
-
     <main>
         <section class="login_form">
             <div class="outer">
@@ -24,7 +23,8 @@
 
                     <div id="index-container">
                         <h1>로그인</h1>
-                        <form>
+
+                        <div>
                             <fieldset>
                                 <input type="text" id="id" placeholder="아이디" required/>
                                 <p id="idResult"></p>
@@ -33,12 +33,15 @@
                                 <input type="password" id="password" placeholder="비밀번호" required/>
                                 <p id="pwResult"></p>
                             </fieldset>
-                            <input type="button" class="login--button" onclick="login();" value="로그인"/>
+
+                            <div id="checkIdAndPw"></div>
+
+                            <button type="submit" class="login--button">로그인</button>
                             <br>
-                            <button class="signup--button">회원가입</button>
+                            <button type="button" class="signup--button">회원가입</button>
                             <br>
-                            <button class="find-pw--button">비밀번호 찾기</button>
-                        </form>
+                            <button type="button" class="find-pw--button">비밀번호 찾기</button>
+                        </div>
                     </div>
 
                 </div>
