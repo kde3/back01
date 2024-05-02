@@ -22,6 +22,11 @@ public class UserController {
         return "user/logIn";
     }
 
+    @GetMapping("/join")
+    String joinView() {
+        return "user/logIn";
+    }
+
     @ResponseBody
     @PostMapping("/logIn")
     ResponseEntity<Map> logIn(@RequestBody LogInDTO logInDTO) {
