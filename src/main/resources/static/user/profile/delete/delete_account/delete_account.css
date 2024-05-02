@@ -1,0 +1,138 @@
+* {
+  margin:0;
+  padding:0;
+  font-family: "Pretendard";
+  font-size: 10px;
+}
+
+body {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.outer {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background-color: #FFFFFF;
+}
+
+.inner {
+  width: 1000px;
+}
+
+a {text-decoration: none;}
+input:focus {outline: none;}
+
+
+main{
+  height: 850px !important;
+}
+
+.delete-container{
+  margin-top: 150px;
+  align-items: center;
+}
+
+.delete-theme{
+  font-size: 23px;
+  font-weight: 600;
+  padding-bottom: 30px;
+  /* center */
+  display: flex;
+  justify-content: center;
+
+}
+
+.delete-check{
+  display: block;
+}
+
+.delete-ment{
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: #332C5C;
+  padding-bottom: 50px;
+
+    /* center */
+    display: flex;
+    justify-content: center;
+}
+
+/* 패스워드 공간 */
+.delete-pwd{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.enter-pw, .check-pw{
+  padding-left: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-size: 14px;
+  margin: 5px;
+  width: 300px;
+  height: 30px;
+  border-radius: 9px;
+  border: 0.7px solid #8976FD;
+}
+
+.double-check-pw{
+  padding-bottom: 10px;
+  /* center */
+  display: flex;
+  justify-content: center;
+}
+.first-check-pw{
+  /* center */
+  display: flex;
+  justify-content: center;
+}
+
+.last-chance{
+  font-size: 15px;
+  font-weight: 200;
+  letter-spacing: 0.7px;
+  /* center */
+  display: flex;
+  justify-content: center;
+}
+
+.delete-btn-container{
+  display: flex;
+  padding-top: 40px;
+  /* center */
+  display: flex;
+  justify-content: center;
+  padding-bottom: 50px;
+}
+
+.list-btn{
+  width: 160px;
+  height: 40px;
+  background-color: #8976FD;
+  font-size: 16px; color: #ffff;
+  font-weight: 600;
+  border-radius: 5px;
+  border: none;
+  margin-right: 10px;
+}
+
+.last-btn{
+  width: 160px;
+  height: 40px;
+  background-color:  #ffff;
+  font-size: 16px; 
+  font-weight: 600;
+  border-radius: 5px;
+  border: 0.8px solid #8976FD;
+}
+
+/* js */
+.hide{
+  visibility: hidden;
+  /* display: none; */
+}
