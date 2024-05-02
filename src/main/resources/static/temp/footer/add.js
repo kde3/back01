@@ -1,11 +1,13 @@
 import Load from "/temp/load.js";
 
-fetch("/temp/footer/footer.html")                                         // 받아올 html 파일 경로
-.then((response) => response.text())
-.then((html) => {
+fetch("/temp/footer")
+.then(response => response.text())
+.then(html => {
+
   const parser = new DOMParser();
+
   const doc = parser.parseFromString(html, 'text/html');
-  const content = doc.querySelector('footer');                            // 삽입할 컨텐츠 선택
+  const content = doc.querySelector('footer');             // 삽입할 컨텐츠 선택
 
   document.getElementById('footer-placeholder').appendChild(content);     // 원하는 곳에 컨텐츠 삽입
 

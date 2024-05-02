@@ -3,6 +3,7 @@ package com.fiveis.leasemates.service;
 import com.fiveis.leasemates.domain.dto.LogInDTO;
 import com.fiveis.leasemates.domain.vo.UserVO;
 import com.fiveis.leasemates.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,11 +12,13 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    //회원가입
+    /**
+     * 회원가입
+     */
     public Boolean join(UserVO userVO) {
         // 중복불가 필드 검사
         //아이디 조회해서 검색되면 탈락
@@ -36,7 +39,9 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    //로그인
+    /**
+     * 로그인
+     */
     public Boolean logIn(LogInDTO logInDTO) {
         // 아이디와 비번 받아오면 검사
         Optional<UserVO> foundUser = userRepository.findById(logInDTO.getId());
