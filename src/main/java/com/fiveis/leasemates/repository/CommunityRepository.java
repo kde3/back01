@@ -45,6 +45,8 @@ public interface CommunityRepository {
      */
     int findLikeById(LikeVO likeVO);        //좋아요 했는지 확인 위함
 
+    void updateLikeCnt(Long postNo);
+
     void createLike(LikeVO likeVO);
 
     void deleteLikeById(LikeVO likeVO);

@@ -71,6 +71,13 @@
         where post_no = #{postNo} and user_no = #{userNo}
     </select>
 
+<!--    좋아요 개수 카운트해서 post 테이블에 업데이트-->
+    <update id="updateLikeCnt" parameterType="Long">
+        update tbl_community_post
+        set like_cnt = (select count(*) as cnt_like from tbl_community_like where post_no = #{postNo})
+        where post_no = #{postNo}
+    </update>
+
     <insert id="createLike" parameterType="LikeVO">
         insert into tbl_community_like (post_no , user_no)
         values(#{postNo}, #{userNo})

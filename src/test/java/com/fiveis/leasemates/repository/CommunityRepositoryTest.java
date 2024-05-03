@@ -149,6 +149,12 @@ class CommunityRepositoryTest {
     }
 
     @Test
+    @DisplayName("게시물 좋아요 개수 post 테이블에 업데이트")
+    void updateLikeCnt() {
+        communityRepository.updateLikeCnt(3L);
+    }
+
+    @Test
     @DisplayName("좋아요 하기")
     void createLike() {
         LikeVO likeVO = LikeVO.builder()
