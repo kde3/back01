@@ -24,7 +24,7 @@ loginButton.addEventListener("click", ()=> {
         console.error("아이디 또는 비밀번호가 입력되지 않았습니다.");
     }
     else {
-        fetch("/user/logIn", {
+        fetch("/user/login", {
             method: 'post',
             headers: {
                 'content-type': 'application/json'
@@ -36,7 +36,7 @@ loginButton.addEventListener("click", ()=> {
         })
         .then(response => {
             if (response.ok) {
-                window.location.href = '/';
+                window.location.href = "/community/retrieve";
 
             } else if (response.status === 401) {
                 const checkIdAndPw = document.querySelector("#checkIdAndPw");

@@ -1,8 +1,8 @@
 import Load from "/temp/load.js";
 
-fetch("/temp/header/before_login/header.html")                        // 받아올 html 파일 경로
-.then((response) => response.text())
-.then((html) => {
+fetch("/temp/header/before_login")                        // 받아올 html 파일 경로
+.then(response => response.text())
+.then(html => {
   const parser = new DOMParser();
   const doc = parser.parseFromString(html, 'text/html');
   const content = doc.querySelector('header');                            // 삽입할 컨텐츠 선택

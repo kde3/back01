@@ -87,13 +87,37 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     };
 
-  //회원가입이 완료되면 나오는 aler창
-  document.querySelector('form').addEventListener('submit', function(event) {
-    event.preventDefault();
 
-    alert("회원가입이 완료되었습니다");
 
-    //로그인창으로 이동
-    window.location.href = "/login/index/index.html"; 
-  });
+    const signupButton = document.querySelector("#signup--button");
+    signupButton.addEventListener("click", ()=>{
+        const id = document.querySelector("#id");
+        const password = document.querySelector("#password");
+        const name = document.querySelector("#name");
+        const phoneNumber = document.querySelector("#phone-number");
+        const email = document.querySelector("#email");
+
+        fetch("/user/join", {
+            method: 'post',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body : JSON.stringify({
+                id : `${id.value}`,
+                password : `${password.value}`,
+                name : `${name.value}`,
+                password : `${password.value}`,
+                phoneNumber : `${phoneNumber.value}`,
+                email : `${email.value}`
+            })
+        })
+        .then(response => {
+            if (response.ok) {
+                alert("회원가입이 완료되었습니다.");
+                window.location.href = "/community/retrieve";
+            } else {
+                alert("아이디가 중복됩니다.");
+            }
+        });
+    });
 });
