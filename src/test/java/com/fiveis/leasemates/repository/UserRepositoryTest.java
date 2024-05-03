@@ -1,6 +1,7 @@
 package com.fiveis.leasemates.repository;
 
 import com.fiveis.leasemates.domain.vo.UserVO;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,23 +15,24 @@ class UserRepositoryTest {
     UserRepository userRepository;
 
     @Test
-    void findById() {
-        Optional<UserVO> userVO = userRepository.findById("hong12");
-        System.out.println("user = " + userVO.get());
+    @DisplayName("유저 생성")
+    void createUser() {
+        UserVO userVO = UserVO.builder()
+                .userNo("uuidtest1")
+                .id("hong12")
+                .password("1234")
+                .name("test다")
+                .email("hong@naver.com")
+                .phoneNumber("010-1111-2222")
+                .createdAt(LocalDate.now()).build();
+
+        userRepository.createUser(userVO);
     }
 
     @Test
-    void createUser() {
-        UserVO userVO = new UserVO(
-                "uuidtest",
-                "hong12",
-                "1234",
-                "홍길동입니다",
-                "hong@naver.com",
-                "010-1111-2222",
-                LocalDate.now()
-        );
-
-        userRepository.createUser(userVO);
+    @DisplayName("유저 검색")
+    void findById() {
+        Optional<UserVO> userVO = userRepository.findById("uuidtest");
+        System.out.println("user = " + userVO.get());
     }
 }

@@ -30,8 +30,15 @@ public class UserServiceImpl implements UserService {
 
         //통과되었다면 객체에 담아 저장
         UUID uuid = UUID.randomUUID();
-        userVO.setUserNo(String.valueOf(uuid));
-        userVO.setCreatedAt(LocalDate.now());
+
+        UserVO newUser = UserVO.builder()
+                .userNo(uuid.toString())
+                .id(foundUser.get().getId())
+                .name(foundUser.get().getName())
+                .password(foundUser.get().getPassword())
+                .email(foundUser.get().getEmail())
+                .phoneNumber(foundUser.get().getPhoneNumber())
+                .createdAt(LocalDate.now()).build();
 
         userRepository.createUser(userVO);
 

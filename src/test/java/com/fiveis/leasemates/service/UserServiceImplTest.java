@@ -7,23 +7,23 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDate;
+
 @SpringBootTest
 class UserServiceTest {
     @Autowired
     UserService userService;
-    UserVO userVO = new UserVO();
-
-    @BeforeEach
-    void setUp() {
-        userVO.setId("test1");
-        userVO.setName("test입니다");
-        userVO.setPassword("1234");
-        userVO.setEmail("test@gmail.com");
-        userVO.setPhoneNumber("010-1111-1111");
-    }
 
     @Test
     void join() {
+        UserVO userVO = UserVO.builder()
+                .id("test1")
+                .name("test입니다")
+                .password("1234")
+                .email("hong@naver.com")
+                .phoneNumber("010-1111-2222")
+                .createdAt(LocalDate.now()).build();
+
         Boolean join = userService.join(userVO);
         System.out.println("join = " + join);
     }

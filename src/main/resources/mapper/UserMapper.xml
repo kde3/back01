@@ -3,11 +3,11 @@
 <mapper namespace="com.fiveis.leasemates.repository.UserRepository">
     <select id="findById" parameterType="String" resultType="UserVO">
         SELECT * FROM tbl_user
-        where id = #{id}
+        where user_no = #{userNo}
     </select>
 
     <insert id="createUser" parameterType="UserVO">
-        insert into tbl_user
+        insert into tbl_user(user_no, id, password, name, email, phone_number, created_at)
         values(#{userNo}, #{id}, #{password}, #{name}, #{email}, #{phoneNumber}, #{createdAt})
     </insert>
 </mapper>
