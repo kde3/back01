@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
                 .phoneNumber(foundUser.get().getPhoneNumber())
                 .createdAt(LocalDate.now()).build();
 
-        userRepository.createUser(userVO);
+        userRepository.createUser(newUser);
 
         return true;
     }
