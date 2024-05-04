@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
     public Boolean join(UserVO userVO) {
         // 중복불가 필드 검사
         //아이디 조회해서 검색되면 탈락
-        Optional<UserVO> foundUser = userRepository.findById(userVO.getId());
+        Optional<UserVO> foundUser = userRepository.findByUserId(userVO.getId());
 
         if(foundUser.isPresent()) {
             return false;
@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
      */
     public Boolean logIn(LogInDTO logInDTO) {
         // 아이디와 비번 받아오면 검사
-        Optional<UserVO> foundUser = userRepository.findById(logInDTO.getId());
+        Optional<UserVO> foundUser = userRepository.findByUserId(logInDTO.getId());
 
         if(foundUser.isPresent() && foundUser.get().getPassword().equals(logInDTO.getPassword())) {
             return true;

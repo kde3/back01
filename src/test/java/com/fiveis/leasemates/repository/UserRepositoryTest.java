@@ -1,9 +1,11 @@
 package com.fiveis.leasemates.repository;
 
 import com.fiveis.leasemates.domain.vo.UserVO;
+import com.fiveis.leasemates.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
@@ -32,7 +34,7 @@ class UserRepositoryTest {
     @Test
     @DisplayName("유저 검색")
     void findById() {
-        Optional<UserVO> userVO = userRepository.findById("uuidtest");
+        Optional<UserVO> userVO = userRepository.findByUserId("test1");
         System.out.println("user = " + userVO.get());
     }
 }

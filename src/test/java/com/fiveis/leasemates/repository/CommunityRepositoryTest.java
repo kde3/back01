@@ -3,6 +3,7 @@ package com.fiveis.leasemates.repository;
 import com.fiveis.leasemates.domain.vo.CmtVO;
 import com.fiveis.leasemates.domain.vo.LikeVO;
 import com.fiveis.leasemates.domain.vo.PostVO;
+import com.fiveis.leasemates.repository.CommunityRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class CommunityRepositoryTest {
     @Autowired
-    private CommunityRepository communityRepository;
+    CommunityRepository communityRepository;
 
     /**
      * 게시물 관련 기능
@@ -99,7 +100,7 @@ class CommunityRepositoryTest {
     @Test
     @DisplayName("한 게시물의 댓글들 조회")
     void findCmtAll() {
-        List<CmtVO> cmts = communityRepository.findCmtAll();
+        List<CmtVO> cmts = communityRepository.findCmtAll(1L);
 
         for(CmtVO cmt : cmts) {
             System.out.println("cmt = " + cmt);
@@ -133,6 +134,12 @@ class CommunityRepositoryTest {
         communityRepository.deleteCmtById(1L);
     }
 
+    @Test
+    @DisplayName("댓글 카운트 해서 post 테이블에 업데이트")
+    void updateCmtCnt() {
+        communityRepository.updateCmtCnt(1L);
+    }
+
     /**
      * 좋아요 관련 테스트
      */
@@ -158,8 +165,8 @@ class CommunityRepositoryTest {
     @DisplayName("좋아요 하기")
     void createLike() {
         LikeVO likeVO = LikeVO.builder()
-                .postNo(3L)
-                .userNo("uuidtest")
+                .postNo(4L)
+                .userNo("uuidtest1")
                 .build();
 
         communityRepository.createLike(likeVO);

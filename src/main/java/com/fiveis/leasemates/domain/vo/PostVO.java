@@ -16,4 +16,5 @@ public class PostVO {
     private LocalDateTime updatedAt;
     private String isUpdated;
     private int likeCnt;
+    private int cmtCnt;
 }

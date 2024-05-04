@@ -8,12 +8,12 @@
     </select>
 
     <insert id="createPost" parameterType="PostVO">
-        insert into tbl_community_post (post_no , user_no ,title, updated_at, is_updated, content, like_cnt)
-        values(#{postNo}, #{userNo}, #{title}, #{updatedAt}, 'N', #{title}, 0)
+        insert into tbl_community_post (post_no , user_no ,title, updated_at, is_updated, content, like_cnt, cmt_cnt)
+        values(#{postNo}, #{userNo}, #{title}, #{updatedAt}, 'N', #{title}, 0, 0)
     </insert>
 
     <select id="findPostAll" resultType="PostVO">
-        SELECT * FROM tbl_community_post
+        SELECT * FROM tbl_community_post order by updated_at desc
     </select>
 
     <select id="findPostById" parameterType="Long" resultType="PostVO">
@@ -43,8 +43,10 @@
         values(#{cmtNo}, #{postNo}, #{userNo}, #{content}, #{updatedAt}, 'N')
     </insert>
 
-    <select id="findCmtAll" resultType="CmtVO">
+    <select id="findCmtAll" parameterType="Long" resultType="CmtVO">
         SELECT * FROM tbl_community_comment
+        where post_no = #{postNo}
+        order by updated_at desc
     </select>
 
     <select id="findCmtById" parameterType="Long" resultType="CmtVO">
@@ -63,6 +65,13 @@
         where cmt_no = #{cmtNo}
     </delete>
 
+    <!--    댓글 개수 카운트해서 post 테이블에 업데이트-->
+    <update id="updateCmtCnt" parameterType="Long">
+        update tbl_community_post
+        set cmt_cnt = (select count(*) from tbl_community_comment where post_no = #{postNo})
+        where post_no = (select post_no from tbl_community_comment where cmt_no = #{cmtNo})
+    </update>
+
 <!--    좋아요-->
 
 <!--    좋아요 했는지 판단 위함-->
@@ -74,7 +83,7 @@
 <!--    좋아요 개수 카운트해서 post 테이블에 업데이트-->
     <update id="updateLikeCnt" parameterType="Long">
         update tbl_community_post
-        set like_cnt = (select count(*) as cnt_like from tbl_community_like where post_no = #{postNo})
+        set like_cnt = (select count(*) from tbl_community_like where post_no = #{postNo})
         where post_no = #{postNo}
     </update>
 

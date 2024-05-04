@@ -4,6 +4,7 @@ import com.fiveis.leasemates.domain.vo.CmtVO;
 import com.fiveis.leasemates.domain.vo.LikeVO;
 import com.fiveis.leasemates.domain.vo.PostVO;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,13 +33,15 @@ public interface CommunityRepository {
 
     void createCmt(CmtVO cmtVO);
 
-    List<CmtVO> findCmtAll();
+    List<CmtVO> findCmtAll(Long postNo);
 
     Optional<CmtVO> findCmtById(Long cmtNo);
 
     void updateCmt(CmtVO cmtVO);
 
     void deleteCmtById(Long cmtNo);
+
+    void updateCmtCnt(Long cmtNo);
 
     /**
      * 좋아요 관련 기능
