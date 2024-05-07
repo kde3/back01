@@ -36,7 +36,7 @@ loginButton.addEventListener("click", ()=> {
         })
         .then(response => {
             if (response.ok) {
-                window.location.href = "/community/retrieve";
+                window.location.href = "/community/";
 
             } else if (response.status === 401) {
                 const checkIdAndPw = document.querySelector("#checkIdAndPw");

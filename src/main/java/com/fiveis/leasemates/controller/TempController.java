@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * header와  footer를 보여주기 위함
+ * header와  footer, banner를 보여주기 위함
  */
 
 @Controller
@@ -25,5 +25,10 @@ public class TempController {
     @GetMapping("/footer")
     String footer() {
         return "/temp/footer";
+    }
+
+    @GetMapping("/banner")
+    String banner() {
+        return "/temp/main_banner/b";
     }
 }

@@ -15,7 +15,7 @@ items.push(`
   <div class="post">
     <div class="post--title">
       <span class="material-symbols-outlined picture_icon">image</span>
-      <a href="/commu/post/detail/detail.html"><span class="post--title-name">아파트 실거래가 조회 방법</span></a>
+      <span class="post--title-name">아파트 실거래가 조회 방법</span>
     </div>
 
       <div class="post--like">
@@ -56,6 +56,15 @@ function displayItems() {
   const displayedItems = items.slice(startIndex, endIndex);
 
   content.innerHTML = displayedItems.join('');
+
+//   제목 클릭했을 때 요청보내야 함.
+  const postTitleNames = document.querySelectorAll(".post"); //post--title-name
+  postTitleNames.forEach(postTitleName => {
+    postTitleName.addEventListener("click", () => {
+      window.location.href = `/community/${4}`;
+    });
+  });
+
 }
 
 function createPaginationButtons() {
