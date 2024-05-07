@@ -1,6 +1,7 @@
 package com.fiveis.leasemates.controller;
 
 import com.fiveis.leasemates.domain.dto.PostDetailDTO;
+import com.fiveis.leasemates.domain.vo.CmtVO;
 import com.fiveis.leasemates.domain.vo.LikeVO;
 import com.fiveis.leasemates.service.CommunityService;
 import jakarta.websocket.server.PathParam;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -64,7 +66,7 @@ public class CommunityController {
      *  좋아요 하기
      */
     @PostMapping("/{postNo}/like")
-    public ResponseEntity<String> createlike(@PathVariable("postNo") Long postNo) {
+    public ResponseEntity<String> createLike(@PathVariable("postNo") Long postNo) {
         String userNo = "uuidtest1";
 
         LikeVO likeVO = LikeVO.builder()
@@ -81,7 +83,7 @@ public class CommunityController {
      *  좋아요 취소
      */
     @DeleteMapping("/{postNo}/like")
-    public ResponseEntity<String> deletelike(@PathVariable("postNo") Long postNo) {
+    public ResponseEntity<String> deleteLike(@PathVariable("postNo") Long postNo) {
         String userNo = "uuidtest1";
 
         LikeVO likeVO = LikeVO.builder()
@@ -92,5 +94,36 @@ public class CommunityController {
         communityService.deleteLike(likeVO);
 
         return ResponseEntity.status(HttpStatus.OK).body("좋아요 취소");
+    }
+
+
+    /**
+     * 댓글 보기
+     * http://localhost:10000/community/4/cmt
+     *
+     */
+    @GetMapping("/{postNo}/cmt")
+    @ResponseBody
+    public ResponseEntity<List<CmtVO>> cmtView(@PathVariable("postNo") Long postNo) {
+        List<CmtVO> cmtVOs = communityService.findCmtAll(postNo);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(cmtVOs);
+    }
+
+    /**
+     * 댓글 추가
+     * /community/{postId}/cmt
+     */
+    @PostMapping("/{postNo}/cmt")
+    public ResponseEntity<List<CmtVO>> createCmt(@PathVariable("postNo") Long postNo, @RequestBody CmtVO cmtVO) {
+        CmtVO newCmt = CmtVO.builder()
+                .postNo(postNo)
+                .userNo(cmtVO.getUserNo())
+                .content(cmtVO.getContent())
+                .build();
+
+        List<CmtVO> cmtVOs = communityService.createCmt(newCmt);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(cmtVOs);
     }
 }

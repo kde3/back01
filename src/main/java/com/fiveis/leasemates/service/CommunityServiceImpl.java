@@ -58,24 +58,36 @@ public class CommunityServiceImpl implements CommunityService {
     }
 
     /**
+     * 커뮤니티 댓글 목록 보기
+     */
+    @Override
+    public List<CmtVO> findCmtAll(Long postNo) {
+        List<CmtVO> cmtAll = communityRepository.findCmtAll(postNo);
+
+        return cmtAll;
+    }
+
+    /**
      * 커뮤니티 댓글 추가
-     * @param postId, cmtVO
+     * @param cmtVO
      * @return cmtNo : 생성된 댓글의 번호
      */
     @Override
-    public Long createCmt(Long postId, CmtVO cmtVO) {
+    public List<CmtVO> createCmt(CmtVO cmtVO) {
         Long cmtNo = communityRepository.getCmtNo();
+
         CmtVO newCmt = CmtVO.builder()
                 .cmtNo(cmtNo)
-                .postNo(postId)
+                .postNo(cmtVO.getPostNo())
                 .userNo(cmtVO.getUserNo())
                 .updatedAt(LocalDateTime.now())
                 .content(cmtVO.getContent())
                 .build();
 
         communityRepository.createCmt(newCmt);
+        List<CmtVO> cmtAll = communityRepository.findCmtAll(newCmt.getPostNo());
 
-        return cmtNo;
+        return cmtAll;
     }
 
     /**
