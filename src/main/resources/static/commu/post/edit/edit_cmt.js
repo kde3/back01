@@ -52,6 +52,7 @@ function createCmt(commentInput) {
                 <button class="card-delete-btn">삭제하기</button>
                 <button class="card-complete_update-btn">수정완료</button>
             </div>
+        </div>
     </div>
     `;
 

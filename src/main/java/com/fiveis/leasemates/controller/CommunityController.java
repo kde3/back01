@@ -63,6 +63,25 @@ public class CommunityController {
     }
 
     /**
+     * 게시글 상세페이지(댓글 수정, 삭제되는 상세페이지)
+     * http://localhost:10000/community/1
+     * @return
+     */
+    @GetMapping("/UpdateCmt/{postNo}")
+    @ResponseBody
+    public ModelAndView postDetailView_UpdateCmt(@PathVariable("postNo") Long postNo) {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("commu/post/edit_test/detail");
+
+        String userNo = "uuidtest1";     //유저 고유 넘버(임시)
+
+        PostDetailDTO postDetail = communityService.getPostDetail(postNo, userNo);
+        mv.addObject(postDetail);
+
+        return mv;
+    }
+
+    /**
      *  좋아요 하기
      */
     @PostMapping("/{postNo}/like")
@@ -100,7 +119,6 @@ public class CommunityController {
     /**
      * 댓글 보기
      * http://localhost:10000/community/4/cmt
-     *
      */
     @GetMapping("/{postNo}/cmt")
     @ResponseBody
@@ -125,5 +143,37 @@ public class CommunityController {
         List<CmtVO> cmtVOs = communityService.createCmt(newCmt);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(cmtVOs);
+    }
+
+
+    /**
+     * 댓글 수정
+     * /community/{postId}?cmtNo=1
+     */
+    @PutMapping("/{postNo}")
+    public ResponseEntity<String> updateCmt(@PathVariable("postNo") Long postNo,
+                                                 @RequestParam(value = "cmtNo", required = true) Long cmtNo,
+                                                 @RequestBody CmtVO cmtVO) {
+        CmtVO updatedCmt = CmtVO.builder()
+                .cmtNo(cmtNo)
+                .content(cmtVO.getContent())
+                .build();
+
+        communityService.updateCmt(updatedCmt);
+
+        return ResponseEntity.status(HttpStatus.OK).body("댓글이 수정되었습니다.");
+    }
+
+    /**
+     * 댓글 삭제
+     * /community/{postId}?cmtNo=1
+     */
+    @DeleteMapping("/{postNo}")
+    public ResponseEntity<String> deleteCmt(@PathVariable("postNo") Long postNo,
+                                            @RequestParam(value = "cmtNo", required = true) Long cmtNo) {
+
+        communityService.deleteCmt(cmtNo);
+
+        return ResponseEntity.status(HttpStatus.OK).body("댓글이 삭제되었습니다.");
     }
 }
