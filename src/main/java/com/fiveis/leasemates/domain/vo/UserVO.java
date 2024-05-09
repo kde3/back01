@@ -9,9 +9,10 @@ import java.time.LocalDate;
 @AllArgsConstructor @Builder
 @EqualsAndHashCode
 public class UserVO {
-    private String userNo;          //임시로 String. UUID로 타입 바꿔야.
+    private String userNo;
     private String id;
     private String password;
+    private String role;
     private String name;
     private String email;
     private String phoneNumber;
