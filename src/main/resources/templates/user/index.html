@@ -6,8 +6,8 @@
     <title>LeaseMates: 임차인들을 위한 정보공유공간</title>
     <link rel="icon" href="/img/favicon.ico">
     
-    <link rel="stylesheet" href="./index.css">
-    <script defer src="./index.js"></script>
+<!--    <link rel="stylesheet" href="./index.css">-->
+<!--    <script defer src="./index.js"></script>-->
 
     <script type="module" src="/temp/header/after_login/add.js"></script>
     <script type="module" src="/temp/footer/add.js"></script>
@@ -19,9 +19,7 @@
     <div class="outer">
         <div class="inner">
             <div class="index-container">
-                <!-- <img src="../../../img/user/profile/index/human.webp" alt="#" class="user-photo"> -->
                 <div class="userVO-email">홍길동 님</div>
-                <!-- <button class="user-button">프로필 수정</button> -->
             </div>
 
             <div class="index-button">
@@ -57,7 +55,10 @@
                   </tr>
                   
                 </table>
-                <button class="logout-button" onclick="logout()">로그아웃</button>
+                <form method="POST" action="/user/logout">
+<!--                    <form method="POST" th:action="@{/user/logout}">-->
+                    <button class="logout-button">로그아웃</button>
+                </form>
             </div>
         </div>
     </div>

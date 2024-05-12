@@ -7,7 +7,8 @@ fetch("/temp/header/after_login")                        // 받아올 html 파�
       const doc = parser.parseFromString(html, 'text/html');
       const content = doc.querySelector('header');                            // 삽입할 컨텐츠 선택
 
-      document.getElementById('header-placeholder').appendChild(content);     // 원하는 곳에 컨텐츠 삽입
+        document.getElementById('header-after').appendChild(content);
+          // document.getElementById('header-placeholder').appendChild(content);     // 원하는 곳에 컨텐츠 삽입
 
       new Load(doc);                                                          // css, js 파일 로드
     })

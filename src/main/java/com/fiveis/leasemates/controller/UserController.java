@@ -31,6 +31,11 @@ public class UserController {
         return "login/regist";
     }
 
+    @GetMapping("/info")
+    String userInfoView() {
+        return "user/index";
+    }
+
 
     /**
      * 회원가입 기능
@@ -54,23 +59,32 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
     }
 
-
     /**
-     * 로그인 기능
+     * 로그아웃
+     * @return
      */
-    @ResponseBody
-    @PostMapping("/login")
-    ResponseEntity<Map> logIn(@RequestBody LogInDTO logInDTO) {
-        Map<String, String> response = new HashMap<>();
-
-        Boolean result = userService.logIn(logInDTO);
-        if(result) {
-            response.put("message", "로그인 성공");
-            return ResponseEntity.ok(response);
-        }
-
-        response.put("message", "로그인 실패");
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+    @PostMapping("/logout")
+    public String logout() {
+        return "redirect:/community/";
     }
+
+
+//    /**
+//     * 로그인 기능
+//     */
+//    @ResponseBody
+//    @PostMapping("/login")
+//    ResponseEntity<Map> logIn(@RequestBody LogInDTO logInDTO) {
+//        Map<String, String> response = new HashMap<>();
+//
+//        Boolean result = userService.logIn(logInDTO);
+//        if(result) {
+//            response.put("message", "로그인 성공");
+//            return ResponseEntity.ok(response);
+//        }
+//
+//        response.put("message", "로그인 실패");
+//        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+//    }
 
 }

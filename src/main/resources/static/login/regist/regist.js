@@ -106,7 +106,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 id : `${id.value}`,
                 password : `${password.value}`,
                 name : `${name.value}`,
-                password : `${password.value}`,
                 phoneNumber : `${phoneNumber.value}`,
                 email : `${email.value}`
             })
@@ -114,7 +113,7 @@ document.addEventListener("DOMContentLoaded", function() {
         .then(response => {
             if (response.ok) {
                 alert("회원가입이 완료되었습니다.");
-                window.location.href = "/community/retrieve";
+                // window.location.href = "/community/retrieve";
             } else {
                 alert("아이디가 중복됩니다.");
             }

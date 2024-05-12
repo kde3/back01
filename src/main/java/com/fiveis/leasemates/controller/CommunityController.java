@@ -36,10 +36,15 @@ public class CommunityController {
      * http://localhost:10000/community/
      * @return
      */
+//    @GetMapping("/")
+//    public String mainAfterLoginView() {
+//        return "commu/index/after/after";
+//    }
     @GetMapping("/")
     public String mainAfterLoginView() {
-        return "commu/index/after/after";
+        return "commu/index";
     }
+
 
     /**
      * 게시글 상세페이지

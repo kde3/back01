@@ -13,6 +13,8 @@ const password = document.querySelector('#password');
 
 const loginButton = document.querySelector(".login--button");
 loginButton.addEventListener("click", ()=> {
+    console.log("클릭됨");
+
     const idResult = document.querySelector('#idResult');
     const pwResult = document.querySelector('#pwResult');
 
@@ -36,6 +38,7 @@ loginButton.addEventListener("click", ()=> {
         })
         .then(response => {
             if (response.ok) {
+                console.log("로그인 성공");
                 window.location.href = "/community/";
 
             } else if (response.status === 401) {

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,8 +22,8 @@
             <span class="material-symbols-outlined">search</span>
             <input type="text" placeholder="관심있는 내용을 검색해 보세요!">
           </div>
-          <!-- <a href="#"><div class="header--right-login e">홍길동 님</div></a> -->
-          <a href="/userVO/profile/index/index.html"><div class="header--right-userVO">홍길동 님</div></a>
+
+          <a th:href="@{/user/info}"><div class="header--right-userVO">홍길동 님</div></a>
         </div>
       </div>
     </div>
