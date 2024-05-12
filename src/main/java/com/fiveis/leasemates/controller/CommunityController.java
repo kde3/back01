@@ -4,7 +4,6 @@ import com.fiveis.leasemates.domain.dto.PostDetailDTO;
 import com.fiveis.leasemates.domain.vo.CmtVO;
 import com.fiveis.leasemates.domain.vo.LikeVO;
 import com.fiveis.leasemates.service.CommunityService;
-import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/community")
@@ -21,28 +19,9 @@ import java.util.Map;
 public class CommunityController {
     private final CommunityService communityService;
 
-    /**
-     * 메인화면(로그인 전)
-     * http://localhost:10000/community/
-     * @return
-     */
-//    @GetMapping("/")
-//    public String mainBeforeLoginView() {
-//        return "commu/index/before/before";
-//    }
-
-    /**
-     * 메인화면(로그인 후)
-     * http://localhost:10000/community/
-     * @return
-     */
-//    @GetMapping("/")
-//    public String mainAfterLoginView() {
-//        return "commu/index/after/after";
-//    }
     @GetMapping("/")
-    public String mainAfterLoginView() {
-        return "commu/index";
+    public String mainView() {
+        return "community/main";
     }
 
 

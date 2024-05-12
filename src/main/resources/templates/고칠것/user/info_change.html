@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeaseMates: 임차인들을 위한 정보공유공간</title>
+    <link rel="icon" href="/img/favicon.ico">
+    
+    <link rel="stylesheet" href="./info_change.css">
+    <script defer src="info_change.js"></script>
+
+    <script type="module" src="/고칠것/temp/header/after_login/add.js"></script>
+    <script type="module" src="/고칠것/temp/footer/add.js"></script>
+  </head>
+  <body>
+    <div id="header-placeholder"></div>
+        <main>
+          <div class="outer">
+              <div class="inner">
+                  <div class="info-change">
+                      <!-- <img src="../../../img/user/info_change/human.webp" alt="#" class="user-photo"> -->
+                      <div class="userVO-email">홍길동 님</div>
+                      <!-- <button class="user-button">프로필 수정</button> -->
+                  </div>
+  
+                  <div class="info-change-button">
+                      <a href=".././../index/index.html"><div class="main--profile">프로필</div></a>
+                      <a href="../../../list/list.html"><div class="maim--post">작성게시글</div></a>
+                      <a href="../info_change/info_change.html"><div class="maim--change">내 정보변경</div></a>
+                      <a href="../pw/pw.html"><div class="maim--pwdchang">비밀번호 변경</div></a>
+                      <a href="#" onclick="alert('준비중입니다')"><div class="maim--note">쪽지함</div></a>
+                  </div>
+  
+                  <div class="userVO-profile">
+                      <table>
+                        <tr>
+                          <th>이름</th>
+                          <td><input type="text" class="userVO-profiled-name" placeholder="이름 입력"></td>
+                          <td class="profile-name hide">이름을 입력해주세요</td>
+                        </tr>
+                        <tr>
+                          <th>아이디</th>
+                          <td><input type="text" class="userVO-profiled-id"  placeholder="아이디 입력"></td>
+                          <td class="profile-id hide">아이디를 입력해주세요</td>
+                        </tr>
+                        <tr>
+                          <th>이메일</th>
+                          <td><input type="email" class="userVO-profile-email"  placeholder="이메일 입력"></td>
+                          <td class="profile-email hide">이메일를 입력해주세요</td>
+                        </tr>
+                        <tr>
+                          <th>전화번호</th>
+                          <td><input type="tel" class="userVO-profiled-phone" placeholder="전화번호 입력"></td>
+                          <td class="profile-phone hide">전화번호를 입력해주세요</td>
+                        </tr>
+                        <!-- <tr>
+                          <th>주소</th>
+                          <td><input type="text" class="user-profiled-address" placeholder="주소 입력"></td>
+                          <td class="profile-address hide">주소를 입력해주세요</td>
+                        </tr> -->
+                      </table>
+                      <div class="chang-delete">
+                        <button class="delete-button" onclick="deleteSuccess()">계정 탈퇴</button>
+                        <button class="chang-button" onclick="correctButton()">수정 하기</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </main>
+        <div id="footer-placeholder"></div>
+  </body>
+  </html>

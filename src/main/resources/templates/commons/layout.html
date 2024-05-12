@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <th:block th:replace="~{commons/style_js :: style_js}"></th:block>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeaseMates: 임차인들을 위한 정보공유공간</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div layout:fragment="content"></div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>
