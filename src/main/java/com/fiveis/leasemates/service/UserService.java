@@ -8,7 +8,4 @@ import org.springframework.stereotype.Service;
 public interface UserService {
     //회원가입
     Boolean join(UserVO userVO);
-
-    //로그인
-    Boolean logIn(LogInDTO logInDTO);
 }

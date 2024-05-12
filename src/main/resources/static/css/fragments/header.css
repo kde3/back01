@@ -1,6 +1,6 @@
 header {
     /* fixed 속성 주는 바람에 헤더와 main이 겹쳐지는데 방지하기 위함 */
-    height: 60px;
+    height: 61px;
 }
 
 header .outer {
@@ -33,7 +33,6 @@ header .inner {
 .header--right .e {
     margin-left: 15px;
 }
-
 
 .header--left-logo {
     /* font-family: "Bebas Neue"; */

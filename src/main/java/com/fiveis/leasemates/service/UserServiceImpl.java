@@ -1,11 +1,9 @@
 package com.fiveis.leasemates.service;
 
-import com.fiveis.leasemates.domain.dto.LogInDTO;
 import com.fiveis.leasemates.domain.vo.UserVO;
 import com.fiveis.leasemates.repository.UserRepository;
 import com.fiveis.leasemates.security.Role;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -32,7 +30,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         Optional<UserVO> foundUser = userRepository.findByUserId(userVO.getId());
 
         if(foundUser.isPresent()) {
-            System.out.println("아이디가 있다");
+            System.out.println("아이디 중복");
             return false;
         }
 
@@ -53,21 +51,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userRepository.createUser(newUser);
 
         return true;
-    }
-
-
-    /**
-     * 로그인
-     */
-    public Boolean logIn(LogInDTO logInDTO) {
-        // 아이디와 비번 받아오면 검사
-        Optional<UserVO> foundUser = userRepository.findByUserId(logInDTO.getId());
-
-        if(foundUser.isPresent() && foundUser.get().getPassword().equals(logInDTO.getPassword())) {
-            return true;
-        }
-
-        return false;
     }
 
     @Override

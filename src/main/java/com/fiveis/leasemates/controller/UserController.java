@@ -18,45 +18,26 @@ import java.util.Map;
 public class UserController {
     private final UserService userService;
 
-    /**
-     * 페이지 전달
-     */
     @GetMapping("/login")
-    String logInView() {
-        return "login/login";
-    }
+    public void login() {}
 
     @GetMapping("/join")
-    String joinView() {
-        return "login/regist";
-    }
+    public void join() {}
 
-    @GetMapping("/info")
-    String userInfoView() {
-        return "user/index";
-    }
+//    @GetMapping("/info")
+//    String userInfoView() {
+//        return "user/index";
+//    }
 
 
     /**
      * 회원가입 기능
      */
-    @ResponseBody
     @PostMapping("/join")
-    ResponseEntity<Map> join(@RequestBody UserVO userVO) {
-        Map<String, String> response = new HashMap<>();
-
-        System.out.println("userVO : " + userVO);
-
+    String join(UserVO userVO) {
         Boolean result = userService.join(userVO);
 
-
-        if(result) {
-            response.put("message", "회원가입 성공");
-            return ResponseEntity.status(HttpStatus.CREATED).body(response);
-        }
-
-        response.put("message", "회원가입 실패");
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+        return "redirect:/";
     }
 
     /**
@@ -67,24 +48,4 @@ public class UserController {
     public String logout() {
         return "redirect:/community/";
     }
-
-
-//    /**
-//     * 로그인 기능
-//     */
-//    @ResponseBody
-//    @PostMapping("/login")
-//    ResponseEntity<Map> logIn(@RequestBody LogInDTO logInDTO) {
-//        Map<String, String> response = new HashMap<>();
-//
-//        Boolean result = userService.logIn(logInDTO);
-//        if(result) {
-//            response.put("message", "로그인 성공");
-//            return ResponseEntity.ok(response);
-//        }
-//
-//        response.put("message", "로그인 실패");
-//        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
-//    }
-
 }
