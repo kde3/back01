@@ -1,7 +1,9 @@
 package com.fiveis.leasemates.service;
 
+import com.fiveis.leasemates.domain.dto.JoinDTO;
 import com.fiveis.leasemates.domain.vo.UserVO;
 import com.fiveis.leasemates.repository.UserRepository;
+import com.fiveis.leasemates.security.CustomUserDetails;
 import com.fiveis.leasemates.security.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
@@ -24,10 +26,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     /**
      * 회원가입
      */
-    public Boolean join(UserVO userVO) {
+    public Boolean join(JoinDTO joinDTO) {
         // 중복불가 필드 검사
         //아이디 조회해서 검색되면 탈락
-        Optional<UserVO> foundUser = userRepository.findByUserId(userVO.getId());
+        Optional<UserVO> foundUser = userRepository.findByUserId(joinDTO.getId());
 
         if(foundUser.isPresent()) {
             System.out.println("아이디 중복");
@@ -36,16 +38,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         //통과되었다면 객체에 담아 저장
         UUID uuid = UUID.randomUUID();
-        String encodePassword = bCryptPasswordEncoder.encode(userVO.getPassword());
+        String encodePassword = bCryptPasswordEncoder.encode(joinDTO.getPassword());
 
         UserVO newUser = UserVO.builder()
                 .userNo(uuid.toString())
-                .id(userVO.getId())
+                .id(joinDTO.getId())
                 .role(Role.USER.getKey())
-                .name(userVO.getName())
+                .name(joinDTO.getName())
                 .password(encodePassword)
-                .email(userVO.getEmail())
-                .phoneNumber(userVO.getPhoneNumber())
+                .email(joinDTO.getEmail())
+                .phoneNumber(joinDTO.getPhoneNumber())
                 .createdAt(LocalDate.now()).build();
 
         userRepository.createUser(newUser);
@@ -54,16 +56,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
+    public CustomUserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
+        UserVO userVO = userRepository.findByUserId(id).orElseThrow(() -> new UsernameNotFoundException("없는 유저입니다."));
+        return new CustomUserDetails(userVO);
 
-        UserVO userVO = userRepository.findByUserId(userId).orElseThrow(() -> new UsernameNotFoundException("없는 유저입니다."));
-
-        UserDetails userDetails = User.builder()
-                .username(userVO.getId())
-                .password(userVO.getPassword())
-                .roles(userVO.getRole())
-                .build();
-
-        return userDetails;
+//        UserVO userVO = userRepository.findByUserId(id).orElseThrow(() -> new UsernameNotFoundException("없는 유저입니다."));
+//
+//        UserDetails userDetails = User.builder()
+//                .username(userVO.getId())
+//                .password(userVO.getPassword())
+//                .roles(userVO.getRole())
+//                .build();
+//
+//        return userDetails;
     }
 }

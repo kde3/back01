@@ -105,3 +105,9 @@ header .inner {
 .header--right-signup {
     color: #332C5C;
 }
+
+.user_profile {
+    margin-left: 5px;
+    padding: 5px 8px;
+    border: 1px solid #8976FD;
+}

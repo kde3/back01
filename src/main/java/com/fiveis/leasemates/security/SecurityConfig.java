@@ -17,19 +17,20 @@ public class SecurityConfig {
         http.csrf((csrfConfig) -> csrfConfig.disable())
             .authorizeHttpRequests((authorize) ->
                     authorize
-                            .requestMatchers("/community/UpdateCmt/**", "/user/info/**").hasRole(Role.USER.getKey())
+                            .requestMatchers("/community/", "/user/join", "/user/login").permitAll()
+                            .requestMatchers("/user/info/**").hasRole(Role.USER.getKey())
                             .requestMatchers("/admin/**").hasRole(Role.ADMIN.getKey())
-                            .anyRequest().permitAll()
+                            .anyRequest().authenticated()
             )
             .formLogin((formLogin) ->
                     formLogin.loginPage("/user/login")
                             .usernameParameter("id")
                             .passwordParameter("password")
                             .loginProcessingUrl("/user/login")
-                            .defaultSuccessUrl("/community/")
+                            .defaultSuccessUrl("/community/", true)
             )
             .logout((logout) ->
-                    logout.logoutUrl("/logout")
+                    logout.logoutUrl("/user/logout")
                             .logoutSuccessUrl("/community/")
             );
 
@@ -43,7 +44,6 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer ignoringCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/commu/**", "/img/**",
-                "/login/**", "/temp/**","/user/**");
+        return (web) -> web.ignoring().requestMatchers( "/img/**", "/css/**", "/js/**");
     }
 }
