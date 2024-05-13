@@ -32,6 +32,9 @@ public class UserController {
     @GetMapping("/join")
     public void join() {}
 
+    @GetMapping("/join_terms")
+    public void joinTerms() {}
+
 //    @GetMapping("/info")
 //    String userInfoView() {
 //        return "user/index";

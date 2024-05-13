@@ -3,17 +3,79 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{commons/layout}">
+<head>
+    <link rel="stylesheet" th:href="@{/css/user/join.css}">
+    <script defer th:src="@{/js/user/join.js}"></script>
+</head>
 <body>
 <div layout:fragment="content">
-    <h1>회원가입</h1>
-    <form method="post" action="/user/join">
-        <input type="text" name="id" placeholder="아이디">
-        <input type="password" name="password" placeholder="비밀번호">
-        <input type="text" name="name" placeholder="이름">
-        <input type="text" name="email" placeholder="이메일">
-        <input type="text" name="phoneNumber" placeholder="전화번호">
-        <button type="submit">회원가입</button>
-    </form>
+<section class="signup_form">
+    <div class="outer">
+        <div class="inner">
+
+            <form method="post" action="/user/join">
+                <div class="signup-container">
+                    <div class="title">
+                        <h1>회원가입</h1>
+                        <h3>회원이 되어 다양한 후기 및 경험을 공유해 보세요!</h3>
+                    </div>
+
+                        <div class="signup-wrap">
+                            <fieldset>
+                                <legend>아이디</legend>
+                                <input type="text" id="id" name="id" placeholder="아이디 입력(6-20자, 영어 또는 숫자만 가능)" required />
+                            </fieldset>
+
+                            <div class="success-message hide">사용할 수 있는 아이디입니다</div>
+                            <div class="failure-message hide">아이디는 6-20글자이어야 합니다</div>
+                            <div class="failure-message2 hide">영어 또는 숫자만 가능합니다</div>
+
+                            <fieldset>
+                                <legend>비밀번호</legend>
+                                <input type="password" id="password" name="password" placeholder="비밀번호 입력(문자, 숫자, 특수문자 포함)" required/>
+                            </fieldset>
+
+                            <div class="strongPassword-message hide">8글자 이상, 영문, 숫자, 특수문자(@$!%*#?&)를 사용하세요</div>
+
+                            <fieldset>
+                                <legend>비밀번호 확인</legend>
+                                <input type="password" id="password-retype" placeholder="비밀번호 재확인" required />
+                            </fieldset>
+
+                            <div class="mismatch-message hide">비밀번호가 일치하지 않습니다</div>
+
+                            <fieldset>
+                                <legend>이름</legend>
+                                <input type="text" id="name" name="name" placeholder="이름 입력" required/>
+                            </fieldset>
+
+                            <fieldset>
+                                <legend>전화번호</legend>
+                                <input type="tel" id="phone-number" name="phoneNumber" placeholder="휴대폰 번호 입력('-'제외 11자리 입력)" required />
+                            </fieldset>
+
+                            <fieldset>
+                                <legend>이메일</legend>
+                                <input type="email" id="email" name="email" placeholder="이메일 입력" required />
+                            </fieldset>
+                        </div>
+
+                    <button id="signup--button" type="submit">가입하기</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!--        <h1>회원가입</h1>-->
+<!--        <form method="post" action="/user/join">-->
+<!--            <input type="text" name="id" placeholder="아이디">-->
+<!--            <input type="password" name="password" placeholder="비밀번호">-->
+<!--            <input type="text" name="name" placeholder="이름">-->
+<!--            <input type="text" name="email" placeholder="이메일">-->
+<!--            <input type="text" name="phoneNumber" placeholder="전화번호">-->
+<!--            <button type="submit">회원가입</button>-->
+<!--        </form>-->
 </div>
 </body>
 </html>

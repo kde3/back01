@@ -8,11 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LeaseMates: 임차인들을 위한 정보공유공간</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
 <div th:replace="~{fragments/header :: header}"></div>
 
-<div layout:fragment="content"></div>
+<main><div layout:fragment="content"></div></main>
 
 <div th:replace="~{fragments/footer :: footer}"></div>
 </body>
