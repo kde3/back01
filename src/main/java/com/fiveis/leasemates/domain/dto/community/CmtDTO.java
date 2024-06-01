@@ -1,12 +1,9 @@
 package com.fiveis.leasemates.domain.dto.community;
 
 import com.fiveis.leasemates.domain.vo.CmtVO;
-import com.fiveis.leasemates.domain.vo.PostVO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-import java.time.LocalDateTime;
 
 @Getter @Setter @ToString
 public class CmtDTO {
@@ -14,8 +11,8 @@ public class CmtDTO {
     private String userNo;
     private String userName;
     private String content;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private String createdAt;
+    private String updatedAt;
     private String isUpdated;
 
     public static CmtDTO from(CmtVO cmtVO) {

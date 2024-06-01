@@ -73,7 +73,8 @@ document.querySelectorAll(".card-update-btn")
 
     updateBtn.addEventListener("click", function() {
         let textarea = this.parentNode.parentNode.parentNode.querySelector("textarea");
-        textareaContent = textarea.textContent;
+        textareaContent = textarea.value;
+        console.log(textareaContent);
 
         textarea.removeAttribute("readonly");
         textarea.setAttribute("style", "outline:solid;");
@@ -119,9 +120,10 @@ document.querySelectorAll(".card-cancel_update-btn")
 
         completeUpdateBtn.addEventListener("click", function() {
             let textarea = this.parentNode.parentNode.parentNode.querySelector("textarea");
+            textarea.value = textareaContent;     //원래 있던 텍스트 복구 시킴.
             textarea.setAttribute("readonly", true);
             textarea.setAttribute("style", "outline:none;");
-            textarea.textContent = textareaContent;     //원래 있던 텍스트 복구 시킴.
+
 
             // 수정, 삭제 버튼 보이기
             this.parentNode.querySelector(".card-update-btn").setAttribute("style", "display: inline-block;");

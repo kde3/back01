@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Component
 @RequiredArgsConstructor
@@ -21,7 +22,6 @@ public class Post {
                     .userNo("f00586b2-e0d0-4a44-a05b-95177a752350")
                     .title("테스트 " + i)
                     .content("게시글 컨텐츠" + i)
-                    .createdAt(LocalDateTime.now())
                     .build();
 
             communityRepository.createDummyPost(postVO);
@@ -32,7 +32,6 @@ public class Post {
                     .postNo(1L)
                     .userNo("f00586b2-e0d0-4a44-a05b-95177a752350")
                     .content("게시글 컨텐츠" + i)
-                    .createdAt(LocalDateTime.now())
                     .build();
 
             communityRepository.createDummyCmt(cmtVO);

@@ -1,13 +1,10 @@
 package com.fiveis.leasemates.domain.dto.community;
 
-import com.fiveis.leasemates.domain.vo.CmtVO;
 import com.fiveis.leasemates.domain.vo.PostVO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Getter @Setter @ToString
@@ -17,8 +14,8 @@ public class PostDetailDTO {
     private String userName;            //작성자 닉네임
     private String title;
     private String content;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private String createdAt;
+    private String updatedAt;
     private String isUpdated;
     private Integer likeCnt = 0;
     private Integer CmtCnt = 0;

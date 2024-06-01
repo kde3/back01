@@ -31,7 +31,6 @@ class CommunityRepositoryTest {
                 .postNo(postNo)
                 .userNo("uuidtest")
                 .title("게시물 제목1")
-                .updatedAt(LocalDateTime.now())
                 .content("게시물 내용1")
                 .build();
 
@@ -81,7 +80,6 @@ class CommunityRepositoryTest {
         PostVO postVO = PostVO.builder()
                 .postNo(2L)
                 .title("게시물 제목 수정")
-                .updatedAt(LocalDateTime.now())
                 .content("게시물 내용 수정")
                 .build();
 
@@ -99,7 +97,6 @@ class CommunityRepositoryTest {
     /**
      * 댓글관련 기능
      */
-
     @Test
     @DisplayName("댓글 생성")
     void createCmt() {
@@ -109,7 +106,6 @@ class CommunityRepositoryTest {
                 .cmtNo(cmtNo)
                 .postNo(3L)
                 .userNo("uuidtest")
-                .updatedAt(LocalDateTime.now())
                 .content("댓글 내용")
                 .build();
 
@@ -166,7 +162,6 @@ class CommunityRepositoryTest {
     void updateCmt() {
         CmtVO cmtVO = CmtVO.builder()
                 .cmtNo(1L)
-                .updatedAt(LocalDateTime.now())
                 .content("댓글 내용 수정")
                 .build();
 

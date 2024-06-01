@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 .password(encodePassword)
                 .email(joinDTO.getEmail())
                 .phoneNumber(joinDTO.getPhoneNumber())
-                .createdAt(LocalDate.now()).build();
+                .build();
 
         userRepository.createUser(newUser);
 

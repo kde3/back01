@@ -26,7 +26,7 @@ class UserRepositoryTest {
                 .name("test다")
                 .email("hong@naver.com")
                 .phoneNumber("010-1111-2222")
-                .createdAt(LocalDate.now()).build();
+                .build();
 
         userRepository.createUser(userVO);
     }

@@ -18,6 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -115,7 +116,6 @@ public class CommunityServiceImpl implements CommunityService {
                 .cmtNo(cmtNo)
                 .postNo(cmtVO.getPostNo())
                 .userNo(cmtVO.getUserNo())
-                .createdAt(LocalDateTime.now())
                 .content(cmtVO.getContent())
                 .build();
 
@@ -134,7 +134,6 @@ public class CommunityServiceImpl implements CommunityService {
         CmtVO updatedCmtVO = CmtVO.builder()
                 .cmtNo(cmtVO.getCmtNo())
                 .content(cmtVO.getContent())
-                .updatedAt(LocalDateTime.now())
                 .build();
 
         communityRepository.updateCmt(updatedCmtVO);

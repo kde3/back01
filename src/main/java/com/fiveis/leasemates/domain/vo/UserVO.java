@@ -1,8 +1,6 @@
 package com.fiveis.leasemates.domain.vo;
 
 import lombok.*;
-import org.springframework.stereotype.Component;
-import java.time.LocalDate;
 
 @Getter @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -16,5 +14,5 @@ public class UserVO {
     private String name;
     private String email;
     private String phoneNumber;
-    private LocalDate createdAt;
+    private String createdAt;
 }

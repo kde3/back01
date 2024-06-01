@@ -4,12 +4,12 @@
 
     <insert id="createDummyPost" parameterType="PostVO">
         insert into TBL_COMMUNITY_POST (POST_NO, USER_NO, TITLE, CREATED_AT, UPDATED_AT, IS_UPDATED, CONTENT, LIKE_CNT, CMT_CNT)
-        values (SEQ_COMMUNITY_POST_NO.nextval, #{userNo}, #{title}, #{createdAt}, #{createdAt}, 'N', #{content}, 0, 0)
+        values (SEQ_COMMUNITY_POST_NO.nextval, #{userNo}, #{title}, to_char(sysdate, 'YYYY.MM.DD HH24:MI:SS'), to_char(sysdate, 'YYYY.MM.DD HH24:MI:SS'), 'N', #{content}, 0, 0)
     </insert>
 
     <insert id="createDummyCmt" parameterType="CmtVO">
         insert into TBL_COMMUNITY_COMMENT (CMT_NO, POST_NO, USER_NO, CONTENT, CREATED_AT, UPDATED_AT, IS_UPDATED)
-        values (SEQ_COMMUNITY_COMMENT_NO.nextval, #{postNo}, #{userNo}, #{content}, #{createdAt}, #{createdAt}, 'N')
+        values (SEQ_COMMUNITY_COMMENT_NO.nextval, #{postNo}, #{userNo}, #{content}, to_char(sysdate, 'YYYY.MM.DD HH24:MI:SS'), to_char(sysdate, 'YYYY.MM.DD HH24:MI:SS'), 'N')
     </insert>
 
     <select id="getPostNo" resultType="Long">
@@ -18,7 +18,7 @@
 
     <insert id="createPost" parameterType="PostVO">
         insert into tbl_community_post (post_no , user_no ,title, created_at, updated_at, is_updated, content, like_cnt)
-        values(#{postNo}, #{userNo}, #{title}, #{createdAt}, #{createdAt}, 'N', #{content}, 0)
+        values(#{postNo}, #{userNo}, #{title}, to_char(sysdate, 'YYYY.MM.DD HH24:MI:SS'), to_char(sysdate, 'YYYY.MM.DD HH24:MI:SS'), 'N', #{content}, 0)
     </insert>
 
     <select id="findPostAll" resultType="PostVO">
@@ -59,7 +59,7 @@
 
     <update id="updatePost" parameterType="PostVO">
         update tbl_community_post
-        set title = #{title, jdbcType=VARCHAR}, updated_at = SYSDATE, is_updated = 'Y', content = #{content, jdbcType=VARCHAR}
+        set title = #{title, jdbcType=VARCHAR}, updated_at = to_char(sysdate, 'YYYY.MM.DD HH24:MI:SS'), is_updated = 'Y', content = #{content, jdbcType=VARCHAR}
         where post_no = #{postNo, jdbcType=NUMERIC}
     </update>
 
@@ -70,7 +70,7 @@
 
     <update id="savePost" parameterType="PostVO">
         update tbl_community_post
-        set title = #{title, jdbcType=VARCHAR}, updated_at = SYSDATE, is_updated = 'Y', content = #{content, jdbcType=VARCHAR}
+        set title = #{title, jdbcType=VARCHAR}, updated_at = to_char(sysdate, 'YYYY.MM.DD HH24:MI:SS'), is_updated = 'Y', content = #{content, jdbcType=VARCHAR}
         where post_no = #{postNo, jdbcType=NUMERIC}
     </update>
 
@@ -81,7 +81,7 @@
 
     <insert id="createCmt" parameterType="CmtVO">
         insert into tbl_community_comment (cmt_no, post_no , user_no ,content, created_at, updated_at, is_updated)
-        values(#{cmtNo}, #{postNo}, #{userNo}, #{content}, #{createdAt}, #{createdAt}, 'N')
+        values(#{cmtNo}, #{postNo}, #{userNo}, #{content}, to_char(sysdate, 'YYYY.MM.DD HH24:MI:SS'), to_char(sysdate, 'YYYY.MM.DD HH24:MI:SS'), 'N')
     </insert>
 
     <select id="findCmtAll" parameterType="Long" resultType="CmtVO">
@@ -109,7 +109,7 @@
 
     <update id="updateCmt" parameterType="CmtVO">
         update tbl_community_comment
-        set content = #{content}, updated_at = #{updatedAt}, is_updated = 'Y'
+        set content = #{content}, updated_at = to_char(sysdate, 'YYYY.MM.DD HH24:MI:SS'), is_updated = 'Y'
         where cmt_no = #{cmtNo}
     </update>
 

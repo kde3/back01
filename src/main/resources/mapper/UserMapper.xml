@@ -13,6 +13,6 @@
 
     <insert id="createUser" parameterType="UserVO">
         insert into tbl_user(user_no, id, password, role, name, email, phone_number, created_at)
-        values(#{userNo}, #{id}, #{password}, #{role}, #{name}, #{email}, #{phoneNumber}, #{createdAt})
+        values(#{userNo}, #{id}, #{password}, #{role}, #{name}, #{email}, #{phoneNumber}, to_char(sysdate, 'YYYY.MM.DD HH24:MI:SS'))
     </insert>
 </mapper>

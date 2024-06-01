@@ -28,7 +28,7 @@ CREATE TABLE tbl_user (
     name            VARCHAR2(20)    NOT NULL,
     email           VARCHAR2(20)    NOT NULL,
     phone_number    VARCHAR2(20)    NOT NULL,
-    created_at      DATE    		NOT NULL,
+    created_at      VARCHAR2(20)   	NOT NULL,
     role            VARCHAR2(10)    NOT NULL
 );
 
@@ -36,8 +36,8 @@ CREATE TABLE tbl_community_post (
     post_no     NUMBER  			NOT NULL PRIMARY KEY,
     user_no     VARCHAR2(128)  		NOT NULL,
     title       VARCHAR2(30)    	NOT NULL,
-    created_at  TIMESTAMP   		NOT NULL,
-    updated_at  TIMESTAMP   		NOT NULL,
+    created_at  VARCHAR2(20)   	    NOT NULL,
+    updated_at  VARCHAR2(20)   		NOT NULL,
     is_updated  VARCHAR2(1) 		DEFAULT 'N' NOT NULL CHECK (is_updated IN ('Y', 'N')),
     content     VARCHAR2(2000)    	NOT NULL,
     like_cnt    NUMBER  			DEFAULT 0 NOT NULL,
@@ -59,8 +59,8 @@ CREATE TABLE tbl_community_comment (
     post_no     NUMBER  			NOT NULL,
     user_no     VARCHAR2(128)  	    NOT NULL,
     content     VARCHAR2(2000)      NOT NULL,
-    created_at  TIMESTAMP   		NOT NULL,
-    updated_at  TIMESTAMP   		NOT NULL,
+    created_at  VARCHAR2(20)   	    NOT NULL,
+    updated_at  VARCHAR2(20)   		NOT NULL,
     is_updated  VARCHAR2(1) 		DEFAULT 'N' NOT NULL CHECK (is_updated IN ('Y', 'N')),
 
     CONSTRAINT CMT_POST_NO_FK FOREIGN KEY (post_no) REFERENCES tbl_community_post (post_no) ON DELETE CASCADE,

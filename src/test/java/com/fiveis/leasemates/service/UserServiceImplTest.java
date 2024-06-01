@@ -20,9 +20,6 @@ class UserServiceTest {
                 .password("1234")
                 .email("hong@naver.com")
                 .phoneNumber("010-1111-2222")
-                .createdAt(LocalDate.now()).build();
-
-//        Boolean join = userService.join(userVO);
-//        System.out.println("join = " + join);
+                .build();
     }
 }

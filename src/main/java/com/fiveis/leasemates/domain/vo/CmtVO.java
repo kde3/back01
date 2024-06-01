@@ -1,7 +1,6 @@
 package com.fiveis.leasemates.domain.vo;
 
 import lombok.*;
-import java.time.LocalDateTime;
 
 @Getter @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -12,7 +11,7 @@ public class CmtVO {
     private Long postNo;
     private String userNo;
     private String content;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private String createdAt;
+    private String updatedAt;
     private String isUpdated;
 }
