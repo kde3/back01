@@ -1,4 +1,4 @@
-package com.fiveis.leasemates.domain.dto;
+package com.fiveis.leasemates.domain.dto.user;
 
 import lombok.Getter;
 import lombok.Setter;

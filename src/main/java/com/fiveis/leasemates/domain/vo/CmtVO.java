@@ -12,6 +12,7 @@ public class CmtVO {
     private Long postNo;
     private String userNo;
     private String content;
+    private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private String isUpdated;
 }

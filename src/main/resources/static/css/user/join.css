@@ -66,16 +66,21 @@ legend{
     margin: 10px 210px;
     padding: 10px;
     width: 100px;
-    background-color: #ffffff;
+
+    background-color: #8976FD;
     border: none;
     border-radius: 10px;
 
     font-size: 18px;
-    color: #979797;
+    color: #fff;
     font-weight: 500;
     text-decoration: none;
 
     cursor: pointer;
+}
+
+#signup--button:hover {
+    background-color: #614DDE;
 }
 
 .hide {

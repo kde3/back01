@@ -1,8 +1,6 @@
 package com.fiveis.leasemates.service;
 
-import com.fiveis.leasemates.domain.dto.JoinDTO;
-import com.fiveis.leasemates.domain.dto.LogInDTO;
-import com.fiveis.leasemates.domain.vo.UserVO;
+import com.fiveis.leasemates.domain.dto.user.JoinDTO;
 import org.springframework.stereotype.Service;
 
 @Service

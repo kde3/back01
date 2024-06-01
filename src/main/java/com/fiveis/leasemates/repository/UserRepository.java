@@ -8,6 +8,7 @@ import java.util.Optional;
 
 @Mapper
 public interface UserRepository {
+    String findNameByUserNo(String userNo);
     Optional<UserVO> findByUserId(String id);
     void createUser(UserVO userVO);
 }

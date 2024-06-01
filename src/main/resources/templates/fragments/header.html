@@ -5,8 +5,8 @@
     <div class="outer">
         <div class="inner">
             <div class="header--left">
-                <a href=""><div class="header--left-logo e">LEASEMATE</div></a>
-                <a href=""><div class="header--left-community e">커뮤니티</div></a>
+                <a th:href="@{/community/}"><div class="header--left-logo e">LEASEMATE</div></a>
+                <a th:href="@{/community/}"><div class="header--left-community e">커뮤니티</div></a>
                 <a href="" onclick="alert('준비중입니다')"><div class="header--left-barter e">물물교환</div></a>
                 <a href="" onclick="alert('준비중입니다')"><div class="header--left-sharehouse e">내집공유</div></a>
             </div>
@@ -18,7 +18,7 @@
 
                 <th:block sec:authorize="isAnonymous()">
                     <a th:href="@{/user/login}"><div class="header--right-login e">로그인</div></a>
-                    <a th:href="@{/user/join}"><div class="header--right-signup e">회원가입</div></a>
+                    <a th:href="@{/user/join_terms}"><div class="header--right-signup e">회원가입</div></a>
                 </th:block>
 
                 <th:block sec:authorize="isAuthenticated()">

@@ -1,9 +1,11 @@
 package com.fiveis.leasemates.repository;
 
+import com.fiveis.leasemates.domain.Pageable;
+import com.fiveis.leasemates.domain.dto.community.CmtDTO;
+import com.fiveis.leasemates.domain.dto.community.PostDTO;
 import com.fiveis.leasemates.domain.vo.CmtVO;
 import com.fiveis.leasemates.domain.vo.LikeVO;
 import com.fiveis.leasemates.domain.vo.PostVO;
-import com.fiveis.leasemates.repository.CommunityRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +14,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class CommunityRepositoryTest {
@@ -30,9 +30,9 @@ class CommunityRepositoryTest {
         PostVO postVO = PostVO.builder()
                 .postNo(postNo)
                 .userNo("uuidtest")
-                .title("게시물 제목")
+                .title("게시물 제목1")
                 .updatedAt(LocalDateTime.now())
-                .content("게시물 내용")
+                .content("게시물 내용1")
                 .build();
 
         communityRepository.createPost(postVO);
@@ -46,6 +46,27 @@ class CommunityRepositoryTest {
 
         for(PostVO post : posts) {
             System.out.println("post = " + post);
+        }
+    }
+
+    @Test
+    @DisplayName("게시글 전체 개수")
+    void findPostAllCount() {
+        int postCount = communityRepository.findPostAllCount();
+        System.out.println("게시글 전체 개수: " + postCount);
+    }
+
+    @Test
+    @DisplayName("게시물 페이지네이션")
+    void postPagination() {
+        Pageable pageable = new Pageable();
+        pageable.setPage(1);
+        pageable.setPageSize(3);
+
+        List<PostDTO> postDTOList = communityRepository.postPagination(pageable);
+
+        for(PostDTO postDTO : postDTOList) {
+            System.out.println("postDTO = " + postDTO);
         }
     }
 
@@ -105,6 +126,32 @@ class CommunityRepositoryTest {
         for(CmtVO cmt : cmts) {
             System.out.println("cmt = " + cmt);
         }
+    }
+
+    @Test
+    @DisplayName("게시물 댓글 페이지네이션")
+    void cmtPagination() {
+        Pageable pageable = new Pageable();
+        pageable.setPage(1);
+        pageable.setPageSize(3);
+
+        List<CmtVO> cmtVOList = communityRepository.cmtPagination(1L, pageable);
+
+        System.out.println("출력돼야해");
+
+        if(cmtVOList.size() == 0) System.out.println("리스트에 아무것도 없음");
+        else {
+            for(CmtVO cmtVO : cmtVOList) {
+                System.out.println("cmtDTO = " + cmtVO);
+            }
+        }
+
+//        System.out.println("-----------------------------그냥 댓글 다 출력하기");
+//        List<CmtVO> cmtAll = communityRepository.findCmtAll(1L);
+//        for(CmtVO cmt : cmtAll) {
+//            System.out.println("cmt = " + cmt);
+//        }
+
     }
 
     @Test

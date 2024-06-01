@@ -1,13 +1,12 @@
 package com.fiveis.leasemates.service;
 
-import com.fiveis.leasemates.domain.dto.JoinDTO;
+import com.fiveis.leasemates.domain.dto.user.JoinDTO;
 import com.fiveis.leasemates.domain.vo.UserVO;
 import com.fiveis.leasemates.repository.UserRepository;
 import com.fiveis.leasemates.security.CustomUserDetails;
 import com.fiveis.leasemates.security.Role;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,6 +18,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -28,20 +28,19 @@ public class UserServiceImpl implements UserService, UserDetailsService {
      */
     public Boolean join(JoinDTO joinDTO) {
         // 중복불가 필드 검사
-        //아이디 조회해서 검색되면 탈락
+        // 아이디 조회해서 검색되면 탈락
         Optional<UserVO> foundUser = userRepository.findByUserId(joinDTO.getId());
 
         if(foundUser.isPresent()) {
-            System.out.println("아이디 중복");
+            log.info("아이디 중복");
             return false;
         }
 
-        //통과되었다면 객체에 담아 저장
-        UUID uuid = UUID.randomUUID();
+        String uuid = UUID.randomUUID().toString();
         String encodePassword = bCryptPasswordEncoder.encode(joinDTO.getPassword());
 
         UserVO newUser = UserVO.builder()
-                .userNo(uuid.toString())
+                .userNo(uuid)
                 .id(joinDTO.getId())
                 .role(Role.USER.getKey())
                 .name(joinDTO.getName())
@@ -57,7 +56,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public CustomUserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
-        UserVO userVO = userRepository.findByUserId(id).orElseThrow(() -> new UsernameNotFoundException("없는 유저입니다."));
+        UserVO userVO = userRepository.findByUserId(id)
+                .orElseThrow(() -> new UsernameNotFoundException("없는 유저입니다."));
         return new CustomUserDetails(userVO);
 
 //        UserVO userVO = userRepository.findByUserId(id).orElseThrow(() -> new UsernameNotFoundException("없는 유저입니다."));

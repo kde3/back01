@@ -30,7 +30,7 @@ thumbUpIcon.addEventListener("click", () => {
     })
     .then(response => {
       if (response.ok) {
-        window.location.href = `/community/${4}`;
+        location.href = `/community/${4}`;
       }
     });
   }
@@ -43,7 +43,7 @@ thumbUpIcon.addEventListener("click", () => {
     })
     .then(response => {
       if (response.ok) {
-        window.location.href = `/community/${4}`;
+        location.href = `/community/${4}`;
       }
     });
   }

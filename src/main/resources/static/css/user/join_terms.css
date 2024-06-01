@@ -67,3 +67,7 @@ label {
 
     cursor: pointer;
 }
+
+#next_btn:hover {
+    background-color: #614DDE;
+}

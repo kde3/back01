@@ -1,0 +1,201 @@
+.detail-container{
+    padding-top: 20px;
+    height: max-content;
+    border-bottom: 0.2px solid #CACACA;
+}
+
+.theme-title{
+    font-size: 15px;
+    font-weight: 500;
+    color: #8976FD;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.content-title{
+    font-size: 23px;
+    font-weight: bold;
+    padding-top: 10px;
+    padding-bottom: 15px;
+}
+
+.name-time p{
+    font-size: 15px;
+    padding-right: 10px;
+    color: #332C5C;
+    font-weight: 200;
+}
+.name-time{
+    display: flex;
+    padding-bottom: 20px;
+}
+
+.heart-count{
+    display: flex;
+    padding-bottom: 30px;
+    color: #6E6E6E;
+
+}
+.heart-count > p{
+    padding-top: 2px;
+    margin-left: 2px;
+    margin-right: 14px;
+}
+
+
+.board-content{
+    font-size: 16px;
+    font-weight: 200;
+    padding-top: 30px;
+    padding-left: 5px;
+    padding-right: 5px;
+    /*letter-spacing: 15;*/
+    line-height: 2;
+}
+
+.board-content{
+    min-height: 360px;
+    height: fit-content;
+}
+
+.heart-count-bottom{
+    display: flex;
+    padding-top: 10px;
+    padding-bottom: 40px;
+    border-bottom: 0.2px solid #CACACA;
+}
+.count-like{
+    font-size: 20px;
+    font-weight: lighter;
+    color: #6E6E6E;
+    padding-top: 3px;
+    margin-left: 4px;
+}
+
+/* 게시글 수정, 게시글 삭제 */
+.edit-container{
+    display: flex;
+    justify-content: right;
+}
+.edit-btn{
+    height: 24px;
+    width: 70px;
+    font-size: 13px;
+    margin: 10px;
+    border-radius: 5px;
+    border: 1px solid  #8976FD;
+    display: flex;
+    justify-content: center;
+    padding-top: 6px;
+}
+
+.thumb_up_icon {
+    cursor: pointer;
+}
+
+#input_cmt{
+    height: 100px;
+    width: 900px;
+    border:  0.2px solid black;
+    margin: 0;
+    font-size: 15px;
+    padding-left: 10px;
+    font-weight: 300;
+    border-right: none;
+}
+
+#submit{
+    height: 100px;
+    margin: 0;
+    width: 80px;
+    font-size: 15px;;
+    color: #ffff;
+    background-color: #8976FD;
+    border: none;
+}
+
+.comment-p{
+    font-size:17px !important;
+    margin-top: 30px !important;
+    margin-bottom: 20px !important;
+}
+
+.board-comment-container{
+    width: 1000px;
+    height: max-content;
+}
+
+.comment-form {
+    padding-bottom: 50px;
+    border-bottom: 0.2px solid #666;
+}
+
+.card-body{
+    width: 990px;
+    height: 100px;
+}
+
+.card {
+    padding: 20px 0;
+    border-bottom: 1px solid #CACACA;
+}
+
+.card-username {
+    display: block;
+
+    font-size: 13px;
+    color: #8976FD;
+}
+
+.card textarea {
+    display: block;
+    width: inherit;
+    height:20px;
+    padding: 5px 0;
+    margin: 10px 0;
+    resize: none;     /* textarea 크기조절 불가 */
+
+    background-color: white;
+    border: 0;
+    font-size: 13px;
+    color: #332C5C;
+}
+
+.card-date {
+    display: block;
+
+    font-size: 10px;
+    color: #6E6E6E;
+}
+
+.cmt_bottom {
+    border:1px solid black;
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+}
+
+.card .edit-btn {
+    padding: 3px 5px;
+
+    border: 1px solid #8976FD;
+    background-color: white;
+    color: #332C5C;
+    font-size: 12px;
+
+    cursor: pointer;
+}
+
+.card .edit-btn:hover {
+    color: #FFF;
+    background-color: #8976FD;
+}
+
+.card-complete_update-btn,
+.card-cancel_update-btn {
+    display: none;
+}
+
+textarea {
+    outline:none;
+}
