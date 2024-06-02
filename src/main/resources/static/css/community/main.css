@@ -1,0 +1,100 @@
+.section_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin: 30px 0;
+}
+
+.section_header .category {
+    font-size: 20px;
+    color: #8976FD;
+    font-weight: 700;
+}
+
+.post_write_btn {
+    display: flex;
+    align-items: center;
+
+    padding: 2px 5px;
+
+    border: 1px solid #8976FD;
+    color: #8976FD;
+}
+
+.post_write_btn_text {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.post_write_btn_icon {
+    font-size: 15px;
+    margin-right: 3px;
+}
+
+
+/*-----------------TABLE STYLE---------------*/
+
+.table,
+.thead,
+.tbody,
+.tbody .trow {
+     width: 100%;
+}
+
+.thead,
+.tbody .trow {
+    display: grid;
+    grid-template-columns: 0.2fr 2.5fr 0.5fr 0.5fr 0.5fr 0.5fr;
+}
+
+.table .thead {
+    height: 30px;
+
+    background-color: #8976FD;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.thead div,
+.tbody .trow div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tbody .trow {
+    height: 25px;
+
+    color: #332C5C;
+    border-bottom: 1px solid #CACACA;
+}
+
+.tbody .trow:hover {
+    background-color: #F5F3FF;
+}
+
+/* 게시물 제목 부분 정렬 */
+.tbody .trow .post_title {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+.tbody .trow .post_title a:hover {
+    text-decoration-line: underline;
+    text-decoration-color: #332C5C;
+}
+
+.tbody .trow .picture_icon,
+.tbody .trow .thumb_up_icon,
+.tbody .trow .comment_icon {
+    text-align: center;
+    vertical-align: middle;
+
+    margin-right: 5px;
+
+    font-size: 15px;
+    color: #979797;
+}

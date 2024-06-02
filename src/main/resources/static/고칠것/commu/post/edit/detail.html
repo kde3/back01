@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LeaseMates: 임차인들을 위한 정보공유공간</title>
+    <link rel="icon" href="/img/favicon.ico">
+    
+  <link rel="stylesheet" href="./detail.css">
+  <link rel="stylesheet" href="./edit_cmt.css">
+  <script type="module" src="edit_cmt.js"></script>
+  <script src="detail.js"></script>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  
+  <script type="module" src="/고칠것/temp/header/after_login/add.js"></script>
+  <script type="module" src="/고칠것/temp/footer/add.js"></script>
+  <script type="module" src="/고칠것/temp/main_banner/add.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main>
+    <div id="main-banner"></div>
+
+    <div class="outer">
+      <div class="inner">
+        
+        <div class="detail-container">
+          <p class="theme-title">커뮤니티</p>
+          <p class="content-title" id="title">뉴욕증시, '중동 위험+ 올해 인하 없을 우려'에 급락</p>
+          <div class="name-time">
+            <p class="writer-name">홍길동님</p>
+            <p class="written-time">시간</p>
+          </div>
+          <div class="heart-count">
+            <img src="../../../img/commu/post/detail/up-img.png" width="15"alt="따봉"><p>2</p>
+            <img src="../../../img/commu/post/detail/comment-count.png" width="15" alt="댓글수"><p>22</p>
+          </div>
+        </div>
+
+        <div class="board-container">
+          <p class="board-content" id="content">
+            중동 관련 지정학적 위험이 주가지수에 영향을 미쳤다.
+
+            이란이 시리아의 이란 영사관 폭격의 배후로 이스라엘을 지목한 데 이어 강한 보복을 예고하면서다.
+            이스라엘은 이날 모든 전투부대원의 휴가를 중단했다.
+
+            또 각 부대에 서한을 보내 “이스라엘군은 전쟁 중이며
+            병력 전개 문제는 필요할 때마다 지속해서 검토할 것”이라고 강조했다.
+            전일 이스라엘은 방공시스템 운용 경험이 있는 예비군을 추가로 동원하기로 했다.
+          </p>
+
+          <div class="heart-count-bottom" onclick='count("plus")'>
+            <img src="../../../img/commu/post/detail/up-img.png" width="30"alt="따봉">
+            <div class='count-like' id="result">0</div>
+          </div>
+
+        </div>
+
+        <div class="board-comment-container">
+            <p class="comment-p">댓글</p>
+
+            <div class="comment-form">
+              <input type="text" placeholder="댓글을 작성해주세요." id="input_cmt">
+              <button id="submit">게시</button>
+            </div>
+
+            <div id="comment-content"></div>
+            <div id="pagination"></div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- footer 들어갈 자리 -->
+  <div id="footer-placeholder"></div>
+</body>
+</html>

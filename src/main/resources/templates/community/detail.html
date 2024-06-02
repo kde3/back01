@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{commons/layout}">
+
+<head>
+    <link rel="stylesheet" th:href="@{/css/fragments/banner.css}">
+    <script type="module" th:src="@{/js/fragments/banner.js}"></script>
+
+    <link rel="stylesheet" th:href="@{/css/community/detail.css}">
+    <script defer th:src="@{/js/community/detail.js}"></script>
+
+    <link rel="stylesheet" th:href="@{/css/commons/page_block.css}">
+</head>
+
+<body>
+<main layout:fragment="content">
+    <div th:replace="~{fragments/banner :: banner}"></div>
+
+    <section class="before-list-container">
+        <div class="outer">
+            <div class="inner">
+
+                <div class="detail-container" th:attr="data-postNo=${postDetailDTO.postNo}">
+                    <p class="theme-title">커뮤니티</p>
+                    <p class="content-title" th:text="${postDetailDTO.title}"></p>
+                    <div class="name-time">
+                        <p class="writer-name" th:text="${postDetailDTO.userName} + '님'"></p>
+                        <p class="written-time" th:text="${postDetailDTO.updatedAt}"></p>
+                    </div>
+
+                    <div class="heart-count">
+                        <span class="material-icons">thumb_up_off_alt</span>
+                        <p class="like_cnt" th:text="${postDetailDTO.likeCnt}"></p>
+                        <span class="material-symbols-outlined">mode_comment</span><p th:text="${postDetailDTO.cmtCnt}"></p>
+                    </div>
+                </div>
+
+                <div class="board-container">
+                    <p class="board-content" th:utext="${postDetailDTO.content}"></p>
+
+                    <th:block sec:authorize="isAuthenticated()">
+                        <div class="edit-container" th:if="${postDetailDTO.userNo == #authentication.principal.UserVO.userNo}">
+                            <a href=""><div class="edit-btn">게시글 수정</div></a>
+                            <a href=""><div class="edit-btn">게시글 삭제</div></a>
+                        </div>
+                    </th:block>
+
+                    <div>
+                        <span class="material-icons thumb_up_icon"
+                              th:attr="data-check_like=${postDetailDTO.checkLike}"
+                              th:classappend="${#authentication.principal == 'anonymousUser' ? 'noAuth' : 'yesAuth'}">
+                        </span>
+                        <div class="like_cnt" th:text="${postDetailDTO.likeCnt}"></div>
+                    </div>
+                </div>
+
+                <div class="board-comment-container">
+                    <p class="comment-p">댓글</p>
+
+                    <form class="comment-form" method="post" th:action="@{/community/{postNo}/cmt/create(postNo=${postDetailDTO.postNo})}">
+                        <input type="text" name="cmt" placeholder="댓글을 작성해주세요." id="input_cmt">
+                        <button id="submit">게시</button>
+                    </form>
+
+                    <div id="comment-content">
+                        <th:block th:each="cmt : ${postDetailDTO.cmtDTOList}" id="post_list--content">
+                            <form class="card" th:data-no_cmt="${cmt.cmtNo}"
+                                  method="post"
+                                  th:action="@{/community/{postNo}/cmt/update(postNo=${postDetailDTO.postNo}, cmtNo=${cmt.cmtNo})}">
+
+                                <span class="card-username" th:text="${cmt.userName}"></span>
+                                <textarea name="cmtUpdate" th:utext="${cmt.content}" readonly></textarea>
+
+                                <div class="cmt_bottom">
+                                    <span class="card-date" th:text="${cmt.updatedAt}"></span>
+                                    <span class="card-date" th:if="${cmt.isUpdated == 'Y'}">(수정됨)</span>
+
+                                    <th:block sec:authorize="isAuthenticated()">
+                                        <div class="card-edit-box" th:if="${cmt.userNo == #authentication.principal.UserVO.userNo}">
+                                            <div class="card-update-btn edit-btn">수정하기</div>
+
+                                            <a th:href="@{/community/{postNo}/cmt/delete(postNo=${postDetailDTO.postNo}, cmtNo=${cmt.cmtNo})}">
+                                                <div class="card-delete-btn edit-btn">삭제하기</div>
+                                            </a>
+
+                                            <div class="card-cancel_update-btn edit-btn">수정취소</div>
+                                            <button type="submit" class="card-complete_update-btn edit-btn">수정완료</button>
+                                        </div>
+                                    </th:block>
+                                </div>
+                            </form>
+                        </th:block>
+
+                        <!-- 페이지네이션 버튼 -->
+                        <div class="page_block">
+                            <th:block th:if="${pageBlockDTO.hasPrevBlock()}">
+                                <a th:href="@{/community/{postNo}(postNo=${postDetailDTO.postNo}, page=${pageBlockDTO.startPage - 1})}">
+                                    <span class="material-symbols-outlined">chevron_left</span>
+                                </a>
+                            </th:block>
+
+                            <th:block th:each="i : ${#numbers.sequence(pageBlockDTO.startPage, pageBlockDTO.endPage)}">
+                                <a th:href="@{/community/{postNo}(postNo=${postDetailDTO.postNo}, page=${i})}">
+                                    <div class="page" th:text="${i}" th:classappend="${i == pageBlockDTO.currentPage ? 'active' : ''}"></div>
+                                </a>
+                            </th:block>
+
+                            <th:block th:if="${pageBlockDTO.hasNextBlock()}">
+                                <a th:href="@{/community/{postNo}(postNo=${postDetailDTO.postNo}, page=${pageBlockDTO.endPage + 1})}">
+                                    <span class="material-symbols-outlined">chevron_right</span>
+                                </a>
+                            </th:block>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>

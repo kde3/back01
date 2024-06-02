@@ -1,0 +1,27 @@
+.page_block {
+    display: flex;
+    justify-content: center;
+
+    margin: 30px 0 50px 0;
+}
+
+.page_block .page {
+    margin: 0 3px;
+    width: 30px;
+    height: 30px;
+
+    line-height: 30px;
+    text-align: center;
+
+    font-size: 15px;
+    border:1px solid #8976FD;
+    background-color: white;
+    color: #332C5C;
+
+    cursor: pointer;
+}
+
+.page_block .active {
+    background-color: #8976FD;
+    color: #ffffff;
+}

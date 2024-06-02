@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fiveis.leasemates.repository.UserRepository">
+    <select id="findNameByUserNo" parameterType="String" resultType="String">
+        SELECT name FROM tbl_user
+        where user_no = #{userNo}
+    </select>
+
+    <select id="findByUserId" parameterType="String" resultType="UserVO">
+        SELECT * FROM tbl_user
+        where id = #{id}
+    </select>
+
+    <insert id="createUser" parameterType="UserVO">
+        insert into tbl_user(user_no, id, password, role, name, email, phone_number, created_at)
+        values(#{userNo}, #{id}, #{password}, #{role}, #{name}, #{email}, #{phoneNumber}, to_char(sysdate, 'YYYY.MM.DD HH24:MI:SS'))
+    </insert>
+</mapper>

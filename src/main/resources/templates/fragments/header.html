@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<header th:fragment="header">
+    <div class="outer">
+        <div class="inner">
+            <div class="header--left">
+                <a th:href="@{/community/}"><div class="header--left-logo e">LEASEMATE</div></a>
+                <a th:href="@{/community/}"><div class="header--left-community e">커뮤니티</div></a>
+                <a href="" onclick="alert('준비중입니다')"><div class="header--left-barter e">물물교환</div></a>
+                <a href="" onclick="alert('준비중입니다')"><div class="header--left-sharehouse e">내집공유</div></a>
+            </div>
+            <div class="header--right">
+                <div class="header--right-search e">
+                    <span class="material-symbols-outlined">search</span>
+                    <input type="text" placeholder="관심있는 내용을 검색해 보세요!">
+                </div>
+
+                <th:block sec:authorize="isAnonymous()">
+                    <a th:href="@{/user/login}"><div class="header--right-login e">로그인</div></a>
+                    <a th:href="@{/user/join_terms}"><div class="header--right-signup e">회원가입</div></a>
+                </th:block>
+
+                <th:block sec:authorize="isAuthenticated()">
+                    <a th:href="@{/user/info}"><div class="user_profile"><span sec:authentication="principal.UserVO.name"></span>님</div></a>
+                </th:block>
+
+<!--                <th:block sec:authorize="hasRole('ROLE_USER')">-->
+<!--                    <a th:href="@{/user/info}"><div>유저에게만 보임</div></a>-->
+<!--                </th:block>-->
+
+<!--                <th:block sec:authorize="hasAuthority('ROLE_ADMIN')">-->
+<!--                    <a th:href="@{/user/info}"><div>관리자에게만 보임</div></a>-->
+<!--                </th:block>-->
+
+            </div>
+        </div>
+    </div>
+</header>
+</html>

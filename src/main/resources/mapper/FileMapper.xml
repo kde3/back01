@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fiveis.leasemates.repository.FileRepository">
+
+    <select id="getFileNo" resultType="Long">
+        select seq_community_file_no.nextval
+        from dual
+    </select>
+
+    <insert id="insertFile">
+        insert into tbl_community_file
+            (file_no, post_no, file_path)
+        values (seq_community_file_no.nextval, #{postNo, jdbcType=NUMERIC}, #{filePath, jdbcType=VARCHAR})
+    </insert>
+
+    <delete id="deleteFileById">
+        delete from tbl_community_file
+        where file_no = #{fileNo}
+    </delete>
+
+</mapper>

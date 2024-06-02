@@ -1,0 +1,73 @@
+.terms_of_use .inner {
+    display: flex;
+    justify-content: center;
+}
+
+.terms-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin: 50px 0;
+    padding: 40px 30px;
+    width: 600px;
+
+    background-color: #F5F3FF;
+}
+
+.terms_of_use .title {
+    width: inherit;
+    margin-bottom: 20px;
+}
+
+.terms_of_use h1 {
+    font-size: 30px;
+    color: #8976FD;
+}
+
+.terms_of_use h3 {
+    margin-top: 10px;
+    font-size: 15px;
+    color: #332C5C;
+    font-weight: 500;
+}
+
+#all-agree {
+    margin-bottom: 20px;
+}
+
+fieldset {
+    border: none;
+}
+
+label {
+    font-size: 15px;
+    color: #332C5C;
+    font-weight: 500;
+}
+
+.terms-box {
+    margin: 10px;
+    padding: 10px 15px;
+
+    background-color: #ffffff;
+
+    color: #979797;
+    line-height: 15px;
+    font-weight: 400;
+}
+
+#next_btn {
+    padding: 10px;
+    width: 140px;
+
+    background-color: #ffffff;
+    border: none;
+    border-radius: 10px;
+
+    cursor: pointer;
+}
+
+#next_btn:hover {
+    background-color: #614DDE;
+}

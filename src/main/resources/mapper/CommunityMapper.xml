@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fiveis.leasemates.repository.CommunityRepository">
+
+    <insert id="createDummyPost" parameterType="PostVO">
+        insert into TBL_COMMUNITY_POST (POST_NO, USER_NO, TITLE, CREATED_AT, UPDATED_AT, IS_UPDATED, CONTENT, LIKE_CNT, CMT_CNT)
+        values (SEQ_COMMUNITY_POST_NO.nextval, #{userNo}, #{title}, to_char(sysdate, 'YYYY.MM.DD HH24:MI:SS'), to_char(sysdate, 'YYYY.MM.DD HH24:MI:SS'), 'N', #{content}, 0, 0)
+    </insert>
+
+    <insert id="createDummyCmt" parameterType="CmtVO">
+        insert into TBL_COMMUNITY_COMMENT (CMT_NO, POST_NO, USER_NO, CONTENT, CREATED_AT, UPDATED_AT, IS_UPDATED)
+        values (SEQ_COMMUNITY_COMMENT_NO.nextval, #{postNo}, #{userNo}, #{content}, to_char(sysdate, 'YYYY.MM.DD HH24:MI:SS'), to_char(sysdate, 'YYYY.MM.DD HH24:MI:SS'), 'N')
+    </insert>
+
+    <select id="getPostNo" resultType="Long">
+        SELECT seq_community_post_no.nextval FROM dual
+    </select>
+
+    <insert id="createPost" parameterType="PostVO">
+        insert into tbl_community_post (post_no , user_no ,title, created_at, updated_at, is_updated, content, like_cnt)
+        values(#{postNo}, #{userNo}, #{title}, to_char(sysdate, 'YYYY.MM.DD HH24:MI:SS'), to_char(sysdate, 'YYYY.MM.DD HH24:MI:SS'), 'N', #{content}, 0)
+    </insert>
+
+    <select id="findPostAll" resultType="PostVO">
+        SELECT * FROM tbl_community_post
+        order by updated_at desc
+    </select>
+
+    <select id="findPostAllCount" resultType="int">
+        SELECT count(*) FROM tbl_community_post
+    </select>
+
+    <select id="findCmtAllCount" parameterType="Long" resultType="int">
+        SELECT count(*) FROM tbl_community_comment WHERE post_no = #{postNo}
+    </select>
+
+    <select id="postPagination" parameterType="Pageable" resultType="PostDTO">
+        <![CDATA[
+        SELECT *
+        FROM (select ROWNUM post_rownum,
+                     POST_NO,
+                     USER_NO,
+                     TITLE,
+                     CREATED_AT,
+                     UPDATED_AT,
+                     IS_UPDATED,
+                     CONTENT,
+                     LIKE_CNT,
+                     CMT_CNT
+              from (SELECT * FROM TBL_COMMUNITY_POST ORDER BY UPDATED_AT desc, post_no desc))
+        WHERE post_rownum BETWEEN #{pageSize} * (#{page} - 1) + 1 AND #{pageSize} * #{page}
+        ]]>
+    </select>
+
+    <select id="findPostById" parameterType="Long" resultType="PostVO">
+        SELECT * FROM tbl_community_post
+        where post_no = #{postNo}
+    </select>
+
+    <update id="updatePost" parameterType="PostVO">
+        update tbl_community_post
+        set title = #{title, jdbcType=VARCHAR}, updated_at = to_char(sysdate, 'YYYY.MM.DD HH24:MI:SS'), is_updated = 'Y', content = #{content, jdbcType=VARCHAR}
+        where post_no = #{postNo, jdbcType=NUMERIC}
+    </update>
+
+    <delete id="deletePostById" parameterType="Long">
+        delete from tbl_community_post
+        where post_no = #{postNo}
+    </delete>
+
+    <update id="savePost" parameterType="PostVO">
+        update tbl_community_post
+        set title = #{title, jdbcType=VARCHAR}, updated_at = to_char(sysdate, 'YYYY.MM.DD HH24:MI:SS'), is_updated = 'Y', content = #{content, jdbcType=VARCHAR}
+        where post_no = #{postNo, jdbcType=NUMERIC}
+    </update>
+
+<!--    댓글-->
+    <select id="getCmtNo" resultType="Long">
+        SELECT seq_community_comment_no.nextval FROM dual
+    </select>
+
+    <insert id="createCmt" parameterType="CmtVO">
+        insert into tbl_community_comment (cmt_no, post_no , user_no ,content, created_at, updated_at, is_updated)
+        values(#{cmtNo}, #{postNo}, #{userNo}, #{content}, to_char(sysdate, 'YYYY.MM.DD HH24:MI:SS'), to_char(sysdate, 'YYYY.MM.DD HH24:MI:SS'), 'N')
+    </insert>
+
+    <select id="findCmtAll" parameterType="Long" resultType="CmtVO">
+        SELECT * FROM tbl_community_comment
+        where post_no = #{postNo}
+        order by updated_at desc
+    </select>
+
+    <select id="cmtPagination" parameterType="map" resultType="CmtVO">
+        SELECT CMT_NO, POST_NO, USER_NO, CONTENT, CREATED_AT, UPDATED_AT, IS_UPDATED
+        FROM (select ROWNUM cmt_rownum,
+                     CMT_NO, POST_NO, USER_NO, CONTENT, CREATED_AT, UPDATED_AT, IS_UPDATED
+              from (SELECT * FROM tbl_community_comment
+                    where post_no = #{postNo}
+                    order by created_at desc, CMT_NO desc
+                    )
+              )
+        WHERE cmt_rownum BETWEEN #{pageable.pageSize} * (#{pageable.page} - 1) + 1 AND #{pageable.pageSize} * #{pageable.page}
+    </select>
+
+    <select id="findCmtById" parameterType="Long" resultType="CmtVO">
+        SELECT * FROM tbl_community_comment
+        where cmt_no = #{cmtNo}
+    </select>
+
+    <update id="updateCmt" parameterType="CmtVO">
+        update tbl_community_comment
+        set content = #{content}, updated_at = to_char(sysdate, 'YYYY.MM.DD HH24:MI:SS'), is_updated = 'Y'
+        where cmt_no = #{cmtNo}
+    </update>
+
+    <delete id="deleteCmtById" parameterType="Long">
+        delete from tbl_community_comment
+        where cmt_no = #{cmtNo}
+    </delete>
+
+    <!--    댓글 개수 카운트해서 post 테이블에 업데이트-->
+    <update id="updateCmtCnt" parameterType="Long">
+        update tbl_community_post
+        set cmt_cnt = (select count(*) from tbl_community_comment where post_no = #{postNo})
+        where post_no = #{postNo}
+    </update>
+
+<!--    좋아요-->
+
+<!--    좋아요 했는지 판단 위함-->
+    <select id="findLikeById" parameterType="LikeVO" resultType="int">
+        SELECT count(*) FROM tbl_community_like
+        where post_no = #{postNo} and user_no = #{userNo}
+    </select>
+
+<!--    좋아요 개수 카운트해서 post 테이블에 업데이트-->
+    <update id="updateLikeCnt" parameterType="Long">
+        update tbl_community_post
+        set like_cnt = (select count(*) from tbl_community_like where post_no = #{postNo})
+        where post_no = #{postNo}
+    </update>
+
+    <insert id="createLike" parameterType="LikeVO">
+        insert into tbl_community_like (post_no , user_no)
+        values(#{postNo}, #{userNo})
+    </insert>
+
+    <delete id="deleteLikeById" parameterType="LikeVO">
+        delete from tbl_community_like
+        where post_no = #{postNo} and user_no = #{userNo}
+    </delete>
+</mapper>
