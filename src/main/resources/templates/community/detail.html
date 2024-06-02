@@ -29,6 +29,7 @@
                         <p class="writer-name" th:text="${postDetailDTO.userName} + '님'"></p>
                         <p class="written-time" th:text="${postDetailDTO.updatedAt}"></p>
                     </div>
+
                     <div class="heart-count">
                         <span class="material-icons">thumb_up_off_alt</span>
                         <p class="like_cnt" th:text="${postDetailDTO.likeCnt}"></p>
@@ -47,7 +48,10 @@
                     </th:block>
 
                     <div>
-                        <span class="material-icons thumb_up_icon" th:attr="data-check_like=${postDetailDTO.checkLike}"></span>
+                        <span class="material-icons thumb_up_icon"
+                              th:attr="data-check_like=${postDetailDTO.checkLike}"
+                              th:classappend="${#authentication.principal == 'anonymousUser' ? 'noAuth' : 'yesAuth'}">
+                        </span>
                         <div class="like_cnt" th:text="${postDetailDTO.likeCnt}"></div>
                     </div>
                 </div>

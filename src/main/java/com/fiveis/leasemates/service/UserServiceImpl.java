@@ -59,15 +59,5 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         UserVO userVO = userRepository.findByUserId(id)
                 .orElseThrow(() -> new UsernameNotFoundException("없는 유저입니다."));
         return new CustomUserDetails(userVO);
-
-//        UserVO userVO = userRepository.findByUserId(id).orElseThrow(() -> new UsernameNotFoundException("없는 유저입니다."));
-//
-//        UserDetails userDetails = User.builder()
-//                .username(userVO.getId())
-//                .password(userVO.getPassword())
-//                .roles(userVO.getRole())
-//                .build();
-//
-//        return userDetails;
     }
 }

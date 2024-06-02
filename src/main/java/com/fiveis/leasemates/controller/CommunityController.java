@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -51,15 +52,11 @@ public class CommunityController {
 
         List<PostDTO> postDTOList = communityService.postPagination(pageable);
         for(PostDTO post : postDTOList) log.info("post = " + post);
-        model.addAttribute("postVOList", postDTOList);
+        model.addAttribute("postDTOList", postDTOList);
 
         PageBlockDTO pageBlockDTO = communityService.postPaginationBlock(5, pageable);
         model.addAttribute("pageBlockDTO", pageBlockDTO);
         log.info("pageBlockDTO 값: "+ pageBlockDTO);
-
-//        List<PostVO> postVOList = communityService.findPostAll();
-//        for(PostVO post : postVOList) log.info("post = " + post);
-//        model.addAttribute("postVOList", postVOList);
 
         return "community/main";
     }
@@ -79,11 +76,13 @@ public class CommunityController {
         pageable.setPage(page);
         pageable.setPageSize(size);
 
+        String userNo = "anonymousUser";
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        // anonymousUser
-        CustomUserDetails customUserDetails = (CustomUserDetails) principal;
-        String userNo = customUserDetails.getUserVO().getUserNo();
-        String username = customUserDetails.getUserVO().getName();
+
+        if (!userNo.equals(principal)) {
+            CustomUserDetails customUserDetails = (CustomUserDetails) principal;
+            userNo = customUserDetails.getUserVO().getUserNo();
+        }
 
         PostDetailDTO postDetailDTO = communityService.getPostDetail(postNo, userNo, pageable);
         model.addAttribute("postDetailDTO", postDetailDTO);
@@ -137,19 +136,6 @@ public class CommunityController {
 
         return "redirect:/community/" + postNo;
     }
-
-
-//    /**
-//     * 댓글 보기
-//     * http://localhost:10000/community/4/cmt
-//     */
-//    @GetMapping("/{postNo}/cmt")
-//    @ResponseBody
-//    public ResponseEntity<List<CmtVO>> cmtView(@PathVariable("postNo") Long postNo) {
-//        List<CmtVO> cmtVOs = communityService.findCmtAll(postNo);
-//
-//        return ResponseEntity.status(HttpStatus.CREATED).body(cmtVOs);
-//    }
 
     /**
      * 댓글 추가

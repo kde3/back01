@@ -27,7 +27,9 @@
                         <p id="pwResult"></p>
                     </fieldset>
 
-                    <div th:text="${message}"></div>
+                    <th:block th:if="${error}">
+                        <div th:text="${error}"></div>
+                    </th:block>
 
                     <button type="submit" class="login--button">로그인</button>
                 </form>

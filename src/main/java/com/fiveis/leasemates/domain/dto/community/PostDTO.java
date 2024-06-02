@@ -11,6 +11,7 @@ public class PostDTO {
     private Long postRownum;            //rownum으로 post 번호 매긴 것
     private Long postNo;
     private String userNo;
+    private String userName;
     private String title;
     private String content;
     private String createdAt;

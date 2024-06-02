@@ -20,7 +20,6 @@ import java.util.List;
 class CommunityServiceImplTest {
     @Autowired
     CommunityService communityService;
-
     @Autowired
     CommunityRepository communityRepository;
 

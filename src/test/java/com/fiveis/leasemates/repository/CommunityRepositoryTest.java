@@ -6,8 +6,8 @@ import com.fiveis.leasemates.domain.dto.community.PostDTO;
 import com.fiveis.leasemates.domain.vo.CmtVO;
 import com.fiveis.leasemates.domain.vo.LikeVO;
 import com.fiveis.leasemates.domain.vo.PostVO;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import com.fiveis.leasemates.domain.vo.UserVO;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -18,7 +18,33 @@ import java.util.Optional;
 @SpringBootTest
 class CommunityRepositoryTest {
     @Autowired
+    UserRepository userRepository;
+    @Autowired
     CommunityRepository communityRepository;
+
+    UserVO testUser;
+
+    @BeforeEach
+    void setUp() {
+        testUser = UserVO.builder()
+                .userNo("100")
+                .id("100")
+                .password("1234")
+                .role("USER")
+                .name("100")
+                .email("100@naver.com")
+                .phoneNumber("010-0000-0000")
+                .build();
+
+        userRepository.createUser(testUser);
+    }
+
+    @Test
+    @DisplayName("postNo 얻기")
+    void getPostNo() {
+        Long no = communityRepository.getPostNo();
+        System.out.println("postNo = " + no);
+    }
 
     /**
      * 게시물 관련 기능
@@ -26,26 +52,20 @@ class CommunityRepositoryTest {
     @Test
     @DisplayName("게시물 생성")
     void createPost() {
-        Long postNo = communityRepository.getPostNo();
         PostVO postVO = PostVO.builder()
-                .postNo(postNo)
-                .userNo("uuidtest")
-                .title("게시물 제목1")
-                .content("게시물 내용1")
+                .postNo(100L)
+                .userNo(testUser.getUserNo())
+                .title("게시물 제목")
+                .content("게시물 내용")
                 .build();
-
         communityRepository.createPost(postVO);
-
-        System.out.println("postVO = " + postVO);
     }
 
     @Test
+    @DisplayName("모든 게시물 출력")
     void findAll() {
         List<PostVO> posts = communityRepository.findPostAll();
-
-        for(PostVO post : posts) {
-            System.out.println("post = " + post);
-        }
+        for(PostVO post : posts) System.out.println("post = " + post);
     }
 
     @Test
@@ -64,21 +84,21 @@ class CommunityRepositoryTest {
 
         List<PostDTO> postDTOList = communityRepository.postPagination(pageable);
 
-        for(PostDTO postDTO : postDTOList) {
-            System.out.println("postDTO = " + postDTO);
-        }
+        for(PostDTO postDTO : postDTOList) System.out.println("postDTO = " + postDTO);
     }
 
     @Test
+    @DisplayName("postNo로 게시물 찾기")
     void findById() {
-        Optional<PostVO> post = communityRepository.findPostById(2L);
+        Optional<PostVO> post = communityRepository.findPostById(1L);
         System.out.println("post = " + post.get());
     }
 
     @Test
+    @DisplayName("게시글 수정")
     void updatePost() {
         PostVO postVO = PostVO.builder()
-                .postNo(2L)
+                .postNo(1L)
                 .title("게시물 제목 수정")
                 .content("게시물 내용 수정")
                 .build();
@@ -90,9 +110,15 @@ class CommunityRepositoryTest {
 
     @Test
     void deletePostById() {
-        communityRepository.deletePostById(2L);
+        communityRepository.deletePostById(10L);
     }
 
+    @Test
+    @DisplayName("게시글 댓글 번호 얻기")
+    void getCmtNo() {
+        Long cmtNo = communityRepository.getCmtNo();
+        System.out.println("cmtNo = " + cmtNo);
+    }
 
     /**
      * 댓글관련 기능
@@ -100,12 +126,10 @@ class CommunityRepositoryTest {
     @Test
     @DisplayName("댓글 생성")
     void createCmt() {
-        Long cmtNo = communityRepository.getCmtNo();
-
         CmtVO cmtVO = CmtVO.builder()
-                .cmtNo(cmtNo)
-                .postNo(3L)
-                .userNo("uuidtest")
+                .cmtNo(100L)
+                .postNo(1L)
+                .userNo(testUser.getUserNo())
                 .content("댓글 내용")
                 .build();
 
@@ -118,10 +142,7 @@ class CommunityRepositoryTest {
     @DisplayName("한 게시물의 댓글들 조회")
     void findCmtAll() {
         List<CmtVO> cmts = communityRepository.findCmtAll(1L);
-
-        for(CmtVO cmt : cmts) {
-            System.out.println("cmt = " + cmt);
-        }
+        for(CmtVO cmt : cmts) System.out.println("cmt = " + cmt);
     }
 
     @Test
@@ -133,21 +154,10 @@ class CommunityRepositoryTest {
 
         List<CmtVO> cmtVOList = communityRepository.cmtPagination(1L, pageable);
 
-        System.out.println("출력돼야해");
-
         if(cmtVOList.size() == 0) System.out.println("리스트에 아무것도 없음");
         else {
-            for(CmtVO cmtVO : cmtVOList) {
-                System.out.println("cmtDTO = " + cmtVO);
-            }
+            for(CmtVO cmtVO : cmtVOList) System.out.println("cmtDTO = " + cmtVO);
         }
-
-//        System.out.println("-----------------------------그냥 댓글 다 출력하기");
-//        List<CmtVO> cmtAll = communityRepository.findCmtAll(1L);
-//        for(CmtVO cmt : cmtAll) {
-//            System.out.println("cmt = " + cmt);
-//        }
-
     }
 
     @Test
@@ -166,14 +176,13 @@ class CommunityRepositoryTest {
                 .build();
 
         communityRepository.updateCmt(cmtVO);
-
         System.out.println("cmtVO = " + cmtVO);
     }
 
     @Test
     @DisplayName("댓글 삭제")
     void deleteCmtById() {
-        communityRepository.deleteCmtById(1L);
+        communityRepository.deleteCmtById(10L);
     }
 
     @Test
@@ -189,8 +198,8 @@ class CommunityRepositoryTest {
     @DisplayName("게시물 좋아요 했는지 여부")
     void findLikeById() {
         LikeVO likeVO = LikeVO.builder()
-                .postNo(3L)
-                .userNo("uuidtest")
+                .postNo(1L)
+                .userNo(testUser.getUserNo())
                 .build();
 
         int checkLike = communityRepository.findLikeById(likeVO);
@@ -200,15 +209,15 @@ class CommunityRepositoryTest {
     @Test
     @DisplayName("게시물 좋아요 개수 post 테이블에 업데이트")
     void updateLikeCnt() {
-        communityRepository.updateLikeCnt(3L);
+        communityRepository.updateLikeCnt(1L);
     }
 
     @Test
     @DisplayName("좋아요 하기")
     void createLike() {
         LikeVO likeVO = LikeVO.builder()
-                .postNo(4L)
-                .userNo("uuidtest1")
+                .postNo(1L)
+                .userNo(testUser.getUserNo())
                 .build();
 
         communityRepository.createLike(likeVO);
@@ -218,10 +227,11 @@ class CommunityRepositoryTest {
     @DisplayName("좋아요 취소")
     void deleteLikeById() {
         LikeVO likeVO = LikeVO.builder()
-                .postNo(3L)
-                .userNo("uuidtest")
+                .postNo(2L)
+                .userNo(testUser.getUserNo())
                 .build();
 
+        communityRepository.createLike(likeVO);
         communityRepository.deleteLikeById(likeVO);
     }
 

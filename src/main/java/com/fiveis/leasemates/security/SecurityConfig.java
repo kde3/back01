@@ -17,7 +17,8 @@ public class SecurityConfig {
         http.csrf((csrfConfig) -> csrfConfig.disable())
             .authorizeHttpRequests((authorize) ->
                     authorize
-                            .requestMatchers("/community/**", "/user/join", "/user/login","/user/join_terms").permitAll()
+                            .requestMatchers("/user/join", "/user/login","/user/join_terms",
+                                    "/community/", "/community/{postNo}").permitAll()
                             .requestMatchers("/user/info/**").hasRole(Role.USER.getKey())
                             .requestMatchers("/admin/**").hasRole(Role.ADMIN.getKey())
                             .anyRequest().authenticated()
@@ -27,7 +28,7 @@ public class SecurityConfig {
                             .usernameParameter("id")
                             .passwordParameter("password")
                             .loginProcessingUrl("/user/login")
-                            .failureForwardUrl("/user/login/error")
+                            .failureUrl("/user/login?error=true")
                             .defaultSuccessUrl("/community/", true)
             )
             .logout((logout) ->

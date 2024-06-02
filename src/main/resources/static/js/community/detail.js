@@ -30,36 +30,42 @@ else {
 }
 
 // 좋아요 하기
-thumbUpIcon.addEventListener("click", () => {
-    if(checkLike == 0) {
-        fetch(`/community/${postNo}/like`, {
-            method: 'post'
-        })
-        .then(()=>{
-            like();
-            checkLike = 1;
-            const likeCnts = document.querySelectorAll(".like_cnt");
-            likeCnts.forEach(likeCnt => {
-                likeCnt.textContent = Number(likeCnt.textContent) + 1;
-            });
-        })
+thumbUpIcon.addEventListener("click", function() {
+    const isContain = this.classList.contains('yesAuth');
+    if(isContain) {
+        if(checkLike == 0) {
+            fetch(`/community/${postNo}/like`, {
+                method: 'post'
+            })
+            .then((response)=>{
+                like();
+                checkLike = 1;
+                const likeCnts = document.querySelectorAll(".like_cnt");
+                likeCnts.forEach(likeCnt => {
+                    likeCnt.textContent = Number(likeCnt.textContent) + 1;
+                });
+            })
 
-    }
-    else if(checkLike == 1) {
-        fetch(`/community/${postNo}/unlike`, {
-            method: 'post',
-        })
-        .then(() => {
-            unlike();
-            checkLike = 0;
-            const likeCnts = document.querySelectorAll(".like_cnt");
-            likeCnts.forEach(likeCnt => {
-                likeCnt.textContent = Number(likeCnt.textContent) - 1;
-            });
-        })
+        }
+        else if(checkLike == 1) {
+            fetch(`/community/${postNo}/unlike`, {
+                method: 'post'
+            })
+            .then((response) => {
+                unlike();
+                checkLike = 0;
+                const likeCnts = document.querySelectorAll(".like_cnt");
+                likeCnts.forEach(likeCnt => {
+                    likeCnt.textContent = Number(likeCnt.textContent) - 1;
+                });
+            })
+        }
+        else {
+            console.log("잘못된 checkLike");
+        }
     }
     else {
-        console.log("잘못된 checkLike");
+        location.href = "/user/login";
     }
 });
 

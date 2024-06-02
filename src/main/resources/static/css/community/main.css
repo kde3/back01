@@ -1,87 +1,100 @@
-.category{
-    display: flex;
-    justify-content: space-between;
-
-    margin: 30px 0;
-}
-
-.category p {
-    font-size: 20px;
-    color: #8976FD;
-    font-weight: 500;
-}
-
-.write--button {
-    padding: 2px 5px;
-    border: 1px solid #8976FD;
-}
-
-.write--button span {
-    font-size: 15px;
-    font-weight: 500;
-    color: #8976FD;
-}
-
-.material-symbols-outlined {
-    color: #8976FD;
-    width: 20px;
-    height: 20px;
-
-    position: relative;
-    top: 3px;
-}
-
-.post .material-symbols-outlined {
-    color: #CACACA;
-    padding-left: 10px;
-}
-
-.post {
+.section_header {
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    height: 40px;
+    margin: 30px 0;
 }
 
-.post--title {
+.section_header .category {
+    font-size: 20px;
+    color: #8976FD;
+    font-weight: 700;
+}
+
+.post_write_btn {
+    display: flex;
+    align-items: center;
+
+    padding: 2px 5px;
+
+    border: 1px solid #8976FD;
+    color: #8976FD;
+}
+
+.post_write_btn_text {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.post_write_btn_icon {
+    font-size: 15px;
+    margin-right: 3px;
+}
+
+
+/*-----------------TABLE STYLE---------------*/
+
+.table,
+.thead,
+.tbody,
+.tbody .trow {
+     width: 100%;
+}
+
+.thead,
+.tbody .trow {
+    display: grid;
+    grid-template-columns: 0.2fr 2.5fr 0.5fr 0.5fr 0.5fr 0.5fr;
+}
+
+.table .thead {
+    height: 30px;
+
+    background-color: #8976FD;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.thead div,
+.tbody .trow div {
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
-.post--title-name {
-    display: block;
-    margin-left: 10px;
-    font-size: 18px;
+.tbody .trow {
+    height: 25px;
 
+    color: #332C5C;
+    border-bottom: 1px solid #CACACA;
 }
 
-.post--title .picture_icon {
-    height: 20px;
-    transform: translateY(-25%);
+.tbody .trow:hover {
+    background-color: #F5F3FF;
 }
 
-.like{
-    position: relative;
-    left: 550px;
+/* 게시물 제목 부분 정렬 */
+.tbody .trow .post_title {
+    display: flex;
+    justify-content: left;
+    align-items: center;
 }
 
-.like-count,
-.comme-count{
-    font-size: 20px;
-    color: #CACACA;
-    padding: 10px;
+.tbody .trow .post_title a:hover {
+    text-decoration-line: underline;
+    text-decoration-color: #332C5C;
 }
 
-.list-index{
+.tbody .trow .picture_icon,
+.tbody .trow .thumb_up_icon,
+.tbody .trow .comment_icon {
     text-align: center;
-    margin-top: 40px;
-}
+    vertical-align: middle;
 
-.list-index a{
-    text-decoration: none;
-    color: #6E6E6E;
-    font-size: 25px;
-    margin: 10px;
+    margin-right: 5px;
 
+    font-size: 15px;
+    color: #979797;
 }

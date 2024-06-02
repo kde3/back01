@@ -237,6 +237,11 @@ public class CommunityServiceImpl implements CommunityService {
     public List<PostDTO> postPagination(Pageable pageable) {
         List<PostDTO> postDTOList = communityRepository.postPagination(pageable);
 
+        // 닉네임 담기
+        for(PostDTO postDTO : postDTOList) {
+            postDTO.setUserName(userRepository.findNameByUserNo(postDTO.getUserNo()));
+        }
+
         return postDTOList;
     }
 

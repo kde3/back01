@@ -16,15 +16,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class UserController {
     private final UserService userService;
 
-//    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//    CustomUserDetails customUserDetails = (CustomUserDetails) principal;
-
-//    @GetMapping("/login")
-//    public void login() {}
-
     @GetMapping("/login")
-    public void login(@ModelAttribute String message, Model model) {
-        model.addAttribute(message);
+    public void login(@RequestParam(defaultValue = "false") boolean error,
+                      Model model) {
+
+        if(error) model.addAttribute("error", "아이디나 비밀번호가 잘못되었습니다.");
     }
 
     @GetMapping("/join")
@@ -32,20 +28,6 @@ public class UserController {
 
     @GetMapping("/join_terms")
     public void joinTerms() {}
-
-//    @GetMapping("/info")
-//    String userInfoView() {
-//        return "user/index";
-//    }
-
-    @GetMapping("/login/error")
-    public String loginError(RedirectAttributes redirectAttrs) {
-        redirectAttrs.addFlashAttribute("message", "아이디나 비밀번호가 잘못되었습니다.");
-
-        log.info("들어왔다");
-
-        return "redirect:/user/login";
-    }
 
 
     /**
@@ -68,4 +50,9 @@ public class UserController {
     public String logout() {
         return "redirect:/community/";
     }
+
+    //    @GetMapping("/info")
+//    String userInfoView() {
+//        return "user/index";
+//    }
 }

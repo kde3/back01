@@ -18,40 +18,62 @@
 <main layout:fragment="content">
     <div th:replace="~{fragments/banner :: banner}"></div>
 
-    <section class="before-list-container">
+    <section class="post_list_container">
         <div class="outer">
             <div class="inner">
 
-                <div class="list-category">
-                    <p>커뮤니티</p>
+                <div class="section_header">
+                    <div class="category">커뮤니티</div>
+
                     <a href="">
-                        <div class="write--button">
-                            <span class="material-symbols-outlined">edit_square</span>
-                            <span>글쓰기</span>
+                        <div class="post_write_btn">
+                            <span class="material-symbols-outlined post_write_btn_icon">edit_square</span>
+                            <span class="post_write_btn_text">글쓰기</span>
                         </div>
                     </a>
                 </div>
 
-                <hr>
+                <div class="table">
+                    <div class="thead">
+                        <div>No.</div>
+                        <div>제목</div>
+                        <div>작성자</div>
+                        <div>작성일</div>
+                        <div>좋아요</div>
+                        <div>댓글수</div>
+                    </div>
 
-                <div class="post_list">
-                    <th:block th:each="post : ${postVOList}" id="post_list--content">
-                        <div class="post">
-                            <div class="post--title">
-<!--                                <span class="material-symbols-outlined picture_icon">image</span>-->
-                                <a th:href="@{/community/{postNo}(postNo=${post.postNo})}"><span class="post--title-name" th:text="${post.title}"></span></a>
+                    <div class="tbody">
+                        <div class="trow" th:each="post : ${postDTOList}">
+                            <div>
+                                <span th:text="${post.postRownum}"></span>
                             </div>
-
-                            <div class="post--like">
-                                <span class="material-symbols-outlined">thumb_up</span>
-                                <span class="like-count" th:text="${post.likeCnt}"></span>
-
-                                <span class="material-symbols-outlined">mode_comment</span>
-                                <span class="comme-count" th:text="${post.cmtCnt}"></span>
+                            <div class="post_title">
+                                <span class="material-symbols-outlined picture_icon">image</span>
+                                <a th:href="@{/community/{postNo}(postNo=${post.postNo})}">
+                                    <span class="post--title-name" th:text="${post.title}"></span>
+                                </a>
+                            </div>
+                            <div>
+                                <span th:text="${post.userName}"></span>
+                            </div>
+                            <div>
+                                <span th:text="${post.updatedAt}"></span>
+                            </div>
+                            <div>
+                                <span class="material-symbols-outlined thumb_up_icon">thumb_up</span>
+                                <span th:text="${post.likeCnt}"></span>
+                            </div>
+                            <div>
+                                <span class="material-symbols-outlined comment_icon">mode_comment</span>
+                                <span th:text="${post.cmtCnt}"></span>
                             </div>
                         </div>
-                    </th:block>
+                    </div>
                 </div>
+
+            </div>
+
 
 <!-- 페이지네이션 버튼 -->
                 <div class="page_block">
