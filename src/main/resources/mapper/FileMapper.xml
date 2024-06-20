@@ -18,4 +18,5 @@
         where file_no = #{fileNo}
     </delete>
 
+
 </mapper>

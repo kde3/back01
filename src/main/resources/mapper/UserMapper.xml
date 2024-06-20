@@ -15,4 +15,27 @@
         insert into tbl_user(user_no, id, password, role, name, email, phone_number, created_at)
         values(#{userNo}, #{id}, #{password}, #{role}, #{name}, #{email}, #{phoneNumber}, to_char(sysdate, 'YYYY.MM.DD HH24:MI:SS'))
     </insert>
+
+    <select id="userPostPagination" parameterType="map" resultType="PostDTO">
+        <![CDATA[
+        SELECT *
+        FROM (select ROWNUM post_rownum,
+                     POST_NO,
+                     USER_NO,
+                     TITLE,
+                     CREATED_AT,
+                     UPDATED_AT,
+                     IS_UPDATED,
+                     CONTENT,
+                     LIKE_CNT,
+                     CMT_CNT
+              from (SELECT * FROM TBL_COMMUNITY_POST WHERE user_no = #{userNo} ORDER BY UPDATED_AT desc, post_no desc) )
+        WHERE post_rownum BETWEEN #{pageable.pageSize} * (#{pageable.page} - 1) + 1 AND #{pageable.pageSize} * #{pageable.page}
+        ]]>
+    </select>
+
+    <select id="findMyPostAllCount" parameterType="String" resultType="int">
+        SELECT count(*) FROM tbl_community_post WHERE user_no = #{userNo}
+    </select>
+
 </mapper>
