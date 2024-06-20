@@ -1,5 +1,8 @@
 package com.fiveis.leasemates.service;
 
+import com.fiveis.leasemates.domain.PageBlockDTO;
+import com.fiveis.leasemates.domain.Pageable;
+import com.fiveis.leasemates.domain.dto.community.PostDTO;
 import com.fiveis.leasemates.domain.dto.user.JoinDTO;
 import com.fiveis.leasemates.domain.vo.UserVO;
 import com.fiveis.leasemates.repository.UserRepository;
@@ -13,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -59,5 +63,20 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         UserVO userVO = userRepository.findByUserId(id)
                 .orElseThrow(() -> new UsernameNotFoundException("없는 유저입니다."));
         return new CustomUserDetails(userVO);
+    }
+
+    @Override
+    public List<PostDTO> userPostPagination(String userNo, Pageable pageable){
+        List<PostDTO> postDTOList = userRepository.userPostPagination(userNo, pageable);
+
+        return postDTOList;
+    }
+
+    @Override
+    public PageBlockDTO postPaginationBlock(int blockSize, Pageable pageable, String userNo) {
+        int postTotal = userRepository.findMyPostAllCount(userNo);
+        int totalPages = (int) Math.ceil(postTotal / (double) pageable.getPageSize());  // 전체 버튼 개수
+
+        return new PageBlockDTO(blockSize, totalPages, pageable);
     }
 }

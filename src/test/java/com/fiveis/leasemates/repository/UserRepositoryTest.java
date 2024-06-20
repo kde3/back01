@@ -1,5 +1,7 @@
 package com.fiveis.leasemates.repository;
 
+import com.fiveis.leasemates.domain.Pageable;
+import com.fiveis.leasemates.domain.dto.community.PostDTO;
 import com.fiveis.leasemates.domain.vo.UserVO;
 import com.fiveis.leasemates.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -68,4 +71,24 @@ class UserRepositoryTest {
         String username = userRepository.findNameByUserNo(userVO.getUserNo());
         System.out.println("username = " + username);
     }
+
+    @Test
+    @DisplayName("나의 게시글 페이지네이션")
+    void userPostPagination(){
+        Pageable pageable = new Pageable();
+        pageable.setPage(1);
+        pageable.setPageSize(3);
+
+        List<PostDTO> postDTOList = userRepository.userPostPagination("f00586b2-e0d0-4a44-a05b-95177a752350", pageable);
+
+        for(PostDTO postDTO : postDTOList) System.out.println("postDTO = " + postDTO);
+    }
+
+    @Test
+    @DisplayName("나의 게시글 카운트")
+    void findMyPostAllCount(){
+        int myPostAllCount = userRepository.findMyPostAllCount("f00586b2-e0d0-4a44-a05b-95177a752350");
+        System.out.println("myPostAllCount = " + myPostAllCount);
+    }
+
 }
