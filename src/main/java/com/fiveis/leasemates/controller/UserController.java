@@ -29,6 +29,11 @@ public class UserController {
     @GetMapping("/join_terms")
     public void joinTerms() {}
 
+    @GetMapping("/info")
+    public void userInfoView() {}
+
+    @GetMapping("/myposts")
+    public void myPostsView() {}
 
     /**
      * 회원가입
@@ -51,8 +56,5 @@ public class UserController {
         return "redirect:/community/";
     }
 
-    //    @GetMapping("/info")
-//    String userInfoView() {
-//        return "user/index";
-//    }
+
 }
