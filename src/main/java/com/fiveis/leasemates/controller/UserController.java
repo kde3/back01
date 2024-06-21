@@ -1,13 +1,19 @@
 package com.fiveis.leasemates.controller;
 
+import com.fiveis.leasemates.domain.PageBlockDTO;
+import com.fiveis.leasemates.domain.Pageable;
+import com.fiveis.leasemates.domain.dto.community.PostDTO;
 import com.fiveis.leasemates.domain.dto.user.JoinDTO;
+import com.fiveis.leasemates.security.CustomUserDetails;
 import com.fiveis.leasemates.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -33,7 +39,25 @@ public class UserController {
     public void userInfoView() {}
 
     @GetMapping("/myposts")
-    public void myPostsView() {}
+    public void myPostsView(@RequestParam(defaultValue = "1") int page,
+                            @RequestParam(defaultValue = "10") int size,
+                            Model model) {
+        Pageable pageable = new Pageable();
+        pageable.setPage(page);
+        pageable.setPageSize(size);
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomUserDetails customUserDetails = (CustomUserDetails) principal;
+        String userNo = customUserDetails.getUserVO().getUserNo();
+
+        List<PostDTO> postDTOList = userService.userPostPagination(userNo, pageable);
+        model.addAttribute("postDTOList", postDTOList);
+        for(PostDTO post : postDTOList) log.info("post = " + post);
+
+        PageBlockDTO pageBlockDTO = userService.userPostPaginationBlock(5, pageable, userNo);
+        model.addAttribute("pageBlockDTO", pageBlockDTO);
+        log.info("pageBlockDTO 값: "+ pageBlockDTO);
+    }
 
     /**
      * 회원가입

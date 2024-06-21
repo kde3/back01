@@ -27,6 +27,16 @@ public class Post {
             communityRepository.createDummyPost(postVO);
         }
 
+        for (int i = 12; i < 124; i++) {
+            PostVO postVO = PostVO.builder()
+                    .userNo("06c901bd-a6a9-4c65-a802-86222b651e4a")
+                    .title("테스트 " + i)
+                    .content("게시글 컨텐츠 " + i)
+                    .build();
+
+            communityRepository.createDummyPost(postVO);
+        }
+
         for (int i = 0; i < 77; i++) {
             CmtVO cmtVO = CmtVO.builder()
                     .postNo(1L)

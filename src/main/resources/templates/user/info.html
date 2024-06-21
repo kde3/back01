@@ -4,14 +4,55 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{commons/layout}">
 <head>
-<!--    <link rel="stylesheet" th:href="@{/css/user/login.css}">-->
+    <link rel="stylesheet" th:href="@{/css/user/info.css}">
 <!--    <script defer th:src="@{/js/user/login.js}"></script>-->
+
+    <link rel="stylesheet" th:href="@{/css/fragments/info_header.css}">
 </head>
 <body>
-<div layout:fragment="content">
-<div>여기가 유저 페이지다</div>
-<a th:href="@{/user/myposts}" style="background-color:red">내 게시글 보는 페이지</a>
+<main layout:fragment="content">
 
+<div th:replace="~{fragments/info_header :: info_header}"></div>
+
+<session>
+<div class="outer">
+    <div class="inner">
+
+        <div class="userinfo_content">
+            <table>
+                <tr>
+                    <th>가입일자</th>
+                    <td th:text="${#authentication.principal.userVO.createdAt}"></td>
+                </tr>
+                <tr>
+                    <th>아이디</th>
+                    <td th:text="${#authentication.principal.userVO.id}"></td>
+                </tr>
+                <tr>
+                    <th>이름</th>
+                    <td th:text="${#authentication.principal.userVO.name}"></td>
+                </tr>
+                <tr>
+                    <th>전화번호</th>
+                    <td th:text="${#authentication.principal.userVO.phoneNumber}"></td>
+                </tr>
+                <tr>
+                    <th>이메일</th>
+                    <td th:text="${#authentication.principal.userVO.email}"></td>
+                </tr>
+            </table>
+
+            <div class="logout_box">
+                <form method="POST" th:action="@{/user/logout}">
+                    <button class="logout">로그아웃</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
 </div>
+</session>
+
+</main>
 </body>
 </html>

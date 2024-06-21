@@ -1,0 +1,41 @@
+.userinfo_menu .profile {
+  color: #8976FD;
+  border-bottom: #8976FD solid 1px;
+}
+
+.userinfo_content {
+  margin-bottom: 20px;
+}
+
+.userinfo_content th {
+  width: 100px;
+  height: 30px;
+
+  text-align: left;
+
+  font-weight: 500;
+  font-size: 13px;
+}
+
+.logout_box {
+  display: flex;
+  justify-content: right;
+
+  width: inherit;
+}
+
+.logout {
+  margin-top: 20px;
+  padding: 5px 8px;
+
+  border: 1px solid red;
+  background-color: #FFFFFF;
+  color: red;
+
+  cursor: pointer;
+}
+
+.logout:hover {
+  background-color: red;
+  color: #FFFFFF;
+}

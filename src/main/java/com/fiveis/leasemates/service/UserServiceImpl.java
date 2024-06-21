@@ -73,7 +73,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public PageBlockDTO postPaginationBlock(int blockSize, Pageable pageable, String userNo) {
+    public PageBlockDTO userPostPaginationBlock(int blockSize, Pageable pageable, String userNo) {
         int postTotal = userRepository.findMyPostAllCount(userNo);
         int totalPages = (int) Math.ceil(postTotal / (double) pageable.getPageSize());  // 전체 버튼 개수
 

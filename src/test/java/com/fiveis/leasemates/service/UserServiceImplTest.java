@@ -46,12 +46,12 @@ class UserServiceTest {
 
     @Test
     @DisplayName("나의 게시글 페이지네이션 버튼 뿌리기")
-    void postPaginationBlock(){
+    void userPostPaginationBlock(){
         Pageable pageable = new Pageable();
         pageable.setPage(1);
         pageable.setPageSize(3);
 
-        PageBlockDTO pageBlockDTO = userService.postPaginationBlock(5, pageable, "f00586b2-e0d0-4a44-a05b-95177a752350");
+        PageBlockDTO pageBlockDTO = userService.userPostPaginationBlock(5, pageable, "f00586b2-e0d0-4a44-a05b-95177a752350");
         System.out.println("pageBlockDTO = " + pageBlockDTO);
         
     }

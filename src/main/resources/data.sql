@@ -80,4 +80,6 @@ CREATE TABLE tbl_community_like (
 insert into TBL_USER (USER_NO, ID, PASSWORD, NAME, EMAIL, PHONE_NUMBER, CREATED_AT, ROLE)
 values ('f00586b2-e0d0-4a44-a05b-95177a752350', 'aaa', '$2a$10$SPa39qVNqWA.VqMP/WQXOO.mfyWFe74C4tprELbU/s/QI6KN9XPCS', 'aaa', 'aaa@naver.com', '010-0000-0000', '2024-05-12', 'USER');
 insert into TBL_USER (USER_NO, ID, PASSWORD, NAME, EMAIL, PHONE_NUMBER, CREATED_AT, ROLE)
+values ('06c901bd-a6a9-4c65-a802-86222b651e4a', 'bbb', '$2a$10$yzaC4LMtS2/Gez7G7QtovOREd9yWGY0J.CGIgYt9DW1Fo7bGIpDv6', 'bbb', 'bbb@naver.com', '010-2222-2222', '2024-05-13', 'USER');
+insert into TBL_USER (USER_NO, ID, PASSWORD, NAME, EMAIL, PHONE_NUMBER, CREATED_AT, ROLE)
 values ('cb865a0c-44da-4ede-96f0-83dc1e3ba096', 'kkk', '$2a$10$GFUW.wfJoEbzJbcPv.gL0OCJZBdCG60buq1ckbkDvlXfJ/PP7/1W6', 'kkk', 'kkk@naver.com', '010-0000-0000', '2024-05-12', 'ADMIN');
