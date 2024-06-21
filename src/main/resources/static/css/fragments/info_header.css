@@ -1,0 +1,40 @@
+.userinfo_header {
+    display: flex;
+    align-items: center;
+
+    margin: 50px 0;
+}
+
+.userinfo_header .user_name {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.userinfo_menu {
+    display: flex;
+    justify-content: space-between;
+
+    margin: 20px 0;
+}
+
+.userinfo_menu div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 150px;
+    height: 50px;
+
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.userinfo_menu div {
+    color: #979797;
+    border-bottom: #979797 solid 1px;
+}
+
+.userinfo_menu div:hover {
+    color:#8976FD;
+    border-bottom: #8976FD solid 1px;
+}

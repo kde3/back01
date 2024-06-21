@@ -17,6 +17,6 @@ public interface UserService {
     List<PostDTO> userPostPagination(String userNo, Pageable pageable);
 
     //나의 게시글 페이지네이션 버튼 뿌리기
-    PageBlockDTO postPaginationBlock(int blockSize, Pageable pageable, String userNo);
+    PageBlockDTO userPostPaginationBlock(int blockSize, Pageable pageable, String userNo);
 
 }

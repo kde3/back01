@@ -75,30 +75,29 @@
             </div>
 
 
-<!-- 페이지네이션 버튼 -->
-                <div class="page_block">
-                    <th:block th:if="${pageBlockDTO.hasPrevBlock()}">
-                        <a th:href="@{/community/(page=${pageBlockDTO.startPage - 1})}">
-                            <span class="material-symbols-outlined">chevron_left</span>
-                        </a>
-                    </th:block>
+            <div class="page_block">
+                <th:block th:if="${pageBlockDTO.hasPrevBlock()}">
+                    <a th:href="@{/community/(page=${pageBlockDTO.startPage - 1})}">
+                        <span class="material-symbols-outlined">chevron_left</span>
+                    </a>
+                </th:block>
 
-                    <th:block th:each="i : ${#numbers.sequence(pageBlockDTO.startPage, pageBlockDTO.endPage)}">
-                        <a th:href="@{/community/(page=${i})}">
-                            <div class="page" th:text="${i}" th:classappend="${i == pageBlockDTO.currentPage ? 'active' : ''}"></div>
-                        </a>
-                    </th:block>
+                <th:block th:each="i : ${#numbers.sequence(pageBlockDTO.startPage, pageBlockDTO.endPage)}">
+                    <a th:href="@{/community/(page=${i})}">
+                        <div class="page" th:text="${i}" th:classappend="${i == pageBlockDTO.currentPage ? 'active' : ''}"></div>
+                    </a>
+                </th:block>
 
-                    <th:block th:if="${pageBlockDTO.hasNextBlock()}">
-                        <a th:href="@{/community/(page=${pageBlockDTO.endPage + 1})}">
-                            <span class="material-symbols-outlined">chevron_right</span>
-                        </a>
-                    </th:block>
-                </div>
-
+                <th:block th:if="${pageBlockDTO.hasNextBlock()}">
+                    <a th:href="@{/community/(page=${pageBlockDTO.endPage + 1})}">
+                        <span class="material-symbols-outlined">chevron_right</span>
+                    </a>
+                </th:block>
             </div>
+
         </div>
-    </section>
+    </div>
+</section>
 
 </main>
 </body>

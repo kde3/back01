@@ -4,13 +4,85 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{commons/layout}">
 <head>
-    <!--    <link rel="stylesheet" th:href="@{/css/user/login.css}">-->
+    <link rel="stylesheet" th:href="@{/css/user/myposts.css}">
     <!--    <script defer th:src="@{/js/user/login.js}"></script>-->
+
+    <link rel="stylesheet" th:href="@{/css/fragments/info_header.css}">
+    <link rel="stylesheet" th:href="@{/css/commons/page_block.css}">
 </head>
 <body>
-<div layout:fragment="content">
-    <div>내 게시글 보는 페이지</div>
+<main layout:fragment="content">
 
-</div>
+<div th:replace="~{fragments/info_header :: info_header}"></div>
+
+<section class="userinfo_content">
+    <div class="outer">
+        <div class="inner">
+
+            <div class="table">
+                <div class="thead">
+                    <div>No.</div>
+                    <div>제목</div>
+                    <div>작성자</div>
+                    <div>작성일</div>
+                    <div>좋아요</div>
+                    <div>댓글수</div>
+                </div>
+
+                <div class="tbody">
+                    <div class="trow" th:each="post : ${postDTOList}">
+                        <div>
+                            <span th:text="${post.postRownum}"></span>
+                        </div>
+                        <div class="post_title">
+                            <span class="material-symbols-outlined picture_icon">image</span>
+                            <a th:href="@{/community/{postNo}(postNo=${post.postNo})}">
+                                <span class="post--title-name" th:text="${post.title}"></span>
+                            </a>
+                        </div>
+                        <div>
+                            <span th:text="${#authentication.principal.userVO.name}"></span>
+                        </div>
+                        <div>
+                            <span th:text="${post.updatedAt}"></span>
+                        </div>
+                        <div>
+                            <span class="material-symbols-outlined thumb_up_icon">thumb_up</span>
+                            <span th:text="${post.likeCnt}"></span>
+                        </div>
+                        <div>
+                            <span class="material-symbols-outlined comment_icon">mode_comment</span>
+                            <span th:text="${post.cmtCnt}"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="page_block">
+                <th:block th:if="${pageBlockDTO.hasPrevBlock()}">
+                    <a th:href="@{/user/myposts(page=${pageBlockDTO.startPage - 1})}">
+                        <span class="material-symbols-outlined">chevron_left</span>
+                    </a>
+                </th:block>
+
+                <th:block th:each="i : ${#numbers.sequence(pageBlockDTO.startPage, pageBlockDTO.endPage)}">
+                    <a th:href="@{/user/myposts(page=${i})}">
+                        <div class="page" th:text="${i}" th:classappend="${i == pageBlockDTO.currentPage ? 'active' : ''}"></div>
+                    </a>
+                </th:block>
+
+                <th:block th:if="${pageBlockDTO.hasNextBlock()}">
+                    <a th:href="@{/user/myposts(page=${pageBlockDTO.endPage + 1})}">
+                        <span class="material-symbols-outlined">chevron_right</span>
+                    </a>
+                </th:block>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+</main>
 </body>
 </html>
