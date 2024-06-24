@@ -29,25 +29,14 @@
         SELECT count(*) FROM TBL_SHAREHOUSE_POST
     </select>
 
-<!--    <select id="findNameByUserNo" parameterType="String" resultType="String">-->
-<!--        SELECT name FROM tbl_user-->
-<!--        where user_no = #{userNo}-->
-<!--    </select>-->
+    <select id="findPostById" parameterType="Long" resultType="SharehousePostVO">
+        SELECT * FROM TBL_SHAREHOUSE_POST
+        where post_no = #{postNo}
+    </select>
 
-<!--    <select id="findByUserId" parameterType="String" resultType="UserVO">-->
-<!--        SELECT * FROM tbl_user-->
-<!--        where id = #{id}-->
-<!--    </select>-->
-
-<!--    <insert id="createUser" parameterType="UserVO">-->
-<!--        insert into tbl_user(user_no, id, password, role, name, email, phone_number, created_at)-->
-<!--        values(#{userNo}, #{id}, #{password}, #{role}, #{name}, #{email}, #{phoneNumber}, to_char(sysdate, 'YYYY.MM.DD HH24:MI:SS'))-->
-<!--    </insert>-->
-
-
-
-<!--    <select id="findMyPostAllCount" parameterType="String" resultType="int">-->
-<!--        SELECT count(*) FROM tbl_community_post WHERE user_no = #{userNo}-->
-<!--    </select>-->
-
+    <!--    좋아요 했는지 판단 위함-->
+    <select id="findLikeById" parameterType="LikeVO" resultType="int">
+        SELECT count(*) FROM TBL_SHAREHOUSE_LIKE
+        where post_no = #{postNo} and user_no = #{userNo}
+    </select>
 </mapper>

@@ -4,6 +4,7 @@ drop table TBL_COMMUNITY_LIKE;
 drop table TBL_COMMUNITY_COMMENT;
 drop table TBL_COMMUNITY_POST;
 
+drop table TBL_SHAREHOUSE_LIKE;
 drop table TBL_SHAREHOUSE_POST;
 
 drop table TBL_USER;
@@ -54,7 +55,7 @@ CREATE TABLE tbl_community_post (
     like_cnt    NUMBER  			DEFAULT 0 NOT NULL,
     cmt_cnt     NUMBER  			DEFAULT 0 NOT NULL,
 
-    CONSTRAINT POST_USER_NO_FK FOREIGN KEY (user_no) REFERENCES tbl_user (user_no) ON DELETE CASCADE
+    CONSTRAINT COMMUNITY_POST_USER_NO_FK FOREIGN KEY (user_no) REFERENCES tbl_user (user_no) ON DELETE CASCADE
 );
 
 CREATE TABLE tbl_community_file (
@@ -62,7 +63,7 @@ CREATE TABLE tbl_community_file (
     post_no     NUMBER  		    NOT NULL,
     file_path   VARCHAR2(255)       NOT NULL,
 
-    CONSTRAINT FILE_POST_NO_FK FOREIGN KEY (post_no) REFERENCES tbl_community_post (post_no) ON DELETE CASCADE
+    CONSTRAINT COMMUNITY_FILE_POST_NO_FK FOREIGN KEY (post_no) REFERENCES tbl_community_post (post_no) ON DELETE CASCADE
 );
 
 CREATE TABLE tbl_community_comment (
@@ -74,17 +75,17 @@ CREATE TABLE tbl_community_comment (
     updated_at  VARCHAR2(20)   		NOT NULL,
     is_updated  VARCHAR2(1) 		DEFAULT 'N' NOT NULL CHECK (is_updated IN ('Y', 'N')),
 
-    CONSTRAINT CMT_POST_NO_FK FOREIGN KEY (post_no) REFERENCES tbl_community_post (post_no) ON DELETE CASCADE,
-    CONSTRAINT CMT_USER_NO_FK FOREIGN KEY (user_no) REFERENCES tbl_user (user_no) ON DELETE CASCADE
+    CONSTRAINT COMMUNITY_CMT_POST_NO_FK FOREIGN KEY (post_no) REFERENCES tbl_community_post (post_no) ON DELETE CASCADE,
+    CONSTRAINT COMMUNITY_CMT_USER_NO_FK FOREIGN KEY (user_no) REFERENCES tbl_user (user_no) ON DELETE CASCADE
 );
 
 CREATE TABLE tbl_community_like (
     post_no     NUMBER  			NOT NULL,
     user_no     VARCHAR2(128)  	    NOT NULL,
 
-    CONSTRAINT LIKE_PK PRIMARY KEY (post_no, user_no),
-    CONSTRAINT LIKE_POST_NO_FK FOREIGN KEY (post_no) REFERENCES tbl_community_post (post_no) ON DELETE CASCADE,
-    CONSTRAINT LIKE_USER_NO_FK FOREIGN KEY (user_no) REFERENCES tbl_user (user_no) ON DELETE CASCADE
+    CONSTRAINT COMMUNITY_LIKE_PK PRIMARY KEY (post_no, user_no),
+    CONSTRAINT COMMUNITY_LIKE_POST_NO_FK FOREIGN KEY (post_no) REFERENCES tbl_community_post (post_no) ON DELETE CASCADE,
+    CONSTRAINT COMMUNITY_LIKE_USER_NO_FK FOREIGN KEY (user_no) REFERENCES tbl_user (user_no) ON DELETE CASCADE
 );
 
 CREATE TABLE tbl_sharehouse_post (
@@ -99,6 +100,15 @@ CREATE TABLE tbl_sharehouse_post (
     like_cnt    NUMBER  			DEFAULT 0 NOT NULL,
 
     CONSTRAINT SHAREHOUSE_POST_USER_NO_FK FOREIGN KEY (user_no) REFERENCES tbl_user (user_no) ON DELETE CASCADE
+);
+
+CREATE TABLE tbl_sharehouse_like (
+    post_no     NUMBER  			NOT NULL,
+    user_no     VARCHAR2(128)  	    NOT NULL,
+
+    CONSTRAINT SHAREHOUSE_LIKE_PK PRIMARY KEY (post_no, user_no),
+    CONSTRAINT SHAREHOUSE_LIKE_POST_NO_FK FOREIGN KEY (post_no) REFERENCES tbl_sharehouse_post (post_no) ON DELETE CASCADE,
+    CONSTRAINT SHAREHOUSE_LIKE_USER_NO_FK FOREIGN KEY (user_no) REFERENCES tbl_user (user_no) ON DELETE CASCADE
 );
 
 

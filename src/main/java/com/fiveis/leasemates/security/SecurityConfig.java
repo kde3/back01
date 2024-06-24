@@ -19,7 +19,7 @@ public class SecurityConfig {
                     authorize
                             .requestMatchers("/user/join", "/user/login","/user/join_terms",
                                     "/community/", "/community/{postNo}",
-                                    "/sharehouse/").permitAll()
+                                    "/sharehouse/", "/sharehouse/{postNo}").permitAll()
                             .requestMatchers("/user/info/**").hasRole(Role.USER.getKey())
                             .requestMatchers("/admin/**").hasRole(Role.ADMIN.getKey())
                             .anyRequest().authenticated()
