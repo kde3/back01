@@ -1,5 +1,5 @@
 header {
-    /* fixed 속성 주는 바람에 헤더와 main이 겹쳐지는데 방지하기 위함 */
+    /* fixed 속성으로 헤더와 main이 겹치기 때문에 이를 방지하기 위함 */
     height: 61px;
 }
 
@@ -41,18 +41,19 @@ header .inner {
     font-size:25px;
 }
 
+/* 네비게이션 색상 표시 */
+header .active {
+    color:#8976FD;
+}
+
 .header--left-community,
 .header--left-barter,
 .header--left-sharehouse {
-    color: #332C5C;
     font-size: 15px;
     font-weight: bold;
 }
 
-.header--left-community {
-    color:#8976FD;
-}
-
+.header--left-community:hover,
 .header--left-barter:hover,
 .header--left-sharehouse:hover {
     color:#8976FD;
@@ -100,10 +101,6 @@ header .inner {
 .header--right-login {
     background-color: #8976FD;
     color: #FFFFFF;
-}
-
-.header--right-signup {
-    color: #332C5C;
 }
 
 .user_profile {
