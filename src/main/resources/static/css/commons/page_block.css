@@ -1,22 +1,25 @@
 .page_block {
     display: flex;
     justify-content: center;
+    align-items: center;
 
     margin: 30px 0 50px 0;
 }
 
+.page_block span {
+    display: block;
+}
+
 .page_block .page {
     margin: 0 3px;
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
 
-    line-height: 30px;
+    line-height: 25px;
     text-align: center;
 
-    font-size: 15px;
     border:1px solid #8976FD;
     background-color: white;
-    color: #332C5C;
 
     cursor: pointer;
 }
