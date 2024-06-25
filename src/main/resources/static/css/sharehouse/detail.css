@@ -79,7 +79,8 @@
 }
 
 .like_box .like_icon {
-    color: #8976FD;
+    /*color: #8976FD;*/
+    cursor: pointer;
 }
 
 .detail_content_bottom {

@@ -9,7 +9,7 @@
     <script type="module" th:src="@{/js/fragments/banner.js}"></script>
 
     <link rel="stylesheet" th:href="@{/css/sharehouse/detail.css}">
-<!--    <script defer th:src="@{/js/community/detail.js}"></script>-->
+    <script defer th:src="@{/js/sharehouse/detail.js}"></script>
 </head>
 
 <body>
@@ -33,7 +33,10 @@
                     <div class="detail_info">
                         <div>
                             <div class="detail_title" th:text="${sharehousePostDetailDTO.title}"></div>
-                            <div class="detail_address_like" th:text="${sharehousePostDetailDTO.address} + ' · 좋아요 ' + ${sharehousePostDetailDTO.likeCnt}"></div>
+                            <div class="detail_address_like">
+                                <span th:text="${sharehousePostDetailDTO.address} + ' · 좋아요 '"></span>
+                                <span class="like_cnt" th:text="${sharehousePostDetailDTO.likeCnt}"></span>
+                            </div>
                             <div class="detail_username" th:text="${sharehousePostDetailDTO.userName} + '님'"></div>
                         </div>
 
@@ -41,8 +44,10 @@
                             <button class="send_message">쪽지보내기</button>
 
                             <div class="like_box">
-                                <span class="material-icons like_icon">favorite_border</span>
-                                <span>56</span>
+                                <span class="material-icons like_icon"
+                                      th:attr="data-check_like=${sharehousePostDetailDTO.checkLike}"
+                                      th:classappend="${#authentication.principal == 'anonymousUser' ? 'noAuth' : 'yesAuth'}">favorite_border</span>
+                                <span class="like_cnt" th:text="${sharehousePostDetailDTO.likeCnt}">56</span>
                             </div>
                         </div>
                     </div>

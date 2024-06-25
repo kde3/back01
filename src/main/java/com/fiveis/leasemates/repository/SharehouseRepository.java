@@ -12,8 +12,26 @@ import java.util.Optional;
 @Mapper
 public interface SharehouseRepository {
     void createDummy(SharehousePostVO sharehousePostVO);
+
+    /**
+     * 게시물 목록 보기 관련 기능
+     */
     List<SharehousePostDTO> postPagination(Pageable pageable);
     int findPostAllCount();
+
+    /**
+     * 게시물 상세 보기 관련 기능
+     */
     Optional<SharehousePostVO> findPostById(Long postNo);
-    int findLikeById(LikeVO likeVO);
+
+    /**
+     * 좋아요 관련 기능
+     */
+    int findLikeById(LikeVO likeVO);        //좋아요 했는지 확인 위함
+
+    void updateLikeCnt(Long postNo);
+
+    void createLike(LikeVO likeVO);
+
+    void deleteLikeById(LikeVO likeVO);
 }

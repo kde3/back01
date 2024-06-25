@@ -2,23 +2,21 @@ package com.fiveis.leasemates.controller;
 
 import com.fiveis.leasemates.domain.PageBlockDTO;
 import com.fiveis.leasemates.domain.Pageable;
-import com.fiveis.leasemates.domain.dto.community.PostDTO;
-import com.fiveis.leasemates.domain.dto.community.PostDetailDTO;
 import com.fiveis.leasemates.domain.dto.sharehouse.SharehousePostDTO;
 import com.fiveis.leasemates.domain.dto.sharehouse.SharehousePostDetailDTO;
+import com.fiveis.leasemates.domain.vo.LikeVO;
 import com.fiveis.leasemates.security.CustomUserDetails;
 import com.fiveis.leasemates.service.SharehouseService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/sharehouse")
@@ -65,5 +63,47 @@ public class SharehouseController {
 //        board.setContent(content.replaceAll("\n", "<br>"));
 
         return "sharehouse/detail";
+    }
+
+    /**
+     *  좋아요 하기
+     */
+    @PostMapping("/{postNo}/like")
+    public String createLike(@PathVariable("postNo") Long postNo) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomUserDetails customUserDetails = (CustomUserDetails) principal;
+        String userNo = customUserDetails.getUserVO().getUserNo();
+
+        LikeVO likeVO = LikeVO.builder()
+                .postNo(postNo)
+                .userNo(userNo)
+                .build();
+
+        sharehouseService.createLike(likeVO);
+
+        log.info("[좋아요]");
+
+        return "redirect:/sharehouse/" + postNo;
+    }
+
+    /**
+     *  좋아요 취소
+     */
+    @PostMapping("/{postNo}/unlike")
+    public String deleteLike(@PathVariable("postNo") Long postNo) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomUserDetails customUserDetails = (CustomUserDetails) principal;
+        String userNo = customUserDetails.getUserVO().getUserNo();
+
+        LikeVO likeVO = LikeVO.builder()
+                .postNo(postNo)
+                .userNo(userNo)
+                .build();
+
+        sharehouseService.deleteLike(likeVO);
+
+        log.info("[좋아요 취소]");
+
+        return "redirect:/sharehouse/" + postNo;
     }
 }

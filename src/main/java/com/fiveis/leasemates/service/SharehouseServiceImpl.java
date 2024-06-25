@@ -62,4 +62,24 @@ public class SharehouseServiceImpl implements SharehouseService {
 
         return sharehousePostDetailDTO;
     }
+
+    /**
+     * 좋아요 하기
+     * @param likeVO
+     */
+    @Override
+    public void createLike(LikeVO likeVO) {
+        sharehouseRepository.createLike(likeVO);
+        sharehouseRepository.updateLikeCnt(likeVO.getPostNo());
+    }
+
+    /**
+     * 좋아요 취소
+     * @param likeVO
+     */
+    @Override
+    public void deleteLike(LikeVO likeVO) {
+        sharehouseRepository.deleteLikeById(likeVO);
+        sharehouseRepository.updateLikeCnt(likeVO.getPostNo());
+    }
 }

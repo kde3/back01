@@ -39,4 +39,21 @@
         SELECT count(*) FROM TBL_SHAREHOUSE_LIKE
         where post_no = #{postNo} and user_no = #{userNo}
     </select>
+
+    <!--    좋아요 개수 카운트해서 post 테이블에 업데이트-->
+    <update id="updateLikeCnt" parameterType="Long">
+        update tbl_SHAREHOUSE_post
+        set like_cnt = (select count(*) from TBL_SHAREHOUSE_LIKE where post_no = #{postNo})
+        where post_no = #{postNo}
+    </update>
+
+    <insert id="createLike" parameterType="LikeVO">
+        insert into TBL_SHAREHOUSE_LIKE (post_no , user_no)
+        values(#{postNo}, #{userNo})
+    </insert>
+
+    <delete id="deleteLikeById" parameterType="LikeVO">
+        delete from TBL_SHAREHOUSE_LIKE
+        where post_no = #{postNo} and user_no = #{userNo}
+    </delete>
 </mapper>
