@@ -189,7 +189,12 @@ public class CommunityServiceImpl implements CommunityService {
                 .content(postVO.getContent())
                 .build();
 
-        System.out.println(post);
+        System.out.println("postVO" + post);
+
+        //userNO가 null인지 확인
+        if (post.getUserNo() == null) {
+            throw new IllegalArgumentException("User number cannot be null");
+        }
         communityRepository.createPost(post);
 
         // files가 null인지 확인
