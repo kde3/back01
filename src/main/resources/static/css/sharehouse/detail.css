@@ -79,7 +79,6 @@
 }
 
 .like_box .like_icon {
-    /*color: #8976FD;*/
     cursor: pointer;
 }
 
@@ -89,6 +88,30 @@
     border-bottom: 1px solid #CACACA;
 
     line-height: 20px;
+}
+
+.edit_btn_box {
+    display: flex;
+    justify-content: end;
+    margin-top: 20px;
+}
+
+.edit_btn_box button {
+    padding: 8px 17px;
+
+    background-color: #FFFFFF;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.update_post {
+    border: 1px solid #8976FD;
+}
+
+.delete_post {
+    margin-left: 5px;
+    border: 1px solid #FF6099;
 }
 
 .go_back_box {
