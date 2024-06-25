@@ -194,92 +194,99 @@ public class CommunityController {
     }
 
 
-//    /**
-//     * 게시글 작성
-//     * /community/create
-//     */
-//    @GetMapping("/create")
-//    public  String createPost(@RequestParam(value = "postNo", required = false) final Long postNo, Model model){
-//        if(postNo != null){
-//            Optional<PostVO> postOptional = communityService.findById(postNo);
-//            if(postOptional.isPresent()){
-//                PostVO post = postOptional.get();
+    /**
+     * 게시글 작성
+     * /community/create
+     */
+    @GetMapping("/create")
+    public  String createPost(@RequestParam(value = "postNo", required = false) final Long postNo, Model model){
+        if(postNo != null){
+            Optional<PostVO> postOptional = communityService.findById(postNo);
+            if(postOptional.isPresent()){
+                PostVO post = postOptional.get();
+
+                model.addAttribute("post", post);
+            }
+        }
+        return "community/create";
+    }
+
+
+    @PostMapping("/create")
+    public String createPost(PostVO postVO, FileVO fileVO, @RequestParam(required = false) List<MultipartFile> files, RedirectAttributes redirectAttributes) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomUserDetails customUserDetails = (CustomUserDetails) principal;
+        String userNo = customUserDetails.getUserVO().getUserNo();
+
+        // likeCnt가 null이면 기본값을 설정
+        if (postVO.getLikeCnt() == null) {
+            postVO.setLikeCnt(0); // 기본값 0으로 설정
+        }
+
+//        if(files == null){
+//            Long number = postService.createPost(postVO, files);
 //
-//                model.addAttribute("post", post);
-//            }
+//        } else{
+//            System.out.println("업로드할 파일이 없음");
 //        }
-//        return "commu/post/create/create";
-//    }
-//
-//    @ResponseBody
-//    @PostMapping("/create")
-//    public String createPost(PostVO postVO, FileVO fileVO, @RequestParam(required = false) List<MultipartFile> files, RedirectAttributes redirectAttributes) {
-//        // likeCnt가 null이면 기본값을 설정
-//        if (postVO.getLikeCnt() == null) {
-//            postVO.setLikeCnt(0); // 기본값 0으로 설정
-//        }
-//
-////        if(files == null){
-////            Long number = postService.createPost(postVO, files);
-////
-////        } else{
-////            System.out.println("업로드할 파일이 없음");
-////        }
-//
-//        PostVO newPost = PostVO.builder()
-//                .title(postVO.getTitle())
-//                .userNo("uuidtest1")
-//                .content(postVO.getContent())
-//                .build();
-//
-//        FileVO newFile = FileVO.builder()
-//                .filePath(fileVO.getFilePath())
-//                .build();
-//
-//
-//        Long postNo = communityService.createPost(newPost, files);
-//        Long fileNo = fileService.insertFile(newFile);
-//
-//        redirectAttributes.addAttribute("postNo", postNo);
-//        redirectAttributes.addAttribute("fileNo", fileNo);
-//
-//        return "redirect:community/" + String.valueOf(postNo);
-//    }
-//
-//    /**
-//     * 게시글 수정
-//     * /community/{postId}/update
-//     */
-//    @GetMapping("/{postId}/update")
-//    public String editPost(@PathVariable("postId") Long postNo,Model model){
-//        Optional<PostVO> postOptional = communityService.findById(postNo);
-//        if(postOptional.isPresent()){
-//            PostVO post = postOptional.get();
-//            model.addAttribute("post", post);
-//        }
-//        return "commu/post/edit/edit";
-//    }
-//
-//
-//    @PostMapping("/{postId}/update")
-//    public String updatePost(@PathVariable("postId") Long postNo, PostVO postVO, List<MultipartFile> files){
-//        postVO.setPostNo(postNo);
-////        postVO.setTitle(postVO.getTitle());
-////        postVO.setContent(postVO.getContent());
-//
-//        communityService.updatePost(postVO, files);
-//        return "redirect:/community/" + postNo ;
-//    }
-//
-//    /**
-//     * 게시글 삭제
-//     * /community/{postId}/delete
-//     */
-//    @GetMapping("/{postId}/delete")
-//    public String deletePost(@PathVariable("postId") Long postId){
-//        communityService.deletePost(postId);
-//        return "redirect:/community/retrieve";
-//    }
+
+        PostVO newPost = PostVO.builder()
+                .title(postVO.getTitle())
+                .userNo(userNo)
+                .content(postVO.getContent())
+                .build();
+
+        FileVO newFile = FileVO.builder()
+                .filePath(fileVO.getFilePath())
+                .build();
+
+
+        Long postNo = communityService.createPost(newPost, files);
+        Long fileNo = fileService.insertFile(newFile);
+
+        redirectAttributes.addAttribute("postNo", postNo);
+        redirectAttributes.addAttribute("fileNo", fileNo);
+
+        return "redirect:/community/" + postNo;
+    }
+
+
+
+
+    /**
+     * 게시글 수정
+     * /community/{postNo}/update
+     */
+    @GetMapping("/{postNo}/update")
+    public String editPost(@PathVariable Long postNo, Model model){
+        Optional<PostVO> postOptional = communityService.findById(postNo);
+        if(postOptional.isPresent()){
+            PostVO post = postOptional.get();
+            model.addAttribute("post", post);
+        }
+        return "community/edit";
+    }
+
+
+    @PostMapping("/{postNo}/update")
+    public String updatePost(@PathVariable Long postNo, PostVO postVO, List<MultipartFile> files){
+        postVO.setPostNo(postNo);
+//        postVO.setTitle(postVO.getTitle());
+//        postVO.setContent(postVO.getContent());
+
+        communityService.updatePost(postVO, files);
+        return "redirect:/community/" + postNo ;
+    }
+
+    /**
+     * 게시글 삭제
+     * /community/{postNo}/delete
+     */
+    @GetMapping("/{postNo}/delete")
+    public String deletePost(@PathVariable("postNo") Long postNo){
+        communityService.deletePost(postNo);
+        return "redirect:/community/";
+    }
 
 
 }
