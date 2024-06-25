@@ -1,0 +1,47 @@
+
+/* 각 메인페이지(커뮤니티, 물물교환, 내집공유)의 카테고리 디자인 */
+
+.category .inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin: 30px 0;
+}
+
+.category_title {
+    font-size: 20px;
+    color: #8976FD;
+    font-weight: 700;
+}
+
+.post_write_btn {
+    display: flex;
+    align-items: center;
+
+    padding: 2px 5px;
+
+    border: 1px solid #8976FD;
+    color: #8976FD;
+}
+
+.post_write_btn_text {
+    font-size: 12px;
+    font-weight: 500;
+    color: #8976FD;
+}
+
+.post_write_btn_icon {
+    font-size: 15px;
+    margin-right: 3px;
+    color: #8976FD;
+}
+
+.post_write_btn:hover {
+    background-color: #8976FD;
+}
+
+.post_write_btn:hover .post_write_btn_icon,
+.post_write_btn:hover .post_write_btn_text {
+    color: #FFFFFF;
+}

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fiveis.leasemates.repository.SharehouseRepository">
+
+    <insert id="createDummy" parameterType="SharehousePostVO">
+        insert into TBL_SHAREHOUSE_POST (POST_NO, USER_NO, TITLE, CREATED_AT, UPDATED_AT, IS_UPDATED, CONTENT, ADDRESS, LIKE_CNT)
+        values (seq_sharehouse_post_no.nextval, #{userNo}, #{title}, to_char(sysdate, 'YYYY.MM.DD HH24:MI:SS'), to_char(sysdate, 'YYYY.MM.DD HH24:MI:SS'), 'N', #{content}, '서울 성북구 아리랑로 6', 0)
+    </insert>
+
+    <select id="postPagination" parameterType="Pageable" resultType="SharehousePostDTO">
+        <![CDATA[
+        SELECT *
+        FROM (select ROWNUM post_rownum,
+                     POST_NO,
+                     USER_NO,
+                     TITLE,
+                     CREATED_AT,
+                     UPDATED_AT,
+                     IS_UPDATED,
+                     CONTENT,
+                     ADDRESS,
+                     LIKE_CNT
+              from (SELECT * FROM TBL_SHAREHOUSE_POST ORDER BY UPDATED_AT desc, post_no desc))
+        WHERE post_rownum BETWEEN #{pageSize} * (#{page} - 1) + 1 AND #{pageSize} * #{page}
+        ]]>
+    </select>
+
+    <select id="findPostAllCount" resultType="int">
+        SELECT count(*) FROM TBL_SHAREHOUSE_POST
+    </select>
+
+    <select id="findPostById" parameterType="Long" resultType="SharehousePostVO">
+        SELECT * FROM TBL_SHAREHOUSE_POST
+        where post_no = #{postNo}
+    </select>
+
+    <!--    좋아요 했는지 판단 위함-->
+    <select id="findLikeById" parameterType="LikeVO" resultType="int">
+        SELECT count(*) FROM TBL_SHAREHOUSE_LIKE
+        where post_no = #{postNo} and user_no = #{userNo}
+    </select>
+
+    <!--    좋아요 개수 카운트해서 post 테이블에 업데이트-->
+    <update id="updateLikeCnt" parameterType="Long">
+        update tbl_SHAREHOUSE_post
+        set like_cnt = (select count(*) from TBL_SHAREHOUSE_LIKE where post_no = #{postNo})
+        where post_no = #{postNo}
+    </update>
+
+    <insert id="createLike" parameterType="LikeVO">
+        insert into TBL_SHAREHOUSE_LIKE (post_no , user_no)
+        values(#{postNo}, #{userNo})
+    </insert>
+
+    <delete id="deleteLikeById" parameterType="LikeVO">
+        delete from TBL_SHAREHOUSE_LIKE
+        where post_no = #{postNo} and user_no = #{userNo}
+    </delete>
+</mapper>

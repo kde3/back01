@@ -1,0 +1,36 @@
+.sharehouse_content .inner {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    /* 세로 높이 */
+    grid-auto-rows: 250px;
+
+    /* 갭 */
+    grid-row-gap: 50px;
+    grid-column-gap: 10px;
+}
+
+.post_img {
+    width: 100%;
+}
+
+.post_img img {
+    width: 100%;
+}
+
+.post_info div {
+    margin: 5px 0;
+}
+
+.post_title {
+    font-weight: 800;
+    font-size: 20px;
+}
+
+.post_address_like {
+    font-weight: 300;
+}
+
+.post_username {
+    color: #979797;
+}

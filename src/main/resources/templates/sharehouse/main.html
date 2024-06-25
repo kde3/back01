@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{commons/layout}">
+
+<head>
+    <link rel="stylesheet" th:href="@{/css/fragments/banner.css}">
+    <script type="module" th:src="@{/js/fragments/banner.js}"></script>
+
+    <link rel="stylesheet" th:href="@{/css/sharehouse/main.css}">
+<!--    <script defer th:src="@{/js/community/main.js}"></script>-->
+
+    <link rel="stylesheet" th:href="@{/css/commons/page_block.css}">
+    <link rel="stylesheet" th:href="@{/css/commons/category.css}">
+</head>
+
+<body>
+<main layout:fragment="content">
+    <div th:replace="~{fragments/banner :: banner}"></div>
+
+    <div class="category">
+        <div class="outer">
+            <div class="inner">
+
+                <div class="category_title">내집공유</div>
+
+                <a href="">
+                    <div class="post_write_btn">
+                        <span class="material-symbols-outlined post_write_btn_icon">edit_square</span>
+                        <span class="post_write_btn_text">글쓰기</span>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+    </div>
+
+    <section class="sharehouse_content">
+        <div class="outer">
+            <div class="inner">
+
+                <div class="post" th:each="post : ${sharehousePostDTOList}">
+                    <a th:href="@{/sharehouse/{postNo}(postNo=${post.postNo})}">
+                        <div class="post_img"><img th:src="@{/img/sharehouse.jpg}" alt=""></div>
+                        <div class="post_info">
+                            <div class="post_title" th:text="${post.title}"></div>
+                            <div class="post_address_like" th:text="${post.address} + ' · 좋아요 ' + ${post.likeCnt}"></div>
+                            <div class="post_username" th:text="${post.userName} + '님'"></div>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <div class="page_block">
+        <th:block th:if="${pageBlockDTO.hasPrevBlock()}">
+            <a th:href="@{/sharehouse/(page=${pageBlockDTO.startPage - 1})}">
+                <span class="material-symbols-outlined">chevron_left</span>
+            </a>
+        </th:block>
+
+        <th:block th:each="i : ${#numbers.sequence(pageBlockDTO.startPage, pageBlockDTO.endPage)}">
+            <a th:href="@{/sharehouse/(page=${i})}">
+                <div class="page" th:text="${i}" th:classappend="${i == pageBlockDTO.currentPage ? 'active' : ''}"></div>
+            </a>
+        </th:block>
+
+        <th:block th:if="${pageBlockDTO.hasNextBlock()}">
+            <a th:href="@{/sharehouse/(page=${pageBlockDTO.endPage + 1})}">
+                <span class="material-symbols-outlined">chevron_right</span>
+            </a>
+        </th:block>
+    </div>
+
+</main>
+</body>
+</html>

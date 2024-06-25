@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{commons/layout}">
+
+<head>
+    <link rel="stylesheet" th:href="@{/css/fragments/banner.css}">
+    <script type="module" th:src="@{/js/fragments/banner.js}"></script>
+
+    <link rel="stylesheet" th:href="@{/css/sharehouse/detail.css}">
+    <script defer th:src="@{/js/sharehouse/detail.js}"></script>
+</head>
+
+<body>
+<main layout:fragment="content">
+<div th:replace="~{fragments/banner :: banner}"></div>
+
+    <div class="detail_category">
+        <div class="outer">
+            <div class="inner">
+                <div class="detail_category_title">내집공유</div>
+            </div>
+        </div>
+    </div>
+
+    <section class="sharehouse_detail" th:attr="data-postNo=${sharehousePostDetailDTO.postNo}">
+        <div class="outer">
+            <div class="inner">
+
+                <div class="detail_content_top">
+                    <div class="detail_img"><img th:src="@{/img/sharehouse.jpg}" alt=""></div>
+                    <div class="detail_info">
+                        <div>
+                            <div class="detail_title" th:text="${sharehousePostDetailDTO.title}"></div>
+                            <div class="detail_address_like">
+                                <span th:text="${sharehousePostDetailDTO.address} + ' · 좋아요 '"></span>
+                                <span class="like_cnt" th:text="${sharehousePostDetailDTO.likeCnt}"></span>
+                            </div>
+                            <div class="detail_username" th:text="${sharehousePostDetailDTO.userName} + '님'"></div>
+                        </div>
+
+                        <div class="message_like_box">
+                            <button class="send_message">쪽지보내기</button>
+
+                            <div class="like_box">
+                                <span class="material-icons like_icon"
+                                      th:attr="data-check_like=${sharehousePostDetailDTO.checkLike}"
+                                      th:classappend="${#authentication.principal == 'anonymousUser' ? 'noAuth' : 'yesAuth'}">favorite_border</span>
+                                <span class="like_cnt" th:text="${sharehousePostDetailDTO.likeCnt}">56</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="detail_content_bottom">
+
+                    <div class="detail_content_text" th:utext="${sharehousePostDetailDTO.content}"></div>
+
+                    <th:block sec:authorize="isAuthenticated()">
+                        <div class="edit_btn_box" th:if="${sharehousePostDetailDTO.userNo == #authentication.principal.UserVO.userNo}">
+                            <button class="update_post">게시글 수정</button>
+                            <button class="delete_post">게시글 삭제</button>
+                        </div>
+                    </th:block>
+                </div>
+
+                <div class="go_back_box">
+                    <a th:href="@{/sharehouse/}">
+                        <button class="go_back">목록으로</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>

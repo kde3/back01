@@ -18,7 +18,8 @@ public class SecurityConfig {
             .authorizeHttpRequests((authorize) ->
                     authorize
                             .requestMatchers("/user/join", "/user/login","/user/join_terms",
-                                    "/community/", "/community/{postNo}").permitAll()
+                                    "/community/", "/community/{postNo}",
+                                    "/sharehouse/", "/sharehouse/{postNo}").permitAll()
                             .requestMatchers("/user/info/**").hasRole(Role.USER.getKey())
                             .requestMatchers("/admin/**").hasRole(Role.ADMIN.getKey())
                             .anyRequest().authenticated()

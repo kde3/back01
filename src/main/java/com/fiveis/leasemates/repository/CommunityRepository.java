@@ -17,9 +17,6 @@ public interface CommunityRepository {
     void createDummyPost(PostVO postVO);
     void createDummyCmt(CmtVO cmtVO);
 
-    /**
-     * 게시물 관련 기능
-     */
     Long getPostNo();
 
     void createPost(PostVO postVO);
