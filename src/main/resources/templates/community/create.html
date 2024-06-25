@@ -9,6 +9,7 @@
     <!--  <script type="module" th:src="@{/js/fragments/banner.js}"></script>-->
 
     <link rel="stylesheet" th:href="@{/css/community/create.css}">
+    <!-- <link rel="stylesheet" href="/static/css/community/create.css"> -->
     <script defer th:src="@{/js/community/create.js}"></script>
 
     <link rel="stylesheet" th:href="@{/css/commons/page_block.css}">
@@ -40,7 +41,9 @@
                 </div>
                 <div class="create-button">
                     <input type="button" value="등록하기" id="create-submit-button">
-                    <input type="button" class="create-list-button" value="목록으로" onclick="location.href='/community/main.html'"/>
+                    <a th:href="@{/community/}">
+                    <input type="button" class="create-list-button" value="목록으로"/>
+                    </a>
                 </div>
             </form>
         </div>

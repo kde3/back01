@@ -38,7 +38,9 @@
         <input type="file" id="edit-file" name="edit-file" />
         <div class="edit-submit-buttons">
           <input class="edit-sub-btn1" type="submit" onsubmit="submitEdit(event)" value="수정완료">
-          <input  type="button" class="edit-sub-btn2" value="목록으로" onclick="location.href='/community/main.html'" />
+          <a th:href="@{/community/}">
+          <input  type="button" class="edit-sub-btn2" value="목록으로" />
+          </a>
         </div>
         <div id="error-message" style="color: red; margin-top: 5px; font-size: 16px;"></div>
       </form>
