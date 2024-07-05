@@ -35,7 +35,7 @@
         <div class="form-group">
           <textarea id="content" name="content" th:text="${post.content}"></textarea>
         </div>
-        <input type="file" id="edit-file" name="edit-file" />
+        <input type="file" id="edit-file" name="file" />
         <div class="edit-submit-buttons">
           <input class="edit-sub-btn1" type="submit" onsubmit="submitEdit(event)" value="수정완료">
           <a th:href="@{/community/}">

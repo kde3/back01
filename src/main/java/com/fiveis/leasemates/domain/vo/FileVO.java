@@ -12,4 +12,6 @@ public class FileVO {
     private Long fileNo;
     private Long postNo;
     private String filePath;
+    private String orgName;
+    private String savedName;
 }

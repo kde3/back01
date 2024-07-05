@@ -25,8 +25,14 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/community")
@@ -213,7 +219,9 @@ public class CommunityController {
 
 
     @PostMapping("/create")
-    public String createPost(PostVO postVO, FileVO fileVO, @RequestParam(required = false) List<MultipartFile> files, RedirectAttributes redirectAttributes) {
+    public String createPost(@ModelAttribute PostVO postVO, @ModelAttribute FileVO fileVO,
+                             @RequestParam("files") List<MultipartFile> files,
+                             RedirectAttributes redirectAttributes) throws IOException {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         CustomUserDetails customUserDetails = (CustomUserDetails) principal;
         String userNo = customUserDetails.getUserVO().getUserNo();
@@ -223,29 +231,21 @@ public class CommunityController {
             postVO.setLikeCnt(0); // 기본값 0으로 설정
         }
 
-//        if(files == null){
-//            Long number = postService.createPost(postVO, files);
-//
-//        } else{
-//            System.out.println("업로드할 파일이 없음");
-//        }
-
         PostVO newPost = PostVO.builder()
                 .title(postVO.getTitle())
                 .userNo(userNo)
                 .content(postVO.getContent())
                 .build();
 
-        FileVO newFile = FileVO.builder()
-                .filePath(fileVO.getFilePath())
-                .build();
-
 
         Long postNo = communityService.createPost(newPost, files);
-        Long fileNo = fileService.insertFile(newFile);
+
+        // 파일 업로드 처리
+        for (MultipartFile file : files) {
+            fileService.uploadFile(file, fileVO, postVO);
+        }
 
         redirectAttributes.addAttribute("postNo", postNo);
-        redirectAttributes.addAttribute("fileNo", fileNo);
 
         return "redirect:/community/" + postNo;
     }
@@ -269,12 +269,54 @@ public class CommunityController {
 
 
     @PostMapping("/{postNo}/update")
-    public String updatePost(@PathVariable Long postNo, PostVO postVO, List<MultipartFile> files){
-        postVO.setPostNo(postNo);
-//        postVO.setTitle(postVO.getTitle());
-//        postVO.setContent(postVO.getContent());
+    public String updatePost(@PathVariable Long postNo,
+                             PostVO postVO,
+                             @RequestPart(value="file",required = false)  List<MultipartFile> files,
+                             FileVO fileVO
+    ) throws IOException {
+        // 게시글 업데이트
+        communityService.updatePost(postVO, files, fileVO);
 
-        communityService.updatePost(postVO, files);
+        // 기존 파일 삭제
+        fileService.deleteFile(fileVO.getFileNo());
+
+
+        String userHome = System.getProperty("user.home");
+        String uploadDir = userHome + "/uploads";
+
+        File directory = new File(uploadDir);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+
+        if (files != null && !files.isEmpty()) {
+            for (MultipartFile file : files) {
+                if (file.isEmpty()) continue;
+
+                try {
+                    String fileName = UUID.randomUUID().toString().replaceAll("-", "") +
+                            "-" + file.getOriginalFilename();
+                    String filePath = uploadDir + "/" + fileName;
+
+                    FileVO updateFile = FileVO.builder()
+                            .fileNo(fileVO.getFileNo())
+                            .postNo(postVO.getPostNo())
+                            .filePath(filePath)
+                            .build();
+                    System.out.println(updateFile);
+                    fileService.insertFile(fileVO);
+
+                    Path path = Paths.get(filePath);
+                    Files.copy(file.getInputStream(), path);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    throw new RuntimeException("파일 저장에 실패했습니다", e);
+                }
+            }
+        } else {
+            System.out.println("파일이 없습니다");
+        }
         return "redirect:/community/" + postNo ;
     }
 

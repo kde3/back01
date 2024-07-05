@@ -9,13 +9,14 @@
 
     <insert id="insertFile">
         insert into tbl_community_file
-            (file_no, post_no, file_path)
-        values (seq_community_file_no.nextval, #{postNo, jdbcType=NUMERIC}, #{filePath, jdbcType=VARCHAR})
+            (file_no, post_no, file_path, org_name, saved_name)
+        values (seq_community_file_no.nextval, #{postNo, jdbcType=NUMERIC}, #{filePath, jdbcType=VARCHAR},
+                #{orgName, jdbcType=VARCHAR}, #{savedName, jdbcType=VARCHAR})
     </insert>
 
     <delete id="deleteFileById">
         delete from tbl_community_file
-        where file_no = #{fileNo}
+        where file_no = #{fileNo, jdbcType=NUMERIC}
     </delete>
 
 
