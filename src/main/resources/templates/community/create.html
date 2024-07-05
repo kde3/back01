@@ -31,13 +31,13 @@
                 </span>
                 <span>커뮤니티</span>
             </div>
-            <form id="createFrm" method="post" th:action="@{/community/create}">
+            <form id="createFrm" method="post" th:action="@{/community/create}" enctype="multipart/form-data">
                 <input type="text" id="create-textarea-title" name="title" placeholder="제목을 입력해주세요." />
                 <textarea type="text" id="create-textarea-content" name="content" rows="4" cols="50"
                           placeholder="토픽에 맞지 않는 글로 다른 유저로부터 일정 수 이상의 신고를 받는 경우 관리자 권한으로 게시물이 삭제될 수 있습니다.
 불특정 다수에게 불쾌한 감정을 유발하는 게시물 작성 시, 관리자 권한으로 게시물 삭제 및 차단조치할 수 있습니다."></textarea>
                 <div class="create-file">
-                    <input type="file" />
+                    <input type="file" name="files"/>
                 </div>
                 <div class="create-button">
                     <input type="button" value="등록하기" id="create-submit-button">

@@ -6,6 +6,7 @@ import com.fiveis.leasemates.domain.dto.community.CmtDTO;
 import com.fiveis.leasemates.domain.dto.community.PostDTO;
 import com.fiveis.leasemates.domain.dto.community.PostDetailDTO;
 import com.fiveis.leasemates.domain.vo.CmtVO;
+import com.fiveis.leasemates.domain.vo.FileVO;
 import com.fiveis.leasemates.domain.vo.LikeVO;
 import com.fiveis.leasemates.domain.vo.PostVO;
 import org.springframework.stereotype.Service;
@@ -50,7 +51,7 @@ public interface CommunityService {
     Long createPost(PostVO postVO, List<MultipartFile> files);
     List<PostVO> findPostAll();
 
-    public void updatePost(PostVO postVO, List<MultipartFile> files);
+    public void updatePost(PostVO postVO, List<MultipartFile> files, FileVO fileVO);
     public void deletePost(long postNo);
     Optional<PostVO> findById(Long postNO);
     //수정한 내용 저장

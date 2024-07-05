@@ -1,12 +1,15 @@
 package com.fiveis.leasemates.service;
 
 import com.fiveis.leasemates.domain.vo.FileVO;
+import com.fiveis.leasemates.domain.vo.PostVO;
 import com.fiveis.leasemates.repository.FileRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -19,6 +22,9 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class FileServiceImpl implements FileService {
 
+    @Value("${file.dir}")
+    private String fileDir;
+
     private final FileRepository fileRepository;
 
     @Override
@@ -27,7 +33,7 @@ public class FileServiceImpl implements FileService {
         Long fileNo = fileRepository.getFileNo();
         FileVO file = FileVO.builder()
                 .fileNo(fileNo)
-                .filePath("C:/upload/commu/1.png")
+                .filePath(fileDir)
                 .postNo(fileVO.getPostNo())
                 .build();
 
@@ -41,33 +47,46 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    @Transactional
-    public List<String> uploadFiles(List<MultipartFile> files, Long postNO) {
-        List <String> fileUrls = new ArrayList<>();
-
-        for (MultipartFile file : files) {
-            if (file.isEmpty()) continue;
-            try {
-                // 파일 업로드 및 URL 생성 로직
-                String fileName = UUID.randomUUID().toString().replaceAll("-", "") + "-" + file.getOriginalFilename();
-                String filePath = "c:/upload/community/" + fileName;
-
-                // 파일 저장 경로 설정
-                Path path = Paths.get(filePath);
-                Files.copy(file.getInputStream(), path);
-
-                fileUrls.add(filePath);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return fileUrls;
-    }
-
-    @Override
     public void saveFiles(List<FileVO> fileVOs) {
         for (FileVO fileVO : fileVOs) {
             fileRepository.insertFile(fileVO);
         }
+    }
+
+    @Override
+    public Long uploadFile(MultipartFile file, FileVO fileVO, PostVO postVO) throws IOException {
+        if(file.isEmpty()){
+            return null;
+        }
+
+        //원래 이름 추출
+        String origName = file.getOriginalFilename();
+
+        //파일 이름으로 쓸 uuid 생성
+        String uuid = UUID.randomUUID().toString();
+
+        //확장자 추출(ex : .png)
+        String extension = origName.substring(origName.lastIndexOf("."));
+
+        //uuid와 확장자 결합
+        String savedName = uuid + extension;
+
+        //파일을 불러올 때 사용할 파일 경로
+        String savedPath = fileDir + savedName;
+
+
+        FileVO files = FileVO.builder()
+                .fileNo(fileVO.getFileNo())
+                .postNo(postVO.getPostNo())
+                .filePath(fileVO.getFilePath())
+                .orgName(fileVO.getOrgName())
+                .savedName(fileVO.getSavedName())
+                .build();
+
+        //실제로 로컬에 uuid를 파일명으로 저장
+        file.transferTo(new File(savedPath));
+
+        fileRepository.insertFile(files);
+        return fileVO.getFileNo();
     }
 }

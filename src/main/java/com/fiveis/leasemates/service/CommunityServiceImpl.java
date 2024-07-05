@@ -10,11 +10,15 @@ import com.fiveis.leasemates.repository.CommunityRepository;
 import com.fiveis.leasemates.repository.FileRepository;
 import com.fiveis.leasemates.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
@@ -27,6 +31,10 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class CommunityServiceImpl implements CommunityService {
+
+    @Value("${file.dir}")
+    private String fileDir;
+
     private final CommunityRepository communityRepository;
     private final UserRepository userRepository;
     private final FileRepository fileRepository;
@@ -191,13 +199,19 @@ public class CommunityServiceImpl implements CommunityService {
 
         System.out.println("postVO" + post);
 
-        //userNO가 null인지 확인
         if (post.getUserNo() == null) {
             throw new IllegalArgumentException("User number cannot be null");
         }
         communityRepository.createPost(post);
 
-        // files가 null인지 확인
+        String userHome = System.getProperty("user.home");
+        String uploadDir = userHome + "/uploads";
+
+        File directory = new File(uploadDir);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+
         if (files != null) {
             for (MultipartFile file : files) {
                 if (file.isEmpty()) continue;
@@ -205,30 +219,32 @@ public class CommunityServiceImpl implements CommunityService {
                 try {
                     String fileName = UUID.randomUUID().toString().replaceAll("-", "") +
                             "-" + file.getOriginalFilename();
-                    String filePath = "c:/upload/community" + fileName;
+                    String filePath = uploadDir + "/" + fileName;
 
                     FileVO fileVO = FileVO.builder()
                             .fileNo(fileRepository.getFileNo())
+                            .postNo(postNo)
                             .filePath(filePath)
                             .build();
                     System.out.println(fileVO);
                     fileRepository.insertFile(fileVO);
 
-                    // 파일 경로 저장
-                    Path path = Paths.get("c:/upload/community" + filePath);
-                    // 파일 저장
+                    Path path = Paths.get(filePath);
                     Files.copy(file.getInputStream(), path);
 
                 } catch (IOException e) {
                     e.printStackTrace();
+                    throw new RuntimeException("파일 저장에 실패했습니다", e);
                 }
             }
         } else {
-            System.out.println("files null");
+            System.out.println("파일이 없습니다");
         }
 
         return postNo;
     }
+
+
 
     /**
      * 게시글 목록 보기
@@ -237,6 +253,7 @@ public class CommunityServiceImpl implements CommunityService {
     public List<PostVO> findPostAll() {
         return communityRepository.findPostAll();
     }
+
 
     @Override
     public List<PostDTO> postPagination(Pageable pageable) {
@@ -259,40 +276,51 @@ public class CommunityServiceImpl implements CommunityService {
     }
 
     /**
-     * 게시글 작성
+     * 게시글 수정
      * @param postVO
      */
     @Override
-    public void updatePost(PostVO postVO, List<MultipartFile> files) {
-        //게시글 업데이트
-        communityRepository.updatePost(postVO);
+    public void updatePost(PostVO postVO, List<MultipartFile> files, FileVO fileVO) {
         //기존 파일 삭제
         fileRepository.deleteFileById(postVO.getPostNo());
+        //게시글 업데이트
+        communityRepository.updatePost(postVO);
 
-        // 파일 정보 저장
-//        List<String> fileUrls = fileService.uploadFiles(files, postVO.getPostNo());
-//        List<FileVO> fileVOs = new ArrayList<>();
-//        for (String fileUrl : fileUrls) {
-//            FileVO fileVO = FileVO.builder()
-//                    .postNo(postVO.getPostNo())
-//                    .filePath(fileUrl)
-//                    .build();
-//            fileVOs.add(fileVO);
-//        }
-//        fileService.saveFiles(fileVOs);
+        String userHome = System.getProperty("user.home");
+        String uploadDir = userHome + "/uploads";
 
-        if(files != null){
-            for(MultipartFile file : files){
-                List<String> fileUrls = fileService.uploadFiles(files, postVO.getPostNo());
-                List<FileVO> fileVOs = new ArrayList<>();
-                for (String fileUrl : fileUrls) {
-                    FileVO fileVO = FileVO.builder()
+        File directory = new File(uploadDir);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+
+        if (files != null) {
+            for (MultipartFile file : files) {
+                if (file.isEmpty()) continue;
+
+                try {
+                    String fileName = UUID.randomUUID().toString().replaceAll("-", "") +
+                            "-" + file.getOriginalFilename();
+                    String filePath = uploadDir + "/" + fileName;
+
+                    FileVO updateFile = FileVO.builder()
+                            .fileNo(fileRepository.getFileNo())
                             .postNo(postVO.getPostNo())
-                            .filePath(fileUrl)
+                            .filePath(filePath)
                             .build();
-                    fileVOs.add(fileVO);
+                    System.out.println(updateFile);
+                    fileRepository.insertFile(updateFile);
+
+                    Path path = Paths.get(filePath);
+                    Files.copy(file.getInputStream(), path);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    throw new RuntimeException("파일 저장에 실패했습니다", e);
                 }
             }
+        } else {
+            System.out.println("파일이 없습니다");
         }
     }
 

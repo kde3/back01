@@ -60,8 +60,10 @@ CREATE TABLE tbl_community_post (
 
 CREATE TABLE tbl_community_file (
     file_no     NUMBER  		    NOT NULL PRIMARY KEY,
-    post_no     NUMBER  		    NOT NULL,
-    file_path   VARCHAR2(255)       NOT NULL,
+    post_no     NUMBER,
+    file_path   VARCHAR2(255),
+    org_name    VARCHAR2(255),
+    saved_name  VARCHAR2(255),
 
     CONSTRAINT COMMUNITY_FILE_POST_NO_FK FOREIGN KEY (post_no) REFERENCES tbl_community_post (post_no) ON DELETE CASCADE
 );
