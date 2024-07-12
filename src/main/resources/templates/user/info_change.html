@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{commons/layout}">
+<head>
+    <link rel="stylesheet" th:href="@{/css/user/info_chagne.css}">
+<!--    <script defer th:src="@{/js/user/login.js}"></script>-->
+
+
+    <link rel="stylesheet" th:href="@{/css/fragments/info_header.css}">
+</head>
+<body>
+<main layout:fragment="content">
+
+<div th:replace="~{fragments/info_header :: info_header}"></div>
+
+<session>
+<div class="outer">
+    <div class="inner">
+        <form class="userVO-profile" th:action="@{/user/info_change}" method="post">
+            <table>
+                <tr>
+                    <th>이름</th>
+                    <td><input type="text" name="name" class="userVO-profiled-name" placeholder="이름 입력" th:value="${#authentication.principal.userVO.name}"></td>
+                    <td class="profile-name hide">이름을 입력해주세요</td>
+                </tr>
+                <tr>
+                    <th>아이디</th>
+                    <td><input type="text" name="id" class="userVO-profiled-id"  placeholder="아이디 입력"  th:value="${#authentication.principal.userVO.id}"></td>
+                    <td class="profile-id hide">아이디를 입력해주세요</td>
+                </tr>
+                <tr>
+                    <th>이메일</th>
+                    <td><input type="email" name="email" class="userVO-profile-email"  placeholder="이메일 입력"  th:value="${#authentication.principal.userVO.email}"></td>
+                    <td class="profile-email hide">이메일를 입력해주세요</td>
+                </tr>
+                <tr>
+                    <th>전화번호</th>
+                    <td><input type="tel" name="phoneNumber" class="userVO-profiled-phone" placeholder="전화번호 입력" th:value="${#authentication.principal.userVO.phoneNumber}"></td>
+                    <td class="profile-phone hide">전화번호를 입력해주세요</td>
+                </tr>
+                <!-- <tr>
+                  <th>주소</th>
+                  <td><input type="text" class="user-profiled-address" placeholder="주소 입력"></td>
+                  <td class="profile-address hide">주소를 입력해주세요</td>
+                </tr> -->
+            </table>
+            <div class="chang-delete">
+                <button class="delete-button" type="button">계정 탈퇴</button>
+                <button class="chang-button" >수정 하기</button>
+            </div>
+        </form>
+
+    </div>
+</div>
+</session>
+
+</main>
+</body>
+</html>

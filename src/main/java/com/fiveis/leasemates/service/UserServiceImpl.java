@@ -4,6 +4,8 @@ import com.fiveis.leasemates.domain.PageBlockDTO;
 import com.fiveis.leasemates.domain.Pageable;
 import com.fiveis.leasemates.domain.dto.community.PostDTO;
 import com.fiveis.leasemates.domain.dto.user.JoinDTO;
+import com.fiveis.leasemates.domain.dto.user.UpdateDTO;
+import com.fiveis.leasemates.domain.dto.user.UpdatePwDTO;
 import com.fiveis.leasemates.domain.vo.UserVO;
 import com.fiveis.leasemates.repository.UserRepository;
 import com.fiveis.leasemates.security.CustomUserDetails;
@@ -78,5 +80,27 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         int totalPages = (int) Math.ceil(postTotal / (double) pageable.getPageSize());  // 전체 버튼 개수
 
         return new PageBlockDTO(blockSize, totalPages, pageable);
+    }
+
+    @Override
+    public void updateUserInfo(String userNo, UpdateDTO updateDTO){
+        UserVO userVO=UserVO.builder().
+                userNo(userNo).
+                id(updateDTO.getId()).
+                name(updateDTO.getName()).
+                email(updateDTO.getEmail()).
+                phoneNumber(updateDTO.getPhoneNumber()).
+                build();
+        userRepository.updateUserInfo(userVO);
+    }
+
+    @Override
+    public boolean updateUserPw(String userNo, String userPw, UpdatePwDTO updatePwDTO){
+        if (bCryptPasswordEncoder.matches(updatePwDTO.getPassword(), userPw)){
+            userRepository.updateUserPw(userNo, updatePwDTO.getNewPassword());
+        return true;
+        }
+        return false;
+
     }
 }
