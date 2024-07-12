@@ -4,10 +4,15 @@ import com.fiveis.leasemates.domain.PageBlockDTO;
 import com.fiveis.leasemates.domain.Pageable;
 import com.fiveis.leasemates.domain.dto.community.PostDTO;
 import com.fiveis.leasemates.domain.dto.user.JoinDTO;
+import com.fiveis.leasemates.domain.dto.user.UpdateDTO;
+import com.fiveis.leasemates.domain.dto.user.UpdatePwDTO;
+import com.fiveis.leasemates.domain.vo.UserVO;
 import com.fiveis.leasemates.security.CustomUserDetails;
 import com.fiveis.leasemates.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,17 +31,29 @@ public class UserController {
     public void login(@RequestParam(defaultValue = "false") boolean error,
                       Model model) {
 
-        if(error) model.addAttribute("error", "아이디나 비밀번호가 잘못되었습니다.");
+        if (error) model.addAttribute("error", "아이디나 비밀번호가 잘못되었습니다.");
     }
 
     @GetMapping("/join")
-    public void join() {}
+    public void join() {
+    }
 
     @GetMapping("/join_terms")
-    public void joinTerms() {}
+    public void joinTerms() {
+    }
 
     @GetMapping("/info")
-    public void userInfoView() {}
+    public void userInfoView() {
+    }
+
+    @GetMapping("/info_change")
+    public void userInfoChangeView() {
+    }
+
+    @GetMapping("/pw_change")
+    public void updateUserPw() {
+    }
+
 
     @GetMapping("/myposts")
     public void myPostsView(@RequestParam(defaultValue = "1") int page,
@@ -69,6 +86,35 @@ public class UserController {
         if(result) return "redirect:/user/login";
 
         return "/user/join";
+    }
+
+    @PostMapping("/info_change")
+    public String updateUserinfo(UpdateDTO updateDTO) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomUserDetails customUserDetails = (CustomUserDetails) principal;
+        String userNo = customUserDetails.getUserVO().getUserNo();
+        userService.updateUserInfo(userNo, updateDTO);
+
+        return "redirect:/user/info_change";
+    }
+
+    @PostMapping("/pw_change")
+    public ResponseEntity<String> updateUserPw(@RequestBody UpdatePwDTO updatePwDTO){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomUserDetails customUserDetails = (CustomUserDetails) principal;
+        String userNo = customUserDetails.getUserVO().getUserNo();
+        String userPw = customUserDetails.getUserVO().getPassword();
+        System.out.println(updatePwDTO);
+
+        if( userService.updateUserPw(userNo, userPw, updatePwDTO)){
+            log.info("비밀번호 수정완료");
+            return ResponseEntity.ok("Password changed successfully");
+        } else {
+            log.info("비밀번호 다름");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Incorrect current password");
+        }
+
+
     }
 
     /**

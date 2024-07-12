@@ -91,4 +91,44 @@ class UserRepositoryTest {
         System.out.println("myPostAllCount = " + myPostAllCount);
     }
 
+    @Test
+    @DisplayName("유저 정보 수정")
+    void updateUserInfo(){
+        UserVO userVO = UserVO.builder()
+                .userNo("1")
+                .id("1")
+                .password("1234")
+                .role("USER")
+                .name("1")
+                .email("1@naver.com")
+                .phoneNumber("010-1111-1111")
+                .build();
+        userRepository.createUser(userVO);
+        UserVO userVO1 = UserVO.builder()
+                .userNo("1")
+                .id("2")
+                .name("변경")
+                .email("a1@naver.com")
+                .phoneNumber("010-2222-1111")
+                .build();
+        userRepository.updateUserInfo(userVO1);
+    }
+
+
+    @Test
+    @DisplayName("유저 정보 수정")
+    void updateUserPw(){
+        UserVO userVO = UserVO.builder()
+                .userNo("1")
+                .id("1")
+                .password("1234")
+                .role("USER")
+                .name("1")
+                .email("1@naver.com")
+                .phoneNumber("010-1111-1111")
+                .build();
+        userRepository.createUser(userVO);
+        userRepository.updateUserPw("1", "1597");
+    }
+
 }

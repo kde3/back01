@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{commons/layout}">
+<head>
+    <link rel="stylesheet" th:href="@{/css/user/pw_change.css}">
+    <script defer th:src="@{/js/user/pw_change.js}"></script>
+
+    <link rel="stylesheet" th:href="@{/css/fragments/info_header.css}">
+</head>
+<body>
+<main layout:fragment="content">
+
+<div th:replace="~{fragments/info_header :: info_header}"></div>
+
+<session>
+<div class="outer">
+    <div class="inner">
+        <div class ="secret-page">
+            <p>비밀번호를 변경하시려면 기존 비밀번호와 새 비밀번호를 입력해주세요</p>
+            <div class="secret-page-input">
+                <input id="currentPw" name="password" type="password" class="pw" placeholder="기존 비밀번호">
+                <input id="newPw" name="newPassword" type="password" class="pw" placeholder="새 비밀번호">
+
+                <div class="strongPassword hide">8글자 이상, 영문, 숫자, 특수문자 필수</div>
+
+                <input id="checkPw" type="password" class="pw"  placeholder="새 비빌먼호 확인">
+
+                <th:block th:if="${error}">
+                    <div th:text="${error}"></div>
+                </th:block>
+                <div class="missmatch-message hide">비밀번호가 일치하지 않습니다</div>
+                <!-- <input type="button" onclick="test()" value="비밀번호 변경" id="pwchange" /> -->
+                <!-- <div class="check hide">모두 입력하셔야합니다</div> -->
+            </div>
+            <div>
+                <button id="pwdbutton" >비밀번호 변경</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+</session>
+
+</main>
+</body>
+</html>

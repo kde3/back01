@@ -20,5 +20,9 @@ public interface UserRepository {
     List<PostDTO> userPostPagination(@Param("userNo") String userNo, @Param("pageable") Pageable pageable);
 
     int findMyPostAllCount(String userNo);
+
+    void updateUserInfo(UserVO userVO);
+
+    void updateUserPw(@Param("userNo") String userNo, @Param("password") String password);
 }
 

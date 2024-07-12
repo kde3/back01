@@ -38,4 +38,15 @@
         SELECT count(*) FROM tbl_community_post WHERE user_no = #{userNo}
     </select>
 
+    <update id="updateUserInfo" parameterType="UserVO">
+        update TBL_USER
+        set ID = #{id}, NAME =#{name}, EMAIL = #{email} , PHONE_NUMBER = #{phoneNumber}
+        where user_no = #{userNo}
+    </update>
+
+    <update id="updateUserPw" parameterType="map">
+        update TBL_USER
+        set PASSWORD = #{password}
+        where user_no = #{userNo}
+    </update>
 </mapper>
