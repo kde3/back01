@@ -3,6 +3,7 @@ package com.fiveis.leasemates.domain.vo.sharehouse;
 import lombok.*;
 
 @Getter
+@Setter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor

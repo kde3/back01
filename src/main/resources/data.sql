@@ -98,7 +98,7 @@ CREATE TABLE tbl_sharehouse_post (
     updated_at  VARCHAR2(20)   		NOT NULL,
     is_updated  VARCHAR2(1) 		DEFAULT 'N' NOT NULL CHECK (is_updated IN ('Y', 'N')),
     content     VARCHAR2(2000)    	NOT NULL,
-    address     VARCHAR2(300)    	NOT NULL,
+    address     VARCHAR2(300),
     like_cnt    NUMBER  			DEFAULT 0 NOT NULL,
 
     CONSTRAINT SHAREHOUSE_POST_USER_NO_FK FOREIGN KEY (user_no) REFERENCES tbl_user (user_no) ON DELETE CASCADE

@@ -3,6 +3,7 @@ package com.fiveis.leasemates.repository;
 import com.fiveis.leasemates.domain.Pageable;
 import com.fiveis.leasemates.domain.dto.sharehouse.SharehousePostDTO;
 import com.fiveis.leasemates.domain.vo.LikeVO;
+import com.fiveis.leasemates.domain.vo.PostVO;
 import com.fiveis.leasemates.domain.vo.sharehouse.SharehousePostVO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -34,4 +35,15 @@ public interface SharehouseRepository {
     void createLike(LikeVO likeVO);
 
     void deleteLikeById(LikeVO likeVO);
+
+    /**
+     * 게시글 CRUD 관련 기능
+     */
+    Long getPostNo();
+    void createPost(SharehousePostVO sharehousePostVO);
+
+    void updatePost(SharehousePostVO sharehousePostVO);
+
+    void deletePostById(Long postNo);
+
 }

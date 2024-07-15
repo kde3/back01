@@ -38,7 +38,6 @@ public class CommunityServiceImpl implements CommunityService {
     private final CommunityRepository communityRepository;
     private final UserRepository userRepository;
     private final FileRepository fileRepository;
-    private final FileService fileService;
 
     /**
      * @param postNo
