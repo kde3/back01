@@ -59,8 +59,12 @@
 
                     <th:block sec:authorize="isAuthenticated()">
                         <div class="edit_btn_box" th:if="${sharehousePostDetailDTO.userNo == #authentication.principal.UserVO.userNo}">
+                            <a th:href="@{/sharehouse/{postNo}/update(postNo=${sharehousePostDetailDTO.postNo})}">
                             <button class="update_post">게시글 수정</button>
+                            </a>
+                            <a th:href="@{/sharehouse/{postNo}/delete(postNo=${sharehousePostDetailDTO.postNo})}">
                             <button class="delete_post">게시글 삭제</button>
+                            </a>
                         </div>
                     </th:block>
                 </div>

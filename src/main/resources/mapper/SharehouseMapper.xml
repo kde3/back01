@@ -56,4 +56,28 @@
         delete from TBL_SHAREHOUSE_LIKE
         where post_no = #{postNo} and user_no = #{userNo}
     </delete>
+
+    <update id="updatePost" parameterType="SharehousePostVO">
+        update tbl_SHAREHOUSE_post
+        set title = #{title, jdbcType=VARCHAR}, updated_at = to_char(sysdate, 'YYYY.MM.DD HH24:MI:SS'),
+            is_updated = 'Y', content = #{content, jdbcType=VARCHAR}
+        where post_no = #{postNo, jdbcType=NUMERIC}
+    </update>
+
+    <delete id="deletePostById" parameterType="Long">
+        delete from tbl_SHAREHOUSE_post
+        where post_no = #{postNo}
+    </delete>
+
+    <select id="getPostNo" resultType="Long">
+        SELECT seq_SHAREHOUSE_post_no.nextval FROM dual
+    </select>
+
+    <insert id="createPost" parameterType="SharehousePostVO">
+        insert into tbl_SHAREHOUSE_post (post_no , user_no ,title, created_at, updated_at, is_updated,
+                                         content, like_cnt, address)
+        values(#{postNo, jdbcType=NUMERIC}, #{userNo, jdbcType=VARCHAR}, #{title, jdbcType=VARCHAR},
+               to_char(sysdate, 'YYYY.MM.DD HH24:MI:SS'), to_char(sysdate, 'YYYY.MM.DD HH24:MI:SS'),
+               'N', #{content, jdbcType=VARCHAR}, 0, #{address, jdbcType=VARCHAR})
+    </insert>
 </mapper>

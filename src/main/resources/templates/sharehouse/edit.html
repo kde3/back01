@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{commons/layout}">
+
+<head>
+  <!--  <link rel="stylesheet" th:href="@{/css/fragments/banner.css}">-->
+  <!--  <script type="module" th:src="@{/js/fragments/banner.js}"></script>-->
+
+  <link rel="stylesheet" th:href="@{/css/sharehouse/edit.css}">
+  <script defer th:src="@{/js/sharehouse/edit.js}"></script>
+
+  <link rel="stylesheet" th:href="@{/css/commons/page_block.css}">
+</head>
+
+<body>
+<main layout:fragment="content">
+  <div class="edit-container">
+    <div class="edit-title">
+      <img src="" alt="">
+      <p class="edit-title-font">게시글 수정</p>
+    </div>
+    <div class="form-container">
+      <div>
+          <span class="material-symbols-outlined">
+            groups
+          </span>
+        <span id="edit-category">커뮤니티</span>
+      </div>
+      <form id="edit-form" th:action="@{/sharehouse/{postNo}/update(postNo=${post.postNo})}" method="post" enctype="multipart/form-data" >
+        <div class="form-group">
+          <input type="text" id="title" name="title" th:value="${post.title}"  />
+        </div>
+        <div class="form-group">
+          <textarea id="content" name="content" th:text="${post.content}"></textarea>
+        </div>
+        <input type="file" id="edit-file" name="file" />
+        <div class="edit-submit-buttons">
+          <input class="edit-sub-btn1" type="submit" onsubmit="submitEdit(event)" value="수정완료">
+          <a th:href="@{/sharehouse/}">
+          <input  type="button" class="edit-sub-btn2" value="목록으로" />
+          </a>
+        </div>
+        <div id="error-message" style="color: red; margin-top: 5px; font-size: 16px;"></div>
+      </form>
+    </div>
+  </div>
+</main>
+</body>
+</html>
