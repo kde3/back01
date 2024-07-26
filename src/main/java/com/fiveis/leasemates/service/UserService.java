@@ -6,7 +6,6 @@ import com.fiveis.leasemates.domain.dto.community.PostDTO;
 import com.fiveis.leasemates.domain.dto.user.JoinDTO;
 import com.fiveis.leasemates.domain.dto.user.UpdateDTO;
 import com.fiveis.leasemates.domain.dto.user.UpdatePwDTO;
-import com.fiveis.leasemates.domain.vo.UserVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,5 +25,8 @@ public interface UserService {
     void updateUserInfo(String userNo, UpdateDTO updateDTO);
 
     // 유저 비밀번호 수정
-    boolean updateUserPw(String userNo, String userPw, UpdatePwDTO updatePwDTO);
+    boolean updateUserPw(String userNo, String userId, String userPw, UpdatePwDTO updatePwDTO);
+
+    // 세션 정보 변경
+    void updateSession(String id);
 }

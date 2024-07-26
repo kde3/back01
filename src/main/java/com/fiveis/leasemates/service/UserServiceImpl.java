@@ -12,12 +12,13 @@ import com.fiveis.leasemates.security.CustomUserDetails;
 import com.fiveis.leasemates.security.Role;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -83,7 +84,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public void updateUserInfo(String userNo, UpdateDTO updateDTO){
+    public void updateUserInfo(String userNo, UpdateDTO updateDTO) {
         UserVO userVO=UserVO.builder().
                 userNo(userNo).
                 id(updateDTO.getId()).
@@ -92,15 +93,33 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 phoneNumber(updateDTO.getPhoneNumber()).
                 build();
         userRepository.updateUserInfo(userVO);
+
+        updateSession(updateDTO.getId());
     }
 
     @Override
-    public boolean updateUserPw(String userNo, String userPw, UpdatePwDTO updatePwDTO){
-        if (bCryptPasswordEncoder.matches(updatePwDTO.getPassword(), userPw)){
-            userRepository.updateUserPw(userNo, updatePwDTO.getNewPassword());
-        return true;
+    public boolean updateUserPw(String userNo, String userId, String userPw, UpdatePwDTO updatePwDTO) {
+        if (bCryptPasswordEncoder.matches(updatePwDTO.getPassword(), userPw)) {
+            String encodePassword = bCryptPasswordEncoder.encode(updatePwDTO.getNewPassword());
+            userRepository.updateUserPw(userNo, encodePassword);
+            updateSession(userId);
+            return true;
         }
-        return false;
 
+        return false;
+    }
+
+    /**
+     * 세션 정보 변경
+     * @param id
+     */
+    @Override
+    public void updateSession(String id) {
+        CustomUserDetails updatedUserDetails = loadUserByUsername(id);
+        Authentication newAuthentication = new UsernamePasswordAuthenticationToken(
+                updatedUserDetails,
+                updatedUserDetails.getPassword(),
+                updatedUserDetails.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(newAuthentication);
     }
 }

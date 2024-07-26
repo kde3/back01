@@ -6,7 +6,6 @@ import com.fiveis.leasemates.domain.dto.community.PostDTO;
 import com.fiveis.leasemates.domain.dto.user.JoinDTO;
 import com.fiveis.leasemates.domain.dto.user.UpdateDTO;
 import com.fiveis.leasemates.domain.dto.user.UpdatePwDTO;
-import com.fiveis.leasemates.domain.vo.UserVO;
 import com.fiveis.leasemates.security.CustomUserDetails;
 import com.fiveis.leasemates.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -54,7 +53,6 @@ public class UserController {
     public void updateUserPw() {
     }
 
-
     @GetMapping("/myposts")
     public void myPostsView(@RequestParam(defaultValue = "1") int page,
                             @RequestParam(defaultValue = "10") int size,
@@ -82,7 +80,6 @@ public class UserController {
     @PostMapping("/join")
     String join(JoinDTO joinDTO) {
         Boolean result = userService.join(joinDTO);
-
         if(result) return "redirect:/user/login";
 
         return "/user/join";
@@ -95,26 +92,26 @@ public class UserController {
         String userNo = customUserDetails.getUserVO().getUserNo();
         userService.updateUserInfo(userNo, updateDTO);
 
+        log.info("[회원정보 변경 완료]");
+
         return "redirect:/user/info_change";
     }
 
     @PostMapping("/pw_change")
-    public ResponseEntity<String> updateUserPw(@RequestBody UpdatePwDTO updatePwDTO){
+    public ResponseEntity<String> updateUserPw(@RequestBody UpdatePwDTO updatePwDTO) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         CustomUserDetails customUserDetails = (CustomUserDetails) principal;
         String userNo = customUserDetails.getUserVO().getUserNo();
+        String userId = customUserDetails.getUsername();
         String userPw = customUserDetails.getUserVO().getPassword();
-        System.out.println(updatePwDTO);
 
-        if( userService.updateUserPw(userNo, userPw, updatePwDTO)){
+        if( userService.updateUserPw(userNo, userId, userPw, updatePwDTO)) {
             log.info("비밀번호 수정완료");
             return ResponseEntity.ok("Password changed successfully");
         } else {
             log.info("비밀번호 다름");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Incorrect current password");
         }
-
-
     }
 
     /**
@@ -125,8 +122,4 @@ public class UserController {
     public String logout() {
         return "redirect:/community/";
     }
-
-
-
-
 }
